@@ -1,0 +1,41 @@
+{
+    "name": "AIE Tool Panel",
+    "version": "0.1",
+    "description": "A inspector for AIE module. 2018 (c) Antonio Juan Sánchez ",
+    "browser_action": {
+        "default_title": "AIE Tool Panel",
+        "default_icon": {
+          "19": "icons/19x19.png",
+          "38": "icons/38x38.png"
+        }
+    },
+    "devtools_page": "devtools.html",
+    "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["contentscript.js"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }],
+    "web_accessible_resources": ["loader.js"],
+    "externally_connectable": {
+      "matches": ["<all_urls>"]
+    },
+    "accepts_tls_channel_id": false,
+    "permissions": [
+      "activeTab",
+  		"<all_urls>",
+  		"tabs",
+  		"history",
+  		"bookmarks",
+  		"chrome://favicon/*",
+  		"unlimitedStorage",
+  		"management",
+  		"clipboardWrite",
+  		"clipboardRead",
+  		"contextMenus",
+  		"notifications"
+  	],
+    "content_security_policy": "default-src 'self';   script-src 'self' https://platform.twitter.com;   style-src 'self' 'unsafe-inline';   img-src 'self' data: chrome: filesystem:;   connect-src 'self' http: https: chrome-extension:;   frame-src http: https:",
+
+    "manifest_version": 2
+}

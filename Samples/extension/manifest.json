@@ -1,0 +1,13 @@
+{
+  "manifest_version": 2,
+  "name": "AIE Tool Panel 0.2",
+  "version": "0.2",
+  "applications": {
+    "gecko": {
+      "id": "antonio.juan@gmail.es"
+    }
+  },
+  "browser_action": {
+      "default_title": "AIE Tool Panel 0.2"
+  },
+}

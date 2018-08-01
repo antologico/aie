@@ -1,0 +1,66 @@
+table.aiePrestances {
+  width: 100%;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  margin: 0;
+  border-collapse:collapse;
+}
+
+table.aiePrestances th {
+  min-width: 10px;
+}
+
+table.aiePrestances tr {
+  height: 35px;
+  cursor: pointer;
+}
+
+table.aiePrestances td {
+  padding: 5px;
+  min-width: 10px;
+  color: white;
+  margin: 0;
+  border-collapse:collapse;
+  border-spacing:0;
+}
+
+table.aiePrestances td:last-child {
+  text-align: right;
+  padding-right: 20px;
+  padding-left: 0px;
+}
+
+table.aiePrestances tr td {
+  background: #222;
+  border-bottom: 2px solid #333
+}
+
+table.aiePrestances tr .arrowUp,
+table.aiePrestances tr.open .arrowDown {
+  display: none
+}
+
+table.aiePrestances tr .arrowDown,
+table.aiePrestances tr.open .arrowUp {
+  display: inline-block;
+  padding-right: 5px;
+  font-size: 0.7em;
+  color: #999;
+}
+
+table.aiePrestances tr td:first-child {
+  color: yellow;
+  padding-left: 20px;
+  padding-right: 0px;
+  font-size: 0.7em;
+}
+
+table.aiePrestances tr.title td,
+table.aiePrestances tr.title td:first-child  {
+  color: #333;
+  background: white;
+  font-size: 1.2em;
+}
+
+table.aiePrestances tr:hover td {
+  border-bottom: 2px solid green;
+}
