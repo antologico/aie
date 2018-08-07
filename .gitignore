@@ -1,4 +1,3 @@
-Samples/aie/node_modules
-Samples/aie/yarn.lock
-Samples/aie/yarn-error.log
-Docs
+./Samples/aie/node_modules
+./Samples/aie/yarn.lock
+./Samples/aie/yarn-error.log
