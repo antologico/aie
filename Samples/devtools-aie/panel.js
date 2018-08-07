@@ -14,6 +14,16 @@ function greenPercent(percent) {
   return `rgba(100, ${100 + (percent * 155)}, 100)`
 }
 
+function createUTFText (symbol) {
+  return `&#x${symbol};`
+}
+
+function createUTFSymbol (symbol) {
+  const el = document.createElement('span')
+  el.innerHTML = createUTFText(symbol)
+  return el
+}
+
 function drawLevel(aie, table, level, totalLevels, maxPrestance, className) {
 
     const trClass= 'parent_' + aie.name
@@ -21,10 +31,10 @@ function drawLevel(aie, table, level, totalLevels, maxPrestance, className) {
     if (initTable) {
       if (level > 0) {
         const el = document.querySelector('[data-id="' + aie.name + '"] td:last-child')
-        el.innerHTML = aie.prestance.toFixed(4)
+        el.innerHTML = aie.prestance ? aie.prestance.toFixed(4) : '0'
         el.style.color = greenPercent(aie.prestance / maxPrestance)
         const starEl = document.querySelector('[data-id="' + aie.name + '"] td:first-child')
-        starEl.innerHTML = (maxPrestance === aie.prestance) ? '★' : ''
+        starEl.innerHTML = (maxPrestance === aie.prestance) ? createUTFText('2606') : ''
       }
     } else {
 
@@ -40,15 +50,15 @@ function drawLevel(aie, table, level, totalLevels, maxPrestance, className) {
       tdContent.setAttribute('colspan', `${totalLevels - level}`)
       let content = document.createTextNode(aie.name)
       if (level === 0) {
-        tdContent.appendChild(document.createTextNode('☉ '))
+        tdContent.appendChild(createUTFSymbol('2609'))
       } else {
         if (aie.children.length > 0) {
           const arrowElUp = document.createElement('span')
           arrowElUp.classList.add('arrowUp')
-          arrowElUp.appendChild(document.createTextNode('▲'))
+          arrowElUp.appendChild(createUTFSymbol('25B2'))
           const arrowElDown = document.createElement('span')
           arrowElDown.classList.add('arrowDown')
-          arrowElDown.appendChild(document.createTextNode('▼'))
+          arrowElDown.appendChild(createUTFSymbol('25BC'))
           tdContent.appendChild(arrowElUp)
           tdContent.appendChild(arrowElDown)
         }
@@ -57,7 +67,7 @@ function drawLevel(aie, table, level, totalLevels, maxPrestance, className) {
       tr.appendChild(tdContent)
 
       const tdPrestance = document.createElement('td')
-      const prestance = document.createTextNode(aie.prestance.toFixed(4))
+      const prestance = document.createTextNode(aie.prestance ? aie.prestance.toFixed(4) : '0')
 
       tr.appendChild(tdPrestance)
       if (level > 0) {
@@ -109,12 +119,10 @@ function getDepth(aie, depth = 1) {
   return depth
 }
 
-function drawTable(aiee) {
-  if (aiee) {
-    if (aiee.length) {
+function drawTable(prestances) {
+  if (prestances) {
       const table = document.getElementById('mytable')
       const header = document.getElementById('myheader')
-      const prestances = window.aiee[0].getPrestances()
       const levels = getDepth(prestances)
       const maxPrestance = getMaxPrestance(prestances)
       if (!initTable) {
@@ -124,21 +132,27 @@ function drawTable(aiee) {
       }
       drawLevel(prestances, table, 0, levels, maxPrestance, '')
       initTable = true
-    }
   }
 }
 
-document.getElementById('loader').innerHTML='loading.2..'
+document.getElementById('loader').innerHTML='loading...'
 
-chrome.runtime.onMessageExternal.addListener(
-	function(request, sender, sendResponse) {
-    console.log('request', request, sender, sendResponse)
-    if (sender.url == blacklistedWebsite) {
-			// Don’t allow this web page access
-			return;
-		}
-		if (request.openUrlInEditor) {
-			openUrl(request.openUrlInEditor);
-		}
-	}
-);
+var port = chrome.runtime.connect(null, { name: "panel" });
+var tabId = chrome.devtools.inspectedWindow.tabId;
+
+port.onMessage.addListener(function(message, sender) {
+  if (message.action == 'aie-update') {
+    document.getElementById('loader').innerHTML=''
+    drawTable(JSON.parse(message.prestances))
+  }
+});
+
+/**
+ * Helper for sending a message to the background script.
+ */
+function post(message) {
+  message.tabId = tabId;
+  port.postMessage(message);
+}
+
+post({action: "init"});

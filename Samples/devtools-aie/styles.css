@@ -1,12 +1,16 @@
 table.aiePrestances {
   width: 100%;
-  font-family: "Trebuchet MS", Helvetica, sans-serif;
   margin: 0;
   border-collapse:collapse;
 }
 
 table.aiePrestances th {
   min-width: 10px;
+  height: 0;
+}
+
+table.aiePrestances thead tr {
+  height: 0;
 }
 
 table.aiePrestances tr {
@@ -63,4 +67,13 @@ table.aiePrestances tr.title td:first-child  {
 
 table.aiePrestances tr:hover td {
   border-bottom: 2px solid green;
+}
+
+body {
+  background: #333;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 10px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
