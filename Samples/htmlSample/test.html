@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  <h2>Search box</h2>
+
+  <div aie
+      aie-prestance-fields="[level, font-size, height]"
+      aie-name="searchOptions"
+      aie-max="[font-size: 4, height: 0.7]">
+    <div aie
+      aie-trigger="click"
+      aie-name="findInput"
+      aie-prestance-fields="[color]">
+      <input type="text"/>
+    </div>
+    <div aie
+        aie-prestance-fields="[level]"
+        aie-name="moreOptions">
+      <div aie
+        aie-name="moreOptionsButton"
+        aie-prestance-fields="[color]" />
+        <button>More options</button>
+      </div>
+      <div aie
+        aie-name="moreOptionsLatest"
+        aie-trigger="click"
+        aie-prestance-fields="[color, font-size]"
+        aie-max="[font-size: 2, width: 0.5]" />
+        Lestest item
+      </div>
+      <div aie
+        aie-name="moreOptionsVisited"
+        aie-trigger="click"
+        aie-prestance-fields="[color, font-size]"
+        aie-max="[font-size: 2, width: 0.5]" />
+        Most visited
+      </div>
+      <div aie
+        aie-name="moreOptionsPurchases"
+        aie-trigger="click"
+        aie-prestance-fields="[color, font-size]"
+        aie-max="[font-size: 2, width: 0.5]" />
+        Last purchases
+      </div>
+      <div aie
+        aie-name="moreOptionsPopular"
+        aie-trigger="click"
+        aie-prestance-fields="[color, font-size]"
+        aie-max="[font-size: 2, width: 0.5]" />
+        Most popular
+      </div>
+    </div>
+  </div>
+
+  <h2>Sort options</h2>
+  <div aie
+      aie-prestance-fields="[color, font-size, height]"
+      aie-name="sortOptions"
+      aie-max="[font-size: 2, height: 0.7]">
+    <div aie
+      aie-name="byDeparment"
+      aie-trigger="click"
+      aie-prestance-fields="[position, color]">
+      <input type="radio" name="sort" value="deparment">By deparment
+    </div>
+    <div aie
+      aie-name="byName"
+      aie-trigger="click"
+      aie-prestance-fields="[position, color]">
+      <input type="radio" name="sort" value="name">By name
+    </div>
+    <div aie
+      aie-name="byDate"
+      aie-trigger="click"
+      aie-prestance-fields="[position, color]">
+      <input type="radio" name="sort" value="date">By date
+    </div>
+    <div aie
+      aie-name="byVisits"
+      aie-trigger="click"
+      aie-prestance-fields="[position, color]]">
+      <input type="radio" name="sort" value="visits">By visits
+    </div>
+    <div aie
+    <div aie
+      aie-name="byRate"
+      aie-trigger="click"
+      aie-prestance-fields="[position, color]]">
+      <input type="radio" name="sort" value="rate">By rate
+    </div>
+  </div>
+
+
+<button id="insertmessagebutton" />XXX</button>
+
+  <script src="http://localhost:8080/dist/aie.min.js"></script>
+
+</body>
+</html>
