@@ -10,8 +10,13 @@ import AIEDefaultMaduration from './AIEDefaultMaduration'
   The BaseElement is a DOM element
 */
 export default class AIEHTML extends AIE {
+
+  constructor(name: string, context = 'body') {
+    super(name, context)
+  }
+
   public getElements():NodeListOf<HTMLElement> {
-    return document.querySelectorAll('[aie]')
+    return document.querySelectorAll(this.getContext() + ' [aie]')
   }
 
   public createElement(el: HTMLElement): AIEElement {
@@ -24,12 +29,5 @@ export default class AIEHTML extends AIE {
 
   public getMaduration(): AIEAbstractMaduration {
     return new AIEDefaultMaduration()
-  }
-
-  public updateAIEESpace(): void {
-    if (!(<any>window).aiee) {
-      (<any>window).aiee = []
-    }
-    (<any>window).aiee.push(this)
   }
 }

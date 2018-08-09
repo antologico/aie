@@ -9,23 +9,23 @@ export default abstract class AIE {
   private eventProcessor: AIEEventProcessor
   private environment: AIEElement
   private name: string
+  private context: string
   private prestanceCalculator: AIEPrestanceCalculator
 
-  public constructor(name: string) {
+  public constructor(name: string, context: any) {
     this.eventProcessor = new AIEEventProcessor(this)
     this.name = name
+    this.context = context
     this.prestanceCalculator = new AIEPrestanceCalculator(
       this.getPrestanceSpeed(),
       this.getMaduration()
     )
     AIEMonitor.addEnvironments(this)
-    this.updateAIEESpace()
   }
 
   public abstract getPrestanceSpeed(): AIEAbstractPrestanceSpeed
   public abstract getMaduration(): AIEAbstractMaduration
   public abstract getElements():NodeListOf<any>
-  public abstract updateAIEESpace():void
 
   private estructureElements(elements: Array<AIEElement>) {
     const toRemove: Array<number> = []
@@ -81,11 +81,15 @@ export default abstract class AIE {
     this.initializeElements(this.getElements())
   }
 
-  public getPrestances() {
+  public getPrestances():any {
     return this.getChildrenPrestance(this.environment)
   }
 
-  private getChildrenPrestance(element: AIEElement) {
+  public getContext():any {
+    return this.context
+  }
+
+  private getChildrenPrestance(element: AIEElement):any {
     const values:any = {
       name: element.getName(),
       prestance: element.getPrestace(),

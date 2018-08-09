@@ -135,15 +135,13 @@ function drawTable(prestances) {
   }
 }
 
-document.getElementById('loader').innerHTML='loading...'
-
 var port = chrome.runtime.connect(null, { name: "panel" });
 var tabId = chrome.devtools.inspectedWindow.tabId;
 
 port.onMessage.addListener(function(message, sender) {
   if (message.action == 'aie-update') {
-    document.getElementById('loader').innerHTML=''
-    drawTable(JSON.parse(message.prestances))
+    document.getElementById('loader').classList.add('hide');
+    drawTable(JSON.parse(message.prestances)[0])
   }
 });
 

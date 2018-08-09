@@ -2,7 +2,27 @@
 <html>
 <body>
 
-  <h2>Search box</h2>
+  <h2>Min List Environment</h2>
+  <div id='min-context' aie
+      aie-prestance-fields="[level, font-size, height]"
+      aie-name="minEnvironment"
+      aie-max="[font-size: 4, height: 0.7]">
+      <div aie
+        aie-trigger="click"
+        aie-name="minEnvironment1"
+        aie-prestance-fields="[color]">
+        <input type="text"/>
+      </div>
+      <div aie
+        aie-trigger="click"
+        aie-name="minEnvironment2"
+        aie-prestance-fields="[color]">
+        <input type="text"/>
+      </div>
+  </div>
+  
+  <div id='form-context'>
+  <h2>Search box Environment</h2>
 
   <div aie
       aie-prestance-fields="[level, font-size, height]"
@@ -83,14 +103,13 @@
       <input type="radio" name="sort" value="visits">By visits
     </div>
     <div aie
-    <div aie
       aie-name="byRate"
       aie-trigger="click"
       aie-prestance-fields="[position, color]]">
       <input type="radio" name="sort" value="rate">By rate
     </div>
   </div>
-
+</div>
 
 <button id="insertmessagebutton" />XXX</button>
 
