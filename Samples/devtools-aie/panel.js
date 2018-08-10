@@ -1,147 +1,85 @@
-let initTable = false
+const templateItem = document.getElementById('item-template').innerHTML
+const templateList = document.getElementById('list-template').innerHTML
+const container = document.getElementById('container')
+let init = false
+let printing = false
 
-function drawHeaders(header, levels) {
-  const tr = document.createElement('tr')
-  const vals = [...Array(levels+1).fill().keys()]
-  vals.forEach((level) => {
-      const th = document.createElement('th')
-      tr.appendChild(th)
-  })
-  header.appendChild(tr)
-}
-
-function greenPercent(percent) {
-  return `rgba(100, ${100 + (percent * 155)}, 100)`
-}
-
-function createUTFText (symbol) {
-  return `&#x${symbol};`
-}
-
-function createUTFSymbol (symbol) {
-  const el = document.createElement('span')
-  el.innerHTML = createUTFText(symbol)
-  return el
-}
-
-function drawLevel(aie, table, level, totalLevels, maxPrestance, className) {
-
-    const trClass= 'parent_' + aie.name
-
-    if (initTable) {
-      if (level > 0) {
-        const el = document.querySelector('[data-id="' + aie.name + '"] td:last-child')
-        el.innerHTML = aie.prestance ? aie.prestance.toFixed(4) : '0'
-        el.style.color = greenPercent(aie.prestance / maxPrestance)
-        const starEl = document.querySelector('[data-id="' + aie.name + '"] td:first-child')
-        starEl.innerHTML = (maxPrestance === aie.prestance) ? createUTFText('2606') : ''
-      }
-    } else {
-
-      const tr = document.createElement('tr')
-
-      if (level > 0) {
-        const tdBlank = document.createElement('td')
-        tdBlank.setAttribute('colspan', level)
-        tr.appendChild(tdBlank)
-      }
-
-      const tdContent = document.createElement('td')
-      tdContent.setAttribute('colspan', `${totalLevels - level}`)
-      let content = document.createTextNode(aie.name)
-      if (level === 0) {
-        tdContent.appendChild(createUTFSymbol('2609'))
-      } else {
-        if (aie.children.length > 0) {
-          const arrowElUp = document.createElement('span')
-          arrowElUp.classList.add('arrowUp')
-          arrowElUp.appendChild(createUTFSymbol('25B2'))
-          const arrowElDown = document.createElement('span')
-          arrowElDown.classList.add('arrowDown')
-          arrowElDown.appendChild(createUTFSymbol('25BC'))
-          tdContent.appendChild(arrowElUp)
-          tdContent.appendChild(arrowElDown)
-        }
-      }
-      tdContent.appendChild(content)
-      tr.appendChild(tdContent)
-
-      const tdPrestance = document.createElement('td')
-      const prestance = document.createTextNode(aie.prestance ? aie.prestance.toFixed(4) : '0')
-
-      tr.appendChild(tdPrestance)
-      if (level > 0) {
-        className.trim().split(' ').forEach((myClass) => tr.classList.add(myClass))
-      } else {
-        tr.classList.add('title')
-      }
-
-
-      tr.addEventListener('click', () => {
-        let display = 'none'
-        if (tr.hide) {
-          display = 'table-row'
-          tr.hide = false
-          tr.classList.add('open')
-        } else {
-          tr.classList.remove('open')
-          tr.hide = true
-        }
-        document.querySelectorAll('.'+trClass).forEach((el) =>{
-          el.style.display = display
-        })
-      }, false)
-
-      tr.classList.add('open')
-      tr.setAttribute('data-id', aie.name)
-      table.appendChild(tr)
-    }
-
-    aie.children.forEach((aie) => {
-      drawLevel(aie, table, level + 1, totalLevels, maxPrestance, className + ' ' + trClass)
-    })
-}
-
-function getMaxPrestance(aie) {
-  let childrenPrestance = 0.1
-  if (aie.children.length) {
-    childrenPrestance = aie.children.map((el) => getMaxPrestance(el))
-      .reduce((p, v) => ( p > v ? p : v ), 0)
+function generateList (list, id) {
+  if (!list || list.length === 0) {
+    return ''
   }
-  return aie.prestance > childrenPrestance ? aie.prestance : childrenPrestance
+  let htmlCode = templateList.replace(
+    /{items}/,
+    list.map((item, key) => generateItem(item, `${id}_${key}`)).join('')
+  )
+  return htmlCode
 }
 
-function getDepth(aie, depth = 1) {
-  if (aie.children.length) {
-    return aie.children.map((el) => getDepth(el, depth + 1))
-      .reduce((p, v) => ( p > v ? p : v ), 0)
-  }
-  return depth
+const getPrestace = (prestance) => prestance ? prestance.toFixed(4) : '0'
+
+function generateItem ({ name, prestance, children}, id) {
+  let htmlCode = templateItem.replace(/{id}/g, id)
+  htmlCode = htmlCode.replace(/{name}/g, name)
+  htmlCode = htmlCode.replace(/{value}/i, getPrestace(prestance))
+  htmlCode = htmlCode.replace(
+    /{content}/i,
+    generateList(children, id))
+
+  return htmlCode
 }
 
 function drawTable(prestances) {
   if (prestances) {
-      const table = document.getElementById('mytable')
-      const header = document.getElementById('myheader')
-      const levels = getDepth(prestances)
-      const maxPrestance = getMaxPrestance(prestances)
-      if (!initTable) {
-        table.innerHTML = ''
-        header.innerHTML = ''
-        drawHeaders(header, levels)
-      }
-      drawLevel(prestances, table, 0, levels, maxPrestance, '')
-      initTable = true
+    container.innerHTML = generateList(prestances, '0')
+  }
+}
+
+function flatTree (list) {
+  if (!list || list.length === 0) {
+    return []
+  }
+  if (list) {
+    list.reduce(({prestance, children}) => ([
+      prestance,
+      ...flatTree(children)
+    ]), [])
+  }
+}
+
+function updateValues(list) {
+  if (!list || list.length === 0) {
+    return null
+  }
+  console.log(flatTree(list))
+  if (list) {
+    list.map(({name, prestance, children}) => {
+      document.getElementById(`value_${name}`).innerHTML = getPrestace(prestance)
+      updateValues(children)
+    })
   }
 }
 
 var port = chrome.runtime.connect(null, { name: "panel" });
 var tabId = chrome.devtools.inspectedWindow.tabId;
 
-port.onMessage.addListener(function(message, sender) {
+port.onMessage.addListener(function(message) {
   if (message.action == 'aie-update') {
-    document.getElementById('loader').classList.add('hide');
-    drawTable(JSON.parse(message.prestances)[0])
+    if (!printing) {
+        printing = true
+      if (!message.prestances) {
+        return null
+      }
+      printing = true
+      const prestances = JSON.parse(message.prestances)
+      if (init == false) {
+        init = true;
+        document.getElementById('loader').classList.add('hide');
+        drawTable(prestances)
+      } else {
+        updateValues(prestances)
+      }
+      printing = false
+    }
   }
 });
 
@@ -153,4 +91,4 @@ function post(message) {
   port.postMessage(message);
 }
 
-post({action: "init"});
+post({action: 'init'});
