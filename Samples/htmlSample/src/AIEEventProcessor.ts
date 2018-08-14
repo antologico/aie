@@ -9,12 +9,12 @@ export interface AIEEvent {
 export default class AIEEventProcessor {
   private enviroment: AIE
   private queue: Array<AIEEvent>
-  private interation: number
+  private interaction: number
 
   public constructor(enviroment: AIE) {
     this.enviroment = enviroment
     this.queue = []
-    this.interation = 0
+    this.interaction = 0
     console.info('[AIE] Event processor initialized');
     this.inspect()
   }

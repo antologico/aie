@@ -6,13 +6,20 @@
     "browser_action": {
         "default_title": "AIE Tool Panel"
     },
+    "icons": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
     "background": {
       "scripts": ["background.js"]
     },
     "devtools_page": "devtools.html",
     "content_scripts": [{
       "matches": ["<all_urls>"],
-      "js": ["contentscript.js"]
+      "js": ["contentscript.js"],
+      "css": ["contentscript.css", "aie-embedded.css"],
+      "run_at": "document_end"
     }],
     "web_accessible_resources": ["loader.js"],
     "manifest_version": 2

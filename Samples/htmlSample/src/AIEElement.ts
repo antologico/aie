@@ -2,6 +2,8 @@ import AIEMemory from './AIEMemory'
 import AIEEventProcessor from './AIEEventProcessor'
 import AIEPrestanceCalculator from './AIEPrestanceCalculator'
 
+const DEFAULT_MAX_PRESTANCE = 1
+
 export default abstract class AIEElement {
   private trigger: string
   protected baseElement: any
@@ -27,7 +29,7 @@ export default abstract class AIEElement {
     this.parent = null
     this.prestance = 0
     this.updates = 0
-    this.maxPrestance = 1 // By default
+    this.maxPrestance = DEFAULT_MAX_PRESTANCE // By default
     this.memory = this.initializeMemory(this.generateId())
   }
 
@@ -51,12 +53,12 @@ export default abstract class AIEElement {
     }
   }
 
-  public getInterations(): number {
+  public getInteractions(): number {
     return this.memory.getScore()
   }
 
   public getParentInteractions(): number {
-    return this.parent ? this.parent.getInterations() : 0
+    return this.parent ? this.parent.getInteractions() : 0
   }
 
   public getName() {

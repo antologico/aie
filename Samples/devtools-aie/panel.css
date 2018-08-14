@@ -26,12 +26,13 @@ label {
 }
 
 label:hover {
-  color: #DBBD81;
+  color: rgb(219, 189, 129);
 }
 
 .value {
   padding: 10px;
   color: white;
+  white-space: nowrap;
 }
 
 input[type='checkbox'] {
@@ -107,6 +108,10 @@ input[type='checkbox']:checked ~ .itemContent {
   height: 100vh;
 }
 
+.svgLoader {
+  margin-left: 10px;
+}
+
 #loader.hide {
   display: none;
 }
@@ -118,4 +123,78 @@ body {
   padding: 0;
   font-size: 10px;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+
+label.mark {
+  color: gold;
+  animation-name: blinker;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+
+  -webkit-animation-name:blinker;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.5; }
+}
+
+@-webkit-keyframes blinker {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes blinker {  
+  0% { opacity: 1.0; }
+  50% { opacity: 0.5; }
+}
+
+.toolbar {
+  z-index: 1;
+  background: rgb(32, 60, 105);
+  color: #E39644;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  height: 25px;
+  border-bottom: 1px solid  rgb(44, 87, 155);
+  box-shadow: 0 3px 3px #000;
+  display: flex;
+}
+
+
+.toolbar input[type='checkbox'] {
+  display: none;
+}
+
+.toolbar-icon {
+  font-size: 15px;
+  display: inline-block;
+  width: auto;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 5px;
+  color: #E39644;
+  border-bottom: 1px solid rgb(54, 106, 190);
+}
+
+input[type='checkbox']:checked + .toolbar-icon {
+  background: rgb(7, 19, 39)
+}
+
+.toolbar-icon:hover {
+  color: gold;
+}
+
+#container {
+  margin-top: 25px;
 }

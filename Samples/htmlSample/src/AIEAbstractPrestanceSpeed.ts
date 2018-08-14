@@ -1,3 +1,3 @@
 export default abstract class AIEAbstractPrestanceSpeed {
-  public abstract calculate(interations: number): number
+  public abstract calculate(interactions: number): number
 }
