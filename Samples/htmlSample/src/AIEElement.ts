@@ -16,6 +16,7 @@ export default abstract class AIEElement {
   private prestanceCalculator: AIEPrestanceCalculator
   private maxPrestance: number
   private updates: number
+  private born: number
 
   public constructor(baseElement: any) {
     if(baseElement) {
@@ -24,6 +25,7 @@ export default abstract class AIEElement {
       this.trigger = this.getAttr('trigger')
       this.bindTriggers()
     }
+    this.born = this.getDate()
     this.children = []
     this.processor = null
     this.parent = null
@@ -46,11 +48,18 @@ export default abstract class AIEElement {
     return 'aie::' + this.name
   }
 
-  public updatePrestance(): void {
+  public updatePrestance(increment: number = null): number {
     if (this.hasParent()) {
+      if (increment !== null) {
+        this.prestance += (this.prestance + increment > 0) ? increment : 0
+        return increment
+      }
       this.updates ++
-      this.prestance += this.prestanceCalculator.calculateIncrement(this)
+      const newIncrement = this.prestanceCalculator.calculateIncrement(this)
+      this.prestance += newIncrement
+      return newIncrement
     }
+    return 0
   }
 
   public getInteractions(): number {
@@ -59,6 +68,16 @@ export default abstract class AIEElement {
 
   public getParentInteractions(): number {
     return this.parent ? this.parent.getInteractions() : 0
+  }
+
+  public getLife(now: number = null): number {
+    const myDate = now || this.getDate()
+    return myDate - this.born
+  }
+
+  public getParentLife(now: number = null): number {
+    const myDate = now || this.getDate()
+    return myDate - this.parent.born
   }
 
   public getName() {
@@ -115,8 +134,8 @@ export default abstract class AIEElement {
       : 0
   }
 
-  public updateChildrenPrestance(): void {
-    this.children.forEach((child) => child.updatePrestance())
+  public updateChildrenPrestance(increment: number, excluded: Array<AIEElement> = []): void {
+    this.children.forEach((child) => !excluded.includes(child) && child.updatePrestance(increment))
   }
 
   public hasParent(): boolean {
@@ -137,4 +156,5 @@ export default abstract class AIEElement {
   public abstract getBaseElementParent(): Node
   public abstract getBaseElement(): any
   public abstract bindTriggers(): void
+  public abstract getDate(): number
 }

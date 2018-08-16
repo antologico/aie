@@ -29,7 +29,8 @@ export default class AIEEventProcessor {
       console.info('[AIE] Procesing "', event.name, '" over', event.element.getName())
       if (event.element.hasParent()) {
         const elParent: AIEElement = event.element.getParent()
-        elParent.updateChildrenPrestance()
+        const increment = event.element.updatePrestance()
+        elParent.updateChildrenPrestance(-increment, [ event.element ])
         elParent.onTrigger()
       }
     }

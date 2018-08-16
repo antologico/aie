@@ -40,4 +40,9 @@ export default class AIEHTMLElement extends AIEElement {
   public getBaseElementParent(): Node {
     return this.getBaseElement().parentNode
   }
+
+  public getDate(): number {
+    const d = new Date()
+    return d.getMilliseconds()
+  }
 }

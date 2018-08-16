@@ -14,9 +14,14 @@ export default class AIEPrestanceCalculator {
   public calculateIncrement(element: AIEElement): number {
     const interactions = element.getInteractions()
     const enviromentInterarions = element.getParentInteractions()
-    const maduration = this.maduration.calculate(interactions/enviromentInterarions)
+
+    const interactionsPercent = interactions/enviromentInterarions
+    const date = element.getDate()
+    const lifePercent = element.getLife(date) / element.getParentLife(date)
+
+    const maduration = this.maduration.calculate(interactionsPercent, lifePercent)
     const speed = this.speed.calculate(interactions)
-    console.log(element.getName(), { interactions, enviromentInterarions, speed, maduration, total: speed * maduration })
+
     return speed * maduration
   }
 }
