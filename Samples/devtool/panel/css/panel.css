@@ -1,18 +1,24 @@
-li {
+.itemElement {
   list-style: none;
 }
 
-li > .item {
+.itemElement > .item {
   display: flex;
   flex: flex-wrap;
   width: 100%;
   position: relative
 }
 
-ul {
+.itemList {
   padding-left: 30px;
 }
 
+#container > .itemContent > .itemList {
+  padding-left: 15px;
+  margin: 0;
+}
+
+.timemachine-item,
 label {
   padding: 10px;
   width: 100%;
@@ -20,17 +26,17 @@ label {
   overflow: hidden;
   white-space: nowrap;
   padding-left: 20px;
-  cursor: pointer;
+  cursor: cell;
   color: white;
   border-bottom: 1px solid rgb(32, 60, 105);
 }
 
 label:hover {
-  color: rgb(219, 189, 129);
+  color: #ff0475
 }
 
 .value {
-  padding: 10px;
+  padding: 10px 30px 0 0;
   color: white;
   white-space: nowrap;
 }
@@ -45,8 +51,8 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked ~ .item > label {
-  color: #E39644;
-  border-bottom: 1px solid #E39644;
+  color: #d405a7;
+  border-bottom: 1px solid #d405a7;
 }
 
 .item:before {
@@ -69,7 +75,7 @@ input[type='checkbox']:checked ~ .item:before {
   -webkit-animation: rotateRight 0.3s;
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
-  border-left-color: #E39644;
+  border-left-color: #d405a7;
 }
 
 input[type='checkbox']:not(checked) ~ .itemContent {
@@ -105,15 +111,16 @@ input[type='checkbox']:checked ~ .itemContent {
   width: 100%;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: calc(100vh - 60px);
+  color: #ff0475;
 }
 
 .svgLoader {
   margin-left: 10px;
 }
 
-#loader.hide {
-  display: none;
+.hide {
+  display: none !important;
 }
 
 body {
@@ -126,7 +133,7 @@ body {
 }
 
 label.mark {
-  color: gold;
+  color: #ff0475;
   animation-name: blinker;
   animation-duration: 0.5s;
   animation-timing-function: linear;
@@ -156,7 +163,7 @@ label.mark {
 .toolbar {
   z-index: 1;
   background: rgb(32, 60, 105);
-  color: #E39644;
+  color: #d405a7;
   width: 100%;
   top: 0;
   left: 0;
@@ -164,7 +171,6 @@ label.mark {
   height: 25px;
   border-bottom: 1px solid  rgb(44, 87, 155);
   box-shadow: 0 3px 3px #000;
-  display: flex;
 }
 
 
@@ -172,6 +178,7 @@ label.mark {
   display: none;
 }
 
+.toolbar-info,
 .toolbar-icon {
   font-size: 15px;
   display: inline-block;
@@ -183,8 +190,15 @@ label.mark {
   align-items: center;
   height: 100%;
   padding: 0 5px;
-  color: #E39644;
+  color: #d405a7;
   border-bottom: 1px solid rgb(54, 106, 190);
+  margin: 0 auto;
+}
+.toolbar-info {
+  font-size: 12px;
+  border-bottom: 0;
+  color: white;
+  margin: 0 10px;
 }
 
 input[type='checkbox']:checked + .toolbar-icon {
@@ -192,9 +206,81 @@ input[type='checkbox']:checked + .toolbar-icon {
 }
 
 .toolbar-icon:hover {
-  color: gold;
+  color: #ff0475;
+  border-bottom-color: #ff0475;
 }
 
 #container {
-  margin-top: 25px;
+  margin-top: 35px;
+}
+
+#timemachine {
+  margin-top: 35px;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.right {
+  float: right;
+}
+
+.timemachine-item {
+  width: calc(100% - 70px);
+  cursor: context-menu;
+}
+
+.timemachine-item td {
+  padding: 15px;
+  margin: 0;
+  border-bottom: 1px solid rgb(32, 60, 105);
+}
+
+.timemachine-item:hover td {
+  background: rgb(7, 19, 39);
+}
+
+.toolbar-icon-label {
+  display: none;
+  overflow: hidden;
+  padding: 10px;
+  position: absolute;
+  margin-left: 20px;
+  font-size: 10px;
+  margin-top: 30px;
+  background: rgba(7, 19, 39, 0.8);
+}
+
+.timemachine-restore-button > *,
+.timemachine-apply-button > * {
+  pointer-events: none;
+}
+
+.timemachine-restore-button,
+.timemachine-apply-button {
+  background: rgb(7, 19, 39);
+  padding: 5px 10px 5px 5px;
+  color: #d405a7;
+  cursor: pointer;
+  border: 1px solid #d405a7;
+}
+
+.timemachine-apply-button {
+  border-radius: 0 5px 5px 0;
+  border-left: 0;
+}
+
+.timemachine-restore-button {
+  border-radius: 5px 0 0 5px;
+  margin-left: 10px;
+}
+
+.timemachine-restore-button:hover,
+.timemachine-apply-button:hover {
+  color: white;
+  background: #ff0475;
+}
+
+.toolbar-icon:hover > .toolbar-icon-label {
+  display: inline-block;
 }

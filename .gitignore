@@ -1,3 +1,6 @@
 Samples/htmlSample/node_modules
 Samples/htmlSample/yarn.lock
 Samples/htmlSample/yarn-error.log
+Samples/devtool/node_modules
+Samples/devtool/yarn.lock
+Samples/devtool/yarn-error.log

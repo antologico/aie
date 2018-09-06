@@ -10,10 +10,14 @@ export default class AIEEventProcessor {
   private enviroment: AIE
   private queue: Array<AIEEvent>
   private interaction: number
+  private events: any
 
   public constructor(enviroment: AIE) {
     this.enviroment = enviroment
     this.queue = []
+    this.events = {
+      change: () => {},
+    }
     this.interaction = 0
     console.info('[AIE] Event processor initialized');
     this.inspect()
@@ -21,6 +25,10 @@ export default class AIEEventProcessor {
 
   public notify (event: AIEEvent) {
     this.queue.push(event)
+  }
+
+  public registerEvent (event: string, func: any) {
+    this.events[event] = func
   }
 
   private inspect () {
@@ -32,6 +40,7 @@ export default class AIEEventProcessor {
         const increment = event.element.updatePrestance()
         elParent.updateChildrenPrestance(-increment, [ event.element ])
         elParent.onTrigger()
+        event.name && this.events.change(event.name, event.element)
       }
     }
     setTimeout(this.inspect.bind(this), 0)

@@ -22,7 +22,7 @@ function setupPortIfNeeded() {
     setupPortIfNeeded()
     port.postMessage({
       action: 'aie-update',
-      prestances: event.detail,
+      detail: event.detail,
       target: 'panel',
     });
   }
@@ -58,7 +58,7 @@ function sendMark (marked, element) {
   }
 }
 
-chrome.runtime.onMessage.addListener(function({ target, action, name }) {
+chrome.runtime.onMessage.addListener(function({ target, action, name, prestances }) {
   if (target !== 'content') {
     return
   }
@@ -76,6 +76,17 @@ chrome.runtime.onMessage.addListener(function({ target, action, name }) {
     case 'aie-unactive-mark':
       console.info('[AIEE Extension] Marker unactive')
       activeMaks = false
+      break
+    case 'aie-connect':
+      window.dispatchEvent(new CustomEvent('aie-connect'));
+      break
+    case 'aie-apply':
+      console.info('[AIEE Extension] Apply changes for AIE')
+      window.dispatchEvent(new CustomEvent('aie-apply', { 'detail': JSON.stringify(prestances) }))
+      break
+    case 'aie-restore':
+      console.info('[AIEE Extension] Restore changes for AIE')
+      window.dispatchEvent(new CustomEvent('aie-restore', { 'detail': JSON.stringify(prestances) }))
       break
   }
 })  

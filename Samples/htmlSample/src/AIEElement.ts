@@ -150,6 +150,10 @@ export default abstract class AIEElement {
     return this.prestance
   }
 
+  public setScore(value: number) {
+    return this.memory.setScore(value)
+  }
+
   public abstract initializeMemory(seed: string): AIEMemory
   public abstract setBaseElement(baseElement: any): void
   public abstract getAttr(attributeName: string): string

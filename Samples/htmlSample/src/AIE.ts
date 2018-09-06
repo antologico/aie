@@ -27,6 +27,10 @@ export default abstract class AIE {
   public abstract getMaduration(): AIEAbstractMaduration
   public abstract getElements():NodeListOf<any>
 
+  public registerEvent (event: string, func: any) {
+    this.eventProcessor.registerEvent(event, func)
+  }
+
   private estructureElements(elements: Array<AIEElement>) {
     const toRemove: Array<number> = []
     elements.forEach((element, index) => {
@@ -85,6 +89,17 @@ export default abstract class AIE {
     return this.getChildrenPrestance(this.environment)
   }
 
+  public setScores(value: any, child: AIEElement = null) {
+    const parent = child ? child : this.environment
+    parent.setScore(value.score)
+    value.children.map((childValues: any) => {
+      const el = parent.getChildren().find((e: AIEElement) => e.getName() === childValues.name)
+      if (el) {
+        this.setScores(childValues, el)
+      }
+    })
+  }
+
   public getContext():any {
     return this.context
   }
@@ -93,6 +108,7 @@ export default abstract class AIE {
     const values:any = {
       name: element.getName(),
       prestance: element.getPrestace(),
+      score: element.getScore(),
       children: element.getChildren().map((children: AIEElement) => {
         return this.getChildrenPrestance(children)
       })
