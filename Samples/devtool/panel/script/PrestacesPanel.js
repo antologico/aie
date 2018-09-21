@@ -71,9 +71,12 @@ class PrestacesPanel {
               const prevValue = parseFloat(el.innerHTML)
               if (prevValue > prestance) {
                 arrowEl.innerHTML = '&darr;'
-              }
-              if (prevValue < prestance) {
+              } else if (prevValue < prestance) {
                 arrowEl.innerHTML = '&uarr;'
+              } else if (!prevValue) {
+                arrowEl.innerHTML = ''
+              } else {
+                arrowEl.innerHTML = '='
               }
               el.innerHTML = this.getPrestace(prestance)
             }
