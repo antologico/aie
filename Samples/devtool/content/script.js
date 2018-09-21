@@ -29,6 +29,7 @@ function setupPortIfNeeded() {
   
   // Unique ID for the className.
 const MOUSE_VISITED_CLASSNAME = 'aie_mouse_highlight';
+const MOUSE_VISITED_ID = 'aie-selector-element';
 
 function mark (marked, element) {
   if (!activeMaks) {
@@ -37,10 +38,23 @@ function mark (marked, element) {
   if (!element) {
     return
   }
-  if (element.hasAttribute('aie-name')) {
-    marked ?
-      element.classList.add(MOUSE_VISITED_CLASSNAME) :
-      element.classList.remove(MOUSE_VISITED_CLASSNAME)
+
+  let marker = document.querySelector(`#${MOUSE_VISITED_ID}`)
+  if (!marker) {
+    marker = document.createElement('div')
+    marker.classList.add(MOUSE_VISITED_CLASSNAME)
+    marker.setAttribute('id', MOUSE_VISITED_ID)
+    document.body.appendChild(marker)
+  }
+
+  if (marked) {
+      marker.style.left = `${element.offsetLeft}px`
+      marker.style.top = `${element.offsetTop}px`
+      marker.style.width = `${element.offsetWidth}px`
+      marker.style.height = `${element.offsetHeight}px`
+      marker.classList.add('show')
+  } else {
+      marker.classList.remove('show')
   }
 }
 

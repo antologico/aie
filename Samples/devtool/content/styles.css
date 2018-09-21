@@ -1,14 +1,11 @@
 .aie_mouse_highlight {
-  background-color: rgb(212, 5, 167, 0.1) !important;
-  outline: 1px solid rgb(212, 5, 167, 0.8) !important;
-  animation-name: borderDance;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  display: none;
+  position: fixed;
+  background-color: rgba(212, 5, 167, 0.1);
+  border: 1px solid rgba(212, 5, 167, 0.1);
+  pointer-events: none;
+}
 
-  -webkit-animation-name: borderDance;
-  -webkit-animation-duration: 0.5s;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-
+.aie_mouse_highlight.show {
+  display: inline-block;
 }
