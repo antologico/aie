@@ -7,7 +7,12 @@ import AIEHTMLMemory from './AIEHTMLMemory'
 */
 export default class AIEHTMLElement extends AIEElement {
   protected baseElement: HTMLElement
+  public fields: Array<string>
 
+  public constructor(baseElement: any) {
+    super(baseElement)
+    console.log(baseElement)
+  }
 
   public initializeMemory(seed: string): AIEMemory {
     return new AIEHTMLMemory(seed)
@@ -44,5 +49,9 @@ export default class AIEHTMLElement extends AIEElement {
   public getDate(): number {
     const d = new Date()
     return d.getMilliseconds()
+  }
+
+  public transform(percent: number): void {
+    console.log(this.getName() , 'Cambiando el ' + Math.round(percent * 100) +  '%', 'de', )
   }
 }

@@ -96,7 +96,7 @@ chrome.runtime.onMessage.addListener(function({ target, action, name, prestances
       break
     case 'aie-apply':
       console.info('[AIEE Extension] Apply changes for AIE')
-      window.dispatchEvent(new CustomEvent('aie-apply', { 'detail': JSON.stringify(prestances) }))
+      window.dispatchEvent(new CustomEvent('aie-mutate', { 'detail': JSON.stringify(prestances) }))
       break
     case 'aie-restore':
       console.info('[AIEE Extension] Restore changes for AIE')

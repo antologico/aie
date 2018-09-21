@@ -104,6 +104,13 @@ export default abstract class AIE {
     return this.context
   }
 
+  public mutate() {
+    const maxGroupPrestance = this.environment.getMaxPrestance()
+    this.environment.getChildren().forEach((child: AIEElement) => {
+      child.mutate(maxGroupPrestance)
+    })
+  }
+
   private getChildrenPrestance(element: AIEElement):any {
     const values:any = {
       name: element.getName(),

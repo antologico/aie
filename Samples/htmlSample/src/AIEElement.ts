@@ -137,6 +137,9 @@ export default abstract class AIEElement {
   public updateChildrenPrestance(increment: number, excluded: Array<AIEElement> = []): void {
     this.children.forEach((child) => !excluded.includes(child) && child.updatePrestance(increment))
   }
+  public getMaxPrestance(): number {
+    return this.children.reduce((total, child) => Math.max(total, child.getPrestace()), 0)
+  }
 
   public hasParent(): boolean {
     return !!this.parent
@@ -154,6 +157,15 @@ export default abstract class AIEElement {
     return this.memory.setScore(value)
   }
 
+  public mutate(maxPrestance: number): void {
+    this.transform(maxPrestance ? this.getPrestace() / maxPrestance : 0)
+    const maxGroupPrestance = this.getMaxPrestance()
+    this.getChildren().forEach((child: AIEElement) => {
+      child.mutate(maxGroupPrestance)
+    })
+
+  }
+
   public abstract initializeMemory(seed: string): AIEMemory
   public abstract setBaseElement(baseElement: any): void
   public abstract getAttr(attributeName: string): string
@@ -161,4 +173,5 @@ export default abstract class AIEElement {
   public abstract getBaseElement(): any
   public abstract bindTriggers(): void
   public abstract getDate(): number
+  public abstract transform(percent: number): void
 }
