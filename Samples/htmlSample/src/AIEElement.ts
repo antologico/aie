@@ -1,6 +1,7 @@
 import AIEMemory from './AIEMemory'
 import AIEEventProcessor from './AIEEventProcessor'
 import AIEPrestanceCalculator from './AIEPrestanceCalculator'
+import AIEProperty from './AIEProperty'
 
 const DEFAULT_MAX_PRESTANCE = 1
 
@@ -17,6 +18,7 @@ export default abstract class AIEElement {
   private maxPrestance: number
   private updates: number
   private born: number
+  private properties: Array<AIEProperty> 
 
   public constructor(baseElement: any) {
     if(baseElement) {
@@ -106,6 +108,15 @@ export default abstract class AIEElement {
 
   public getParent() {
     return this.parent
+  
+  }
+  
+  public setProperties(properties: Array<AIEProperty>) {
+    this.properties = properties
+  }
+
+  public getProperties() {
+    return this.properties
   }
 
   public setChildren(element: AIEElement) {

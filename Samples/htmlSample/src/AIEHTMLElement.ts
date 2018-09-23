@@ -1,17 +1,52 @@
 import AIEElement from './AIEElement'
 import AIEMemory from './AIEMemory'
 import AIEHTMLMemory from './AIEHTMLMemory'
+import AIEHTMLAIEProperty from './AIEHTMLProperty'
+
+const MAX_ID = 'max'
+const MIN_ID = 'min'
+const HTML_SUFFIX_PRESTACE_FIELD = 'prestance-fields'
+const HTML_PREFIX = 'aie-'
 
 /*
   The BaseElement is a DOM element
 */
 export default class AIEHTMLElement extends AIEElement {
   protected baseElement: HTMLElement
-  public fields: Array<string>
 
   public constructor(baseElement: any) {
     super(baseElement)
-    console.log(baseElement)
+    this.setProperties(this.parseAttr(this.getAttr(HTML_SUFFIX_PRESTACE_FIELD)))
+  }
+
+  public parseAttr(text: string): Array<AIEHTMLAIEProperty> {
+      if (!text) {
+        return []
+      }
+
+      const properties:Array<AIEHTMLAIEProperty> = []
+      
+      text.split('.').forEach(el => {
+        const components = text.split('|')
+        if (components.length) {
+          const property = new AIEHTMLAIEProperty(components[0].trim())
+          components.shift()
+          components.forEach(element => {
+            const parts = element.split(':')
+            if (parts.length === 2) {
+              if (parts[0] === MAX_ID) {
+                property.setMax(parseFloat(parts[1].trim()))
+              }
+              if (parts[0] === MIN_ID) {
+                property.setMin(parseFloat(parts[1].trim()))
+              }
+            }
+          });
+          properties.push(property)
+        }
+      })
+
+      return properties
   }
 
   public initializeMemory(seed: string): AIEMemory {
@@ -27,7 +62,10 @@ export default class AIEHTMLElement extends AIEElement {
   }
 
   public getAttr(attributeName: string) {
-    const name = `aie-${attributeName}`
+    const name = `${HTML_PREFIX}${attributeName}`
+    if (this.baseElement === undefined) {
+      return undefined
+    }
     const val = this.baseElement.attributes.getNamedItem(name)
     return val ? val.value : undefined
   }
