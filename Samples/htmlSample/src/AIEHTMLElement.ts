@@ -13,6 +13,7 @@ const HTML_PREFIX = 'aie-'
 */
 export default class AIEHTMLElement extends AIEElement {
   protected baseElement: HTMLElement
+  protected style: Object
 
   public constructor(baseElement: any) {
     super(baseElement)
@@ -29,7 +30,11 @@ export default class AIEHTMLElement extends AIEElement {
       text.split(',').forEach(el => {
         const components = el.split('|')
         if (components.length) {
-          const property = new AIEHTMLAIEProperty(components.shift().trim())
+          const name = components.shift().trim()
+          const property = new AIEHTMLAIEProperty(
+            name,
+            window.getComputedStyle(this.getBaseElement(), null).getPropertyValue(name)
+          )
           components.forEach(element => {
             const parts = element.split(':')
             if (parts.length === 2) {
@@ -53,6 +58,9 @@ export default class AIEHTMLElement extends AIEElement {
 
   public setBaseElement(baseElement: HTMLElement) {
     this.baseElement = baseElement
+    this.style = {
+      ...window.getComputedStyle(baseElement)
+    }
   }
 
   public getBaseElement(): HTMLElement {

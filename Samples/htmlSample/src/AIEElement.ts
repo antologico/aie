@@ -17,6 +17,7 @@ export default abstract class AIEElement {
   private prestanceCalculator: AIEPrestanceCalculator
   private maxPrestance: number
   private updates: number
+  private maxUpdates: number = null
   private born: number
   private properties: Array<AIEProperty> 
 
@@ -37,6 +38,10 @@ export default abstract class AIEElement {
     this.memory = this.initializeMemory(this.generateId())
   }
 
+  public setUpdates(updates: number) {
+    this.maxUpdates = updates
+  }
+
   public setMaxPrestance(prestance: number) {
     this.maxPrestance = prestance
   }
@@ -51,17 +56,17 @@ export default abstract class AIEElement {
   }
 
   public updatePrestance(increment: number = null): number {
-    if (this.hasParent()) {
-      if (increment !== null) {
-        this.prestance += (this.prestance + increment > 0) ? increment : 0
-        return increment
-      }
-      this.updates ++
-      const newIncrement = this.prestanceCalculator.calculateIncrement(this)
-      this.prestance += newIncrement
-      return newIncrement
+    if (!this.hasParent() || (this.maxUpdates && (this.updates >= this.maxUpdates))) {
+      return 0
     }
-    return 0
+    if (increment !== null) {
+      this.prestance += (this.prestance + increment > 0) ? increment : 0
+      return increment
+    }
+    this.updates ++
+    const newIncrement = this.prestanceCalculator.calculateIncrement(this)
+    this.prestance += newIncrement
+    return newIncrement
   }
 
   public getInteractions(): number {

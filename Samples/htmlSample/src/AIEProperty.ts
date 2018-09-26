@@ -1,16 +1,18 @@
 import AIEElement from './AIEElement'
 
 export default class AIEProperty {
+    protected initialValue: any
     protected name: string
     protected max: number = null
     protected min: number = null
     protected transformFn: Function = null
 
-    public constructor(name: string) {
+    public constructor(name: string, initialValue: any) {
         this.name = name
+        this.initialValue = initialValue
     }
 
-    public getName() {
+    public getName(): string {
         return this.name
     }
 
@@ -33,6 +35,6 @@ export default class AIEProperty {
     }
 
     public transform (element: AIEElement) {
-        this.transformFn && this.transformFn(element)
+        this.transformFn && this.transformFn(element, this.initialValue)
     }
 }
