@@ -26,11 +26,10 @@ export default class AIEHTMLElement extends AIEElement {
 
       const properties:Array<AIEHTMLAIEProperty> = []
       
-      text.split('.').forEach(el => {
-        const components = text.split('|')
+      text.split(',').forEach(el => {
+        const components = el.split('|')
         if (components.length) {
-          const property = new AIEHTMLAIEProperty(components[0].trim())
-          components.shift()
+          const property = new AIEHTMLAIEProperty(components.shift().trim())
           components.forEach(element => {
             const parts = element.split(':')
             if (parts.length === 2) {
@@ -45,7 +44,6 @@ export default class AIEHTMLElement extends AIEElement {
           properties.push(property)
         }
       })
-
       return properties
   }
 
@@ -90,6 +88,8 @@ export default class AIEHTMLElement extends AIEElement {
   }
 
   public transform(percent: number): void {
-    console.log(this.getName() , 'Cambiando el ' + Math.round(percent * 100) +  '%', 'de', )
+    this.getProperties().forEach(prop => {
+      prop.transform(this)
+    })
   }
 }
