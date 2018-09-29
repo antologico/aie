@@ -17,6 +17,7 @@ function colorFn(element: AIEElement, initialValue: string) {
 
 function fontSizeFn(element: AIEElement, initialValue: string) {
     const fontSizeBase: number = parseFloat(initialValue)
+    console.log(fontSizeBase)
     element.getBaseElement().style.fontSize = Math.round(fontSizeBase * (1 + element.getPrestace())) + 'px'
 }
 
@@ -37,6 +38,7 @@ function positionFn(element: AIEElement) {
 
 }
 function levelFn(element: AIEHTMLElement) {
+
 }
 
 export default class AIEHTMLProperty extends AIEProperty {
