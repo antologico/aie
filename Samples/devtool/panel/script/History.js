@@ -16,7 +16,7 @@ class History extends EventDispatcher {
       this.disabled = disabled
     }
   
-    add ({event, prestances, element}) {
+    add ({event, state, element}) {
       if (!this.disabled) {
         if (this.maxItems) {
           if (this.history.length >= this.maxItems) {
@@ -27,7 +27,7 @@ class History extends EventDispatcher {
           time: new Date(),
           event,
           element,
-          prestances,
+          state,
         })
         this.events.change(this)
       }

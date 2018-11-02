@@ -11,6 +11,7 @@ class Connection extends EventDispatcher {
         this.events = {
             updateValues: () => {},
             initValues: () => {},
+            activeMark: () => {},
             reciveMark: () => {},
             onReceiveUpdate: () => {},
         }
@@ -23,8 +24,11 @@ class Connection extends EventDispatcher {
               case 'aie-update':
                 this.receiveUpdate(message)
                 break
+              case 'aie-reset':
+                this.events.activeMark (false)
+                break
               case 'aie-mark':
-                this.events.reciveMark (message.name, true)
+                this.events.reciveMark (message.name, false)
                 break
               case 'aie-unmark':
                 this.events.reciveMark (message.name, false)
@@ -55,19 +59,19 @@ class Connection extends EventDispatcher {
         }
         
         this.updating = true
-        const { prestances, event, element } = JSON.parse(detailJSON)
+        const { state, event, element } = JSON.parse(detailJSON)
         
         this.events.onReceiveUpdate({
             event,
-            prestances,
+            state,
             element,
         })
         
         if (this.init == false) {
           this.init = true
-          this.events.initValues(prestances)
+          this.events.initValues(state)
         } else {
-          this.events.updateValues(prestances)
+          this.events.updateValues(state)
         }
         this.updating = false
     }
@@ -86,17 +90,17 @@ class Connection extends EventDispatcher {
         })
     }
 
-    restoreScores (prestances = null) {
+    restoreScores (state = null) {
         this.send({
             action: 'aie-restore',
-            prestances,
+            state,
         })
     }
 
-    applyPrestances (prestances = null) {
+    applyState (state = null) {
         this.send({
             action: 'aie-apply',
-            prestances,
+            state,
         })
     }
 

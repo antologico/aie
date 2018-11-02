@@ -4,7 +4,7 @@ class HistoryPanel extends EventDispatcher {
     constructor (history) {    
       super()  
       this.templateTimemachine = document.getElementById('timemachine-template').innerHTML
-      this.content = document.getElementById('timemachine')
+      this.content = document.getElementById('timemachine-table')
       this.history = history
       this.events = {
         onApply: () => {},
@@ -14,12 +14,12 @@ class HistoryPanel extends EventDispatcher {
       document.addEventListener('click', (e) => {
         const element = e.srcElement
         if (element && element.hasAttribute('aie-history-restore-index')) {
-          const { prestances } = this.history.toItem(element.getAttribute('aie-history-restore-index'))
-          this.events.onRestore(prestances)
+          const { state } = this.history.toItem(element.getAttribute('aie-history-restore-index'))
+          this.events.onRestore(state)
         }
         if (element && element.hasAttribute('aie-history-apply-index')) {
-          const { prestances } = this.history.getItem(element.getAttribute('aie-history-apply-index'))
-          this.events.onApply(prestances)
+          const { state } = this.history.getItem(element.getAttribute('aie-history-apply-index'))
+          this.events.onApply(state)
         }
       }, false)
     }

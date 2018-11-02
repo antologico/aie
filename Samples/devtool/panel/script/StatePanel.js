@@ -1,11 +1,12 @@
 
-class PrestacesPanel {
+class StatePanel {
     constructor () {
         this.templateItem = document.getElementById('item-template').innerHTML
+        this.propertyItem = document.getElementById('item-property').innerHTML
         this.templateList = document.getElementById('list-template').innerHTML
-        this.container = document.getElementById('container')
-        this.loader = document.getElementById('loader')
+        this.table = document.getElementById('state-table')
     }
+
     generateList (list, id) {
         if (!list || list.length === 0) {
           return ''
@@ -21,24 +22,25 @@ class PrestacesPanel {
         return prestance ? prestance.toFixed(4) : ''
     }
       
-    generateItem ({ name, prestance, children}, id) {
+    generateItem ({ name, prestance, properties, children}, id) {
         let htmlCode = this.templateItem.replace(/{id}/g, name)
         htmlCode = htmlCode.replace(/{name}/g, name)
+        htmlCode = htmlCode.replace(
+          /{properties}/g,
+          properties.map(property => this.propertyItem.replace(/{property}/i, property)).join(''))
         htmlCode = htmlCode.replace(/{value}/i, this.getPrestace(prestance))
         htmlCode = htmlCode.replace(
           /{content}/i,
           this.generateList(children, id))
-      
         return htmlCode
       }
       
-    drawTable(prestances) {
-        if (prestances) {
-          loader.classList.add('hide')
-          this.container.innerHTML = this.generateList(prestances, '0')
+    drawTable(state) {
+        if (state) {
+          this.table.innerHTML = this.generateList(state, '0')
         }
       }
-      
+
     flatTree (list) {
         if (!list || list.length === 0) {
           return []
@@ -85,4 +87,4 @@ class PrestacesPanel {
       }
 }
 
-export default PrestacesPanel
+export default StatePanel

@@ -85,17 +85,18 @@ export default abstract class AIE {
     this.initializeElements(this.getElements())
   }
 
-  public getPrestances():any {
-    return this.getChildrenPrestance(this.environment)
+  public getState():any {
+    return this.getElementState(this.environment)
   }
 
-  public setScores(value: any, child: AIEElement = null) {
+  public setState(value: any, child: AIEElement = null) {
     const parent = child ? child : this.environment
     parent.setScore(value.score)
+    parent.setPrestance(value.prestance)
     value.children.map((childValues: any) => {
       const el = parent.getChildren().find((e: AIEElement) => e.getName() === childValues.name)
       if (el) {
-        this.setScores(childValues, el)
+        this.setState(childValues, el)
       }
     })
   }
@@ -111,13 +112,15 @@ export default abstract class AIE {
     })
   }
 
-  private getChildrenPrestance(element: AIEElement):any {
+  private getElementState(element: AIEElement):any {
     const values:any = {
       name: element.getName(),
-      prestance: element.getPrestace(),
+      prestance: element.getPrestance(),
       score: element.getScore(),
+      properties: element.getPropertiesNames(),
+      physicalAttribute: element.getPhysicalAttributes(),
       children: element.getChildren().map((children: AIEElement) => {
-        return this.getChildrenPrestance(children)
+        return this.getElementState(children)
       })
     }
     return values

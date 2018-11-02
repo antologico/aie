@@ -6,28 +6,34 @@ let activeMaks = false
  * and send initialization message.
  */
 function setupPortIfNeeded() {
-    if (!port) {
-      port = chrome.runtime.connect(null, { name: 'content' });
-      port.postMessage({ action: 'init' })
-      port.onDisconnect.addListener(function () {
-        port = null
-      });
-    }
-  }
-  
-  /**
-   * Send mouse coordinates to DevTools panel script.
-   */
-  function sendPrestances(event) {
-    setupPortIfNeeded()
-    port.postMessage({
-      action: 'aie-update',
-      detail: event.detail,
-      target: 'panel',
+  if (!port) {
+    port = chrome.runtime.connect(null, { name: 'content' });
+    port.postMessage({ action: 'init' })
+    port.onDisconnect.addListener(function () {
+      port = null
     });
   }
+}
   
-  // Unique ID for the className.
+function sendState(event) {
+  setupPortIfNeeded()
+  port.postMessage({
+    action: 'aie-update',
+    detail: event.detail,
+    target: 'panel',
+  });
+}
+
+function sendReset() {
+  setupPortIfNeeded()
+  port.postMessage({
+    action: 'aie-reset',
+    detail: 'reset',
+    target: 'panel',
+  });
+}
+
+// Unique ID for the className.
 const MOUSE_VISITED_CLASSNAME = 'aie_mouse_highlight';
 const MOUSE_VISITED_ID = 'aie-selector-element';
 
@@ -48,10 +54,10 @@ function mark (marked, element) {
   }
 
   if (marked) {
-      marker.style.left = `${element.offsetLeft}px`
-      marker.style.top = `${element.offsetTop}px`
-      marker.style.width = `${element.offsetWidth}px`
-      marker.style.height = `${element.offsetHeight}px`
+      marker.style.left = `${element.offsetLeft - 3}px`
+      marker.style.top = `${element.offsetTop - 3}px`
+      marker.style.width = `${element.offsetWidth + 3}px`
+      marker.style.height = `${element.offsetHeight + 3}px`
       marker.classList.add('show')
   } else {
       marker.classList.remove('show')
@@ -72,7 +78,7 @@ function sendMark (marked, element) {
   }
 }
 
-chrome.runtime.onMessage.addListener(function({ target, action, name, prestances }) {
+chrome.runtime.onMessage.addListener(function({ target, action, name, state }) {
   if (target !== 'content') {
     return
   }
@@ -96,11 +102,11 @@ chrome.runtime.onMessage.addListener(function({ target, action, name, prestances
       break
     case 'aie-apply':
       console.info('[AIEE Extension] Apply changes for AIE')
-      window.dispatchEvent(new CustomEvent('aie-mutate', { 'detail': JSON.stringify(prestances) }))
+      window.dispatchEvent(new CustomEvent('aie-mutate', { 'detail': JSON.stringify(state) }))
       break
     case 'aie-restore':
       console.info('[AIEE Extension] Restore changes for AIE')
-      window.dispatchEvent(new CustomEvent('aie-restore', { 'detail': JSON.stringify(prestances) }))
+      window.dispatchEvent(new CustomEvent('aie-restore', { 'detail': JSON.stringify(state) }))
       break
   }
 })  
@@ -117,5 +123,7 @@ document.addEventListener('mouseout', function (e) {
 }, false)
 
 console.info('[AIEE Extension] Loaded')
-  
-window.addEventListener('aie-update', event => sendPrestances(event))
+
+sendReset()
+
+window.addEventListener('aie-update', event => sendState(event))

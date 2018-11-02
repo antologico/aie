@@ -16,19 +16,19 @@ export default class AIEHTMLMonitor extends AIEMonitor {
         prestances.map((group: any) => {
             const aie: AIE = AIEMonitor.environments.find((env:AIE) => env.getName() === group.name)
             if (aie) {
-                aie.setScores(group)
+                aie.setState(group)
             }
         })
     }
     static mutateElements (event: any) : void  {
         const prestances = JSON.parse(event.detail)
-        console.info('[AIE] AIEHTMLMonitor mutate elements');
+        console.info('[AIE] AIEHTMLMonitor mutate elements', prestances);
 
         prestances 
             ? prestances.map((group: any) => {
                 const aie: AIE = AIEMonitor.environments.find((env:AIE) => env.getName() === group.name)
                 if (aie) {
-                    aie.setScores(group)
+                    aie.setState(group)
                     aie.mutate()
                 }})
             : AIEMonitor.environments.forEach((env:AIE) => env.mutate())
@@ -36,17 +36,16 @@ export default class AIEHTMLMonitor extends AIEMonitor {
 
     static sendPrestances (eventName: string = '', elementName: string = '', environmentName: string = '') : void {
         console.info('[AIE] AIEHTMLMonitor send prestances for <', eventName, '>');
-        if (AIEMonitor.getPrestances().length) {
+        const state = AIEMonitor.getState()
+        if (state && state.length) {
             const detail = {
                 event: eventName,
                 aie: environmentName,
                 element: elementName,
-                prestances: AIEMonitor.getPrestances()
+                state,
             }
-            if (detail.prestances) {
-                const event = new CustomEvent(AIEHTMLMonitor.eventSendName, { 'detail': JSON.stringify(detail) });
-                (<any>window).dispatchEvent(event);
-            }
+            const event = new CustomEvent(AIEHTMLMonitor.eventSendName, { 'detail': JSON.stringify(detail) });
+            (<any>window).dispatchEvent(event);
         }
     }
 

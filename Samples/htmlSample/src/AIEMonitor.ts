@@ -7,7 +7,7 @@ export default class AIEMonitor {
     AIEMonitor.environments.push(env)
   }
 
-  static getPrestances():any {
-    return AIEMonitor.environments.map((env: AIE) => env.getPrestances())
+  static getState():any {
+    return AIEMonitor.environments.map((env: AIE) => env.getState())
   }
 }

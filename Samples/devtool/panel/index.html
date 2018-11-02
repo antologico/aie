@@ -6,23 +6,33 @@
 		<link rel="stylesheet" href="css/icons.css">
 	</head>
 	<body>
+		<input id="state-table-checker" type="radio" name="tab-control" class="tab-checker" checked/>
+		<input id="timemachine-checker" type="radio" name="tab-control" class="tab-checker" />
+		<input id="hitmap-checker" type="radio" name="tab-control"  class="tab-checker"/>
+			
 		<div class="toolbar">
 			<input id="active-marks-checker" type="checkbox" />
 			<label class="toolbar-icon" for="active-marks-checker"><i class="icon-target"></i><span class='toolbar-icon-label'>Active marks</span></label>
 			<label class="toolbar-icon" id="toolbar-delete"><i class="icon-trash"></i><span class='toolbar-icon-label'>Delete historial</span></label>
-			<input id="timemachine-checker" type="checkbox" />
 			<label class="toolbar-icon" for="timemachine-checker"><i class="icon-back-in-time"></i><span class='toolbar-icon-label'>Show historial</span></label>
+			<label class="toolbar-icon" for="hitmap-checker"><i class="icon-chart-bar"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
+			<label class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
 			<label class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
 			<label class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Connect</span></label>
 			<label class="toolbar-info right" id="toolbar-apply">
 				<i class="icon-gauge"></i>&nbsp;<span id="memorySize">0</span>
 			</label>
 		</div>
-		<div id="container">
+		
+		<div id="container" class="hide">
+			<div class="tab" id="state-table"></div>
+			
+			<div class="tab" id="timemachine">
+				<table id="timemachine-table"></table>
+			</div>
+			<div class="tab" id="hitmap">
+			</div>
 		</div>
-		<table id="timemachine" class="hide">
-		</table>
-
 		<div id="loader">
 			<div>
 				<img src="images/icon-inline.svg" height="25px">
@@ -71,7 +81,10 @@
 			<li class="itemElement">
 				<input type="checkbox" id="item_{id}">
 				<div class="item itemPair">
-					<label id="label_{name}" aie-name="{name}" for="item_{id}">{name}</label>
+					<label id="label_{name}" aie-name="{name}" for="item_{id}">
+						<span class="name">{name}</span>
+						{properties}
+					</label>
 					<div class="value">
 						<span id="arrow_{name}"></span>
 						<span id="value_{name}">{value}</span>
@@ -80,10 +93,15 @@
 			</li>
 		</script>
 
+		<script type="template" id="item-property">
+			<span class="property">{property}</span>
+		</script>
+
 		<script type="template" id="timemachine-template">
 				<tr class="timemachine-item" aie-history-index={index} aie-name="{element}">
 					<td>
-						<i class="icon-hour"></i>&nbsp;<span class='timemachine-item-label'>{event} over {element}</span>
+						<i class="icon-hour"></i>
+						<span class='timemachine-item-label'>{event} over <strong>{element}</strong></span>
 					</td>
 					<td>
 						{name}

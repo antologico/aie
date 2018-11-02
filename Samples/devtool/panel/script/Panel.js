@@ -10,6 +10,8 @@ class Panel extends EventDispatcher {
             onActiveMarksChange: () => {},
             onApply: () => {},
         }
+        this.loader = document.getElementById('loader')
+        this.container = document.getElementById('container')
 
         document.addEventListener('mouseover', (e) => this.onMouseOver(e.srcElement))
         document.addEventListener('mouseout', (e) => this.onMouseOut(e.srcElement))
@@ -28,16 +30,6 @@ class Panel extends EventDispatcher {
         document.getElementById('toolbar-apply').addEventListener('click', (e) => {
             this.events.onApply()
           }, false)
-          
-          document.getElementById('timemachine-checker').addEventListener('change', (e) => {
-            if (e.srcElement.checked) {
-              document.getElementById('timemachine').classList.remove('hide')
-              document.getElementById('container').classList.add('hide')
-            } else {
-              document.getElementById('timemachine').classList.add('hide')
-              document.getElementById('container').classList.remove('hide')
-            }
-          }, false)
     }
 
     updateMemoryField(history) {
@@ -51,10 +43,19 @@ class Panel extends EventDispatcher {
         }
     }
 
+    activeMark (value) {
+        document.getElementById('active-marks-checker').checked = value
+    }
+
     onMouseOver (element) {
         if (element.hasAttribute('aie-name')) {
             this.events.onMarkChange ({name: element.getAttribute('aie-name'), value: true})
         }
+    }
+
+    reciveValues () {
+        this.loader.classList.add('hide')
+        this.container.classList.remove('hide')
     }
 
     onMouseOut (element) {

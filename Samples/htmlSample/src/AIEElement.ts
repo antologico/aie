@@ -34,6 +34,7 @@ export default abstract class AIEElement {
     this.parent = null
     this.prestance = 0
     this.updates = 0
+    this.properties = []
     this.maxPrestance = DEFAULT_MAX_PRESTANCE // By default
     this.memory = this.initializeMemory(this.generateId())
   }
@@ -120,8 +121,12 @@ export default abstract class AIEElement {
     this.properties = properties
   }
 
-  public getProperties() {
-    return this.properties
+  public getProperties(): Array<AIEProperty> {
+    return this.properties || []
+  }
+
+  public getPropertiesNames(): Array<String> {
+    return this.getProperties().map((prop: AIEProperty) => prop.getName())
   }
 
   public setChildren(element: AIEElement) {
@@ -154,18 +159,22 @@ export default abstract class AIEElement {
     this.children.forEach((child) => !excluded.includes(child) && child.updatePrestance(increment))
   }
   public getMaxPrestance(): number {
-    return this.children.reduce((total, child) => Math.max(total, child.getPrestace()), 0)
+    return this.children.reduce((total, child) => Math.max(total, child.getPrestance()), 0)
   }
 
   public hasParent(): boolean {
     return !!this.parent
   }
 
+  public hasChildren(): boolean {
+    return this.children.length !== 0
+  }
+
   public setPrestanceCalculator(prestanceCalculator: AIEPrestanceCalculator) {
     this.prestanceCalculator = prestanceCalculator
   }
 
-  public getPrestace(): number {
+  public getPrestance(): number {
     return this.prestance
   }
 
@@ -173,8 +182,12 @@ export default abstract class AIEElement {
     return this.memory.setScore(value)
   }
 
+  public setPrestance(value:number) {
+    this.prestance = value
+  }
+
   public mutate(maxPrestance: number): void {
-    this.transform(maxPrestance ? this.getPrestace() / maxPrestance : 0)
+    this.transform(maxPrestance ? this.getPrestance() / maxPrestance : 0)
     const maxGroupPrestance = this.getMaxPrestance()
     this.getChildren().forEach((child: AIEElement) => {
       child.mutate(maxGroupPrestance)
@@ -189,5 +202,6 @@ export default abstract class AIEElement {
   public abstract getBaseElement(): any
   public abstract bindTriggers(): void
   public abstract getDate(): number
+  public abstract getPhysicalAttributes(): any
   public abstract transform(percent: number): void
 }

@@ -31,10 +31,7 @@ export default class AIEHTMLElement extends AIEElement {
         const components = el.split('|')
         if (components.length) {
           const name = components.shift().trim()
-          const property = new AIEHTMLAIEProperty(
-            name,
-            window.getComputedStyle(this.getBaseElement(), null).getPropertyValue(name)
-          )
+          const property = new AIEHTMLAIEProperty(name, this)
           components.forEach(element => {
             const parts = element.split(':')
             if (parts.length === 2) {
@@ -99,5 +96,15 @@ export default class AIEHTMLElement extends AIEElement {
     this.getProperties().forEach(prop => {
       prop.transform(this)
     })
+  }
+
+  public getPhysicalAttributes() {
+    const el = this.getBaseElement()
+    return el ? {
+      left: el.offsetLeft,
+      top: el.offsetTop,
+      width: el.offsetWidth,
+      height: el.offsetHeight,
+    } : {}
   }
 }
