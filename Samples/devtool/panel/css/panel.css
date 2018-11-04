@@ -315,3 +315,34 @@ input[type='checkbox']:checked + .toolbar-icon {
   display: block;
   padding-top: 3em;
 }
+
+#hitmap {
+  margin: 1em 2em 0 2em;
+}
+
+#hitmap-image {
+  background: black;
+  border: 1px solid #d405a7;
+}
+
+#hitmap-input {
+  width: 100%;
+  -webkit-appearance: none;
+  background: transparent;
+  margin-bottom: 2em;
+}
+
+#hitmap-input::-webkit-slider-runnable-track {
+  background: #d405a7;
+  height: 5px;
+  -webkit-appearance: none;
+}
+
+#hitmap-input::-webkit-slider-thumb {
+  background: rgb(32, 60, 105);
+  margin-top: -10px;
+  width: 10px;
+  height: 25px;
+  -webkit-appearance: none;
+  border: 1px solid #d405a7;
+}

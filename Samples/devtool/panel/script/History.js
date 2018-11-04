@@ -4,7 +4,7 @@ import MemoryBlock from './MemoryBlock'
 class History extends EventDispatcher {
     constructor () {
       super()
-      this.maxItems = 50
+      this.maxItems = 100
       this.history = []
       this.disabled = false
       this.events = {
@@ -50,7 +50,6 @@ class History extends EventDispatcher {
       const i = parseInt(index)
       const item = this.history[i]
       this.moveHeader(i)
-      console.log('moveHeader', i)
       this.events.change(this)
       return item
     }
@@ -65,6 +64,10 @@ class History extends EventDispatcher {
   
     getMoment(time) {
       return this.history.find((item) => item.time === time)
+    }
+
+    getLength() {
+      return this.history.length
     }
   }
 
