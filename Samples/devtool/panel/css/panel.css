@@ -323,6 +323,8 @@ input[type='checkbox']:checked + .toolbar-icon {
 #hitmap-image {
   background: black;
   border: 1px solid #d405a7;
+  width: 100%; 
+  height: auto;
 }
 
 #hitmap-input {

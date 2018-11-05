@@ -76,10 +76,19 @@ class HitmapPanel {
 
     updateImage ({ state }) {
         const flatTree = this.flatTree(state)
+        let imageHeight = 0, imageWidth = 0
         const html = flatTree.map(({ physicalAttribute, prestance }) => {
+            const { width, top, left , height } = physicalAttribute
+            if (height + top > imageHeight) {
+                imageHeight = height + top
+            }
+            if (left + width > imageWidth) {
+                imageWidth = left + width
+            }
             return physicalAttribute ? this.getRectagle (physicalAttribute, prestance) : ''
         }).join('')
         this.image.innerHTML = html
+        this.image.setAttribute('viewBox', [0, 0, imageWidth, imageHeight].join(' '))
     }
 }
 
