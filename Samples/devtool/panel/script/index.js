@@ -5,16 +5,21 @@ import HistoryPanel from './HistoryPanel'
 import Panel from './Panel'
 import StatePanel from './StatePanel'
 import HitmapPanel from './HitmapPanel'
+import ConfigPanel from './ConfigPanel'
 
 const history = new History()
 const historyPanel = new HistoryPanel(history)
 const hitmapPanel = new HitmapPanel(history)
 const statePanel = new StatePanel()
 const connection = new Connection()
+const configPanel = new ConfigPanel()
 const panel = new Panel()
 
 history.registerEvent('change', historyPanel.update.bind(historyPanel))
 history.registerEvent('change', panel.updateMemoryField.bind(panel))
+
+configPanel.registerEvent('onLevelChange', history.changeMaxLevels.bind(history))
+configPanel.loadConfig()
 
 connection.registerEvent('initValues', panel.reciveValues.bind(panel))
 connection.registerEvent('initValues', statePanel.drawTable.bind(statePanel))

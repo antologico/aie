@@ -55,7 +55,7 @@ class HitmapPanel {
         return 'rgb(' + [color, 30, color].join(',') + ')'
     }
 
-    getRectagle (physicalAttribute, prestance) {
+    getRectagle ({physicalAttribute, prestance, name}) {
         const { left, top, width, height } = physicalAttribute
 
         return left && prestance 
@@ -63,7 +63,8 @@ class HitmapPanel {
                 y="' + top +'" \
                 width="' + width +'" \
                 height="' + height +'" \
-                fill="'+ this.getFillColor(prestance) +'" />' 
+                fill="'+ this.getFillColor(prestance) +'" /> \
+                <text x="' + (left + 2) + '" y="' + (top + 8) +'" fill="white" font-size="6">' + name + '</text>' 
             : ''
     }
 
@@ -77,7 +78,7 @@ class HitmapPanel {
     updateImage ({ state }) {
         const flatTree = this.flatTree(state)
         let imageHeight = 0, imageWidth = 0
-        const html = flatTree.map(({ physicalAttribute, prestance }) => {
+        const html = flatTree.map(({ physicalAttribute, prestance, name }) => {
             const { width, top, left , height } = physicalAttribute
             if (height + top > imageHeight) {
                 imageHeight = height + top
@@ -85,7 +86,7 @@ class HitmapPanel {
             if (left + width > imageWidth) {
                 imageWidth = left + width
             }
-            return physicalAttribute ? this.getRectagle (physicalAttribute, prestance) : ''
+            return physicalAttribute ? this.getRectagle ({physicalAttribute, prestance, name}) : ''
         }).join('')
         this.image.innerHTML = html
         this.image.setAttribute('viewBox', [0, 0, imageWidth, imageHeight].join(' '))

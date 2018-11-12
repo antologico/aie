@@ -1,10 +1,12 @@
 import EventDispatcher from './EventDispatcher'
 import MemoryBlock from './MemoryBlock'
 
+export const DEFAULT_MAX_LEVELS = 1000
+
 class History extends EventDispatcher {
     constructor () {
       super()
-      this.maxItems = 100
+      this.maxLevels = null
       this.history = []
       this.disabled = false
       this.events = {
@@ -12,15 +14,19 @@ class History extends EventDispatcher {
       }
     }
   
+    changeMaxLevels (maxLevels) {
+      this.maxLevels = maxLevels
+    }
+
     disable (disabled = true) {
       this.disabled = disabled
     }
   
     add ({event, state, element}) {
       if (!this.disabled) {
-        if (this.maxItems) {
-          if (this.history.length >= this.maxItems) {
-            this.history.splice(0, this.history.length + 1 - this.maxItems)
+        if (this.maxLevels) {
+          if (this.history.length >= this.maxLevels) {
+            this.history.splice(0, this.history.length + 1 - this.maxLevels)
           }
         }
         this.history.push ({

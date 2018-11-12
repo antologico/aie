@@ -8,6 +8,7 @@
 	<body>
 		<input id="state-table-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="timemachine-checker" type="radio" name="tab-control" class="tab-checker" />
+		<input id="config-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="hitmap-checker" type="radio" name="tab-control"  class="tab-checker" checked/>
 			
 		<div class="toolbar">
@@ -19,6 +20,7 @@
 			<label class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
 			<label class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
 			<label class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Connect</span></label>
+			<label class="toolbar-icon" for="config-checker"><i class="icon-wrench"></i><span class='toolbar-icon-label'>Configuration</span></label>
 			<label class="toolbar-info right" id="toolbar-apply">
 				<i class="icon-gauge"></i>&nbsp;<span id="memorySize">0</span>
 			</label>
@@ -26,7 +28,13 @@
 		
 		<div id="container" class="hide">
 			<div class="tab" id="state-table"></div>
-			
+			<div class="tab" id="config">
+				<fieldset>
+					<legend><i class="icon-gauge"></i> Resources</legend>
+					<label for="config_level">History levels</label>
+					<input id="config_level" type="number" min="0"> <small><i>0 for disable</i></small>
+				</fieldset>
+			</div>
 			<div class="tab" id="timemachine">
 				<table id="timemachine-table"></table>
 			</div>
@@ -101,8 +109,8 @@
 		</script>
 
 		<script type="template" id="timemachine-template">
-				<tr class="timemachine-item" aie-history-index={index} aie-name="{element}">
-					<td>
+				<tr class="timemachine-item" aie-history-index={index}>
+					<td aie-name="{element}">
 						<i class="icon-hour"></i>
 						<span class='timemachine-item-label'>{event} over <strong>{element}</strong></span>
 					</td>

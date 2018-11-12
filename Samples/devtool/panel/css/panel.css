@@ -212,7 +212,7 @@ label.mark {
   margin: 0 auto;
 }
 .toolbar-info {
-  font-size: 1.2em;
+  font-size: 1em;
   border-bottom: 0;
   color: white;
   margin: 0 1em;
@@ -303,14 +303,16 @@ input[type='checkbox']:checked + .toolbar-icon {
 
 #state-table-checker:checked ~ .toolbar label[for=state-table-checker],
 #timemachine-checker:checked ~ .toolbar label[for=timemachine-checker],
-#hitmap-checker:checked ~ .toolbar label[for=hitmap-checker]
+#hitmap-checker:checked ~ .toolbar label[for=hitmap-checker],
+#config-checker:checked ~ .toolbar label[for=config-checker]
 {
   background: rgb(7, 19, 39)
 }
 
 #state-table-checker:checked ~ #container #state-table,
 #timemachine-checker:checked ~ #container #timemachine,
-#hitmap-checker:checked ~ #container #hitmap
+#hitmap-checker:checked ~ #container #hitmap,
+#config-checker:checked ~ #container #config
 {
   display: block;
   padding-top: 3em;
@@ -347,4 +349,34 @@ input[type='checkbox']:checked + .toolbar-icon {
   height: 25px;
   -webkit-appearance: none;
   border: 1px solid #d405a7;
+}
+
+#config {
+  margin: 1em;
+  color: white;
+}
+
+#config fieldset {
+  padding: 1em;
+  font-size: 1em;
+  border: 0;
+  border-radius: 0.5em;
+  padding: 1em;
+  padding-bottom: 2em;
+  background: rgb(32, 60, 105);
+}
+
+#config fieldset legend {
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  color: #d405a7;
+  background: rgb(32, 60, 105);
+  font-weight: 800;
+  font-size: 1.2em;
+}
+
+#config fieldset input {
+  border: 0;
+  border-radius: 0.5em;
+  padding: 0.5em;
 }
