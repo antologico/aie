@@ -1,8 +1,10 @@
 import AIEHTML from './AIEHTML'
 import AIEHTMLMonitor from './AIEHTMLMonitor'
 
-const aie = new AIEHTML('TESTER0000', '#form-context')
-aie.start()
+function initAIE (name: string, selector: string) {
+    const aie = new AIEHTML(name, selector)
+    aie.start()
+    AIEHTMLMonitor.exposeEnviroments() 
+}
 
-AIEHTMLMonitor.exposeEnviroments()
-  
+(<any>window).initAIE = initAIE

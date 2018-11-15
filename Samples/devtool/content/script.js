@@ -122,8 +122,8 @@ document.addEventListener('mouseout', function (e) {
   sendMark(false, e.srcElement)
 }, false)
 
-console.info('[AIEE Extension] Loaded')
+console.info('[AIEE Extension] Loaded 1')
 
 sendReset()
 
-window.addEventListener('aie-update', event => sendState(event))
+window.addEventListener('aie-update', sendState)

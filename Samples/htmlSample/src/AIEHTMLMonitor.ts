@@ -35,7 +35,7 @@ export default class AIEHTMLMonitor extends AIEMonitor {
     }
 
     static sendPrestances (eventName: string = '', elementName: string = '', environmentName: string = '') : void {
-        console.info('[AIE] AIEHTMLMonitor send prestances for <', eventName, '>');
+        console.info('[AIE] AIEHTMLMonitor send prestances for <' + eventName + '>');
         const state = AIEMonitor.getState()
         if (state && state.length) {
             const detail = {

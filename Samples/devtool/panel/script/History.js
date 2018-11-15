@@ -15,7 +15,7 @@ class History extends EventDispatcher {
     }
   
     changeMaxLevels (maxLevels) {
-      this.maxLevels = maxLevels
+      this.maxLevels = parseInt(maxLevels)
     }
 
     disable (disabled = true) {
@@ -24,7 +24,7 @@ class History extends EventDispatcher {
   
     add ({event, state, element}) {
       if (!this.disabled) {
-        if (this.maxLevels) {
+        if (this.maxLevels && this.maxLevels !== 0) {
           if (this.history.length >= this.maxLevels) {
             this.history.splice(0, this.history.length + 1 - this.maxLevels)
           }

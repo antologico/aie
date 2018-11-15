@@ -10,28 +10,43 @@ const WIDTH = 'width'
 const POSITION = 'position'
 const LEVEL = 'level'
 
-function colorFn(element: AIEElement, initialValue: string) {
-    const color: Color = new Color(initialValue)
-    element.getBaseElement().style.color = color.increment(1 + element.getPrestance()).toString()
+function colorFn(element: AIEElement, initialValues: any) {
+    element.getChildren().forEach((child: AIEElement) => {
+        const initialValue = initialValues[child.getName()]
+        const color: Color = new Color(initialValue)
+        child.getBaseElement().style.color = color.increment(1 + child.getPrestance()).toString()
+    });
 }
 
-function fontSizeFn(element: AIEElement, initialValue: string) {
-    const fontSizeBase: number = parseFloat(initialValue)
-    element.getBaseElement().style.fontSize = Math.round(fontSizeBase * (1 + element.getPrestance())) + 'px'
+function fontSizeFn(element: AIEElement, initialValues: any) {
+    element.getChildren().forEach((child: AIEElement) => {
+        const initialValue = initialValues[child.getName()]
+        const fontSizeBase: number = parseFloat(initialValue)
+        element.getBaseElement().style.fontSize = Math.round(fontSizeBase * (1 + child.getPrestance())) + 'px'
+    });
 }
 
-function widthFn(element: AIEElement, initialValue: string) {
-    const width: number = parseFloat(initialValue)
-    element.getBaseElement().style.width = Math.round(width * (1 + element.getPrestance())) + 'px'
+function widthFn(element: AIEElement, initialValues: any) {
+    element.getChildren().forEach((child: AIEElement) => {
+        const initialValue = initialValues[child.getName()]
+        const width: number = parseFloat(initialValue)
+        child.getBaseElement().style.width = Math.round(width * (1 + child.getPrestance())) + 'px'
+    });
 }
 
-function heightFn(element: AIEElement, initialValue: string) {
-    const height: number = parseFloat(initialValue)
-    element.getBaseElement().style.width = Math.round(height * (1 + element.getPrestance())) + 'px'
+function heightFn(element: AIEElement, initialValues: any) {
+    element.getChildren().forEach((child: AIEElement) => {
+        const initialValue = initialValues[child.getName()]
+        const height: number = parseFloat(initialValue)
+        child.getBaseElement().style.width = Math.round(height * (1 + child.getPrestance())) + 'px'
+    });
 }
+
+
 function positionFn(element: AIEElement) {
     const sortedElements = element.getChildren().sort((a:AIEElement, b:AIEElement) => b.getPrestance() - a.getPrestance())
     sortedElements.forEach(el => {
+
         element.getBaseElement().appendChild(el.getBaseElement())
     });
 
@@ -72,7 +87,11 @@ function getInitialValue(property: string, element: AIEHTMLElement) {
         case LEVEL:
             return element.getParent().getBaseElement();
         default:
-            return window.getComputedStyle(element.getBaseElement(), null).getPropertyValue(property)
+            return element.getChildren().reduce(
+                (prev: any, child) => {
+                    prev[child.getName()] = window.getComputedStyle(child.getBaseElement(), null).getPropertyValue(property)
+                    return prev
+                }, {})
     }
 }
 
@@ -82,8 +101,8 @@ export default class AIEHTMLProperty extends AIEProperty {
         switch(name) {
             case COLOR: this.setTransform(colorFn); break;
             case FONTSIZE: this.setTransform(fontSizeFn); break;
-            case HEIGHT: this.setTransform(widthFn); break;
-            case WIDTH: this.setTransform(heightFn); break;
+            case HEIGHT: this.setTransform(heightFn); break;
+            case WIDTH: this.setTransform(widthFn); break;
             case POSITION: this.setTransform(positionFn); break;
             case LEVEL: this.setTransform(levelFn); break;
             default:

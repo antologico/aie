@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<style>
+    * {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    body {
+        background: gray;
+        font-size: 10px;
+    }
+
+    .content-title,
+    .block-title {
+        background:#2F4F4F;
+        font-size: 2em;
+        padding: 1em;
+        text-align: center;
+        color: aquamarine;
+        font-weight: bold;
+    }
+
+    .content-title {
+        background:IndianRed;
+        color: lightcoral;
+    }
+
+    .item>.title {
+        padding: 1em;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .item>.title:hover {
+        background: #2F4F4F;
+        color: lightblue;
+    }
+
+    div.item>div.item {
+        margin-left: 2em;
+    }
+
+    .menu {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 200px;
+        background: lightseagreen;
+    }
+
+    .content {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: calc(100% - 200px);
+        background: lightcoral;
+    }
+
+    textarea {
+        display: block;
+        width: calc(100% - 4px - 0.6em);
+        height: 100%;
+        border: 2px solid darkred;
+        color: IndianRed;
+        background: white;
+        padding: 0.3em;
+        font-size: 1em;
+        margin-bottom: 2em;
+    }
+
+    button {
+        border: 2px solid black;
+        color: white;
+        background: darkred;
+        font-size: 1em;
+        padding: 0.5em;
+    }
+
+    .form {
+        padding: 0 3em;
+    }
+
+    fieldset {
+        margin-top: 2em;
+        border: 1px dashed darkred;
+        padding: 1em;
+    }
+
+    legend {
+        font-size: 1.5em;
+    }
+
+    label {
+        font-weight: bold;
+        font-size: 1em;
+        display: block;
+        margin-top: 1em;
+        padding: 0.5em;
+    }
+
+    select,
+    input {
+        border: 2px solid darkred;
+        padding: 0.5em;
+        font-size: 1em;
+        -webkit-appearance: none;
+    }
+
+    select {
+        background: lightgray;
+        font-weight: bold;
+        color: darkred;
+    }
+
+    td {
+        background-position: center center;
+        min-width: 100px;
+    }
+
+</style>
+
+<body>
+    <div id='form-context'>
+        <div class="menu">
+            <div class="block-title">Menu block</div>
+            <div aie aie-prestance-fields="font-size|max:1.1, level, position" aie-name="menu">
+                <div class="item" aie aie-trigger="click" aie-name="menu_level_1">
+                    <div class="title">Level 1</div>
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_1_1">
+                        <div class="title">Level 1_1</div>
+                    </div>
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_1_2">
+                        <div class="title">Level 1_1</div>
+                    </div>
+                </div>
+                <div class="item" aie aie-trigger="click" aie-name="menu_level_2">
+                    <div class="title">Level 2</div>
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1">
+                        <div class="title">Level 2_1</div>
+                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1">
+                            <div class="title">Level 2_1_1</div>
+                            <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_2">
+                                <div class="title">Level 2_1_2</div>
+                            </div>
+                        </div>
+                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2">
+                            <div class="title">Level 2_2</div>
+                            <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_1">
+                                <div class="title">Level 2_2_1</div>
+                            </div>
+                            <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_2">
+                                <div class="title">Level 2_2_2</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_3">
+                        <div class="title">Level 3</div>
+                    </div>
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_4">
+                        <div class="title">Level 4</div>
+                    </div>
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_5">
+                        <div class="title">Level 5</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-title">Content block</div>
+            <div class="form" aie aie-prestance-fields="position" aie-name="form">
+
+                <fieldset aie aie-name="description_group" aie-prestance-fields="height|max:3, position">
+                    <legend>Long description</legend>
+                    <textarea aie aie-trigger="onkeypress" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
+                    <textarea aie aie-trigger="onkeypress" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
+                    <textarea aie aie-trigger="onkeypress" aie-name="text_editor_field_3" placeholder="Contact infoe..."></textarea>
+                </fieldset>
+                <fieldset aie aie-name="main_info_group">
+                    <legend>Main info</legend>
+                    <table width="100%">
+                        <tr aie aie-name="main_info_group_columns" aie-prestance-fields="width">
+                            <td aie aie-name="main_info_group_fields" aie-prestance-fields="font-size|max:1.2, height|max:1.2, position">
+                                <div aie aie-name="input_field_username" aie-trigger="click">
+                                    <label>Username</label>
+                                    <input type="text" placeholder="Mandatory" />
+                                </div>
+                                <div aie aie-name="input_field_phone" aie-trigger="click">
+                                    <label>Phone</label>
+                                    <input type="phone" placeholder="Optional" />
+                                </div>
+                                <div aie aie-name="input_field_firstname" aie-trigger="click">
+                                    <label>First name</label>
+                                    <input type="text" placeholder="Optional" />
+                                </div>
+                                <div aie aie-name="input_field_lastname" aie-trigger="click">
+                                    <label>Lastname</label>
+                                    <input type="text" placeholder="Optional" />
+                                </div>
+                                <div aie aie-name="input_field_email" aie-trigger="click">
+                                    <label>Email</label>
+                                    <input type="email" placeholder="Mandatory" />
+                                </div>
+                            </td>
+                            <td aie aie-name="main_info_groupm_map"  style="background: url('/img/map-sample.jpg')"></td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <fieldset aie aie-name="selector_group">
+                    <legend>Select Transport</legend>
+                    <select multiple name="transport" aie-name="selector_field" aie-prestance-fields="position, font-size|max: 2">
+                        <option value="1" aie aie-name="selector_field_option_1" aie-trigger="click">Ship</option>
+                        <option value="2" aie aie-name="selector_field_option_2" aie-trigger="click">Train</option>
+                        <option value="3" aie aie-name="selector_field_option_3" aie-trigger="click">Plane</option>
+                        <option value="4" aie aie-name="selector_field_option_4" aie-trigger="click">Car</option>
+                    </select>
+                </fieldset>
+                <fieldset aie aie-name="advanced_search_group" aie-prestance-fields="width|max: 2">
+                    <legend>Search block</legend>
+                    <input aie aie-name="advanced_search_field" aie-trigger="onkeydown" type="text" placeholder="Text to search" />
+                    <button aie aie-name="advanced_search_button" aie-trigger="click">Find now!</button>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="http://localhost:8080/dist/aie.min.js"></script>
+    <script>
+        initAIE('APPSAMPLE001', '#form-context')  
+    </script>
+</body>
+
+</html>

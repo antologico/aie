@@ -39,8 +39,11 @@
 				<table id="timemachine-table"></table>
 			</div>
 			<div class="tab" id="hitmap">
-				<input type="range" id="hitmap-input" value="0" width="100%" list="tickmarks"/>
-				<datalist id="tickmarks"><option value="100" label="now"></datalist>
+				<fieldset>
+					<legend><i class="icon-back-in-time"></i> Time bar</legend>
+					<input type="range" id="hitmap-input" value="0" width="100%" list="tickmarks"/>
+					<datalist id="tickmarks"><option value="100" label="now"></datalist>
+				</fieldset>
 				<svg id="hitmap-image" preserveAspectRatio="none"></svg>
 			</div>
 		</div>

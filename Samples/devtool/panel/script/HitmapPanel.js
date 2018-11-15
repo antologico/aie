@@ -58,7 +58,7 @@ class HitmapPanel {
     getRectagle ({physicalAttribute, prestance, name}) {
         const { left, top, width, height } = physicalAttribute
 
-        return left && prestance 
+        return (left !== undefined) && prestance 
             ? '<rect x="' + left + '" \
                 y="' + top +'" \
                 width="' + width +'" \

@@ -134,10 +134,10 @@ export default abstract class AIEElement {
     element.setParent(this)
   }
 
-  public onTrigger() {
+  public onTrigger(name: string) {
     this.memory.anoteEvent()
     if (this.processor) {
-      this.processor.notify({ name: this.getTriggerName(), element: this })
+      this.processor.notify({ name, element: this })
     }
   }
 

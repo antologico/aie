@@ -75,7 +75,7 @@ export default class AIEHTMLElement extends AIEElement {
 
   public bindTriggers() {
     if (this.getTriggerName()) {
-      this.baseElement.addEventListener(this.getTriggerName(), this.onTrigger.bind(this))
+      this.baseElement.addEventListener(this.getTriggerName(), this.onTrigger.bind(this, this.getTriggerName()))
     }
   }
 
@@ -100,11 +100,9 @@ export default class AIEHTMLElement extends AIEElement {
 
   public getPhysicalAttributes() {
     const el = this.getBaseElement()
-    return el ? {
-      left: el.offsetLeft,
-      top: el.offsetTop,
-      width: el.offsetWidth,
-      height: el.offsetHeight,
-    } : {}
+    if (!el) {
+      return {}
+    }
+    return el.getBoundingClientRect()
   }
 }

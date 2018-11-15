@@ -34,12 +34,12 @@ export default class AIEEventProcessor {
   private inspect () {
     const event: AIEEvent = this.queue.shift()
     if (event) {
-      console.info('[AIE] Procesing "', event.name, '" over', event.element.getName())
+      console.info('[AIE] Procesing <'+event.name+'> over [' + event.element.getName() + ']')
       if (event.element.hasParent()) {
         const elParent: AIEElement = event.element.getParent()
         const increment = event.element.updatePrestance()
         elParent.updateChildrenPrestance(-increment, [ event.element ])
-        elParent.onTrigger()
+        elParent.onTrigger(event.name)
         event.name && this.events.change(event.name, event.element)
       }
     }
