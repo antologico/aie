@@ -7,6 +7,11 @@ class StatePanel {
         this.table = document.getElementById('state-table')
     }
 
+    clean () {
+      this.history = []
+      this.events.change(this)
+    }
+
     generateList (list, id) {
         if (!list || list.length === 0) {
           return ''

@@ -14,6 +14,7 @@ class Connection extends EventDispatcher {
             activeMark: () => {},
             reciveMark: () => {},
             onReceiveUpdate: () => {},
+            onClean: () => {},
         }
 
         this.port.onMessage.addListener((message) => {
@@ -84,6 +85,8 @@ class Connection extends EventDispatcher {
     }
 
     sendConnect () {
+        this.init = false
+        this.events.onClean()
         this.send({
             action: 'aie-connect',
             name: name,

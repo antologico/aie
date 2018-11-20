@@ -9,12 +9,15 @@ class Panel extends EventDispatcher {
             onConnect: () => {},
             onActiveMarksChange: () => {},
             onApply: () => {},
+            onFilterHitmap: () => {},
         }
         this.loader = document.getElementById('loader')
         this.container = document.getElementById('container')
+        this.hitmapChecker = document.getElementById('hitmap-checker')
 
         document.addEventListener('mouseover', (e) => this.onMouseOver(e.srcElement))
         document.addEventListener('mouseout', (e) => this.onMouseOut(e.srcElement))
+        document.addEventListener('click', (e) => this.onClick(e.srcElement))
           
         document.getElementById('active-marks-checker').addEventListener('change', (e) =>
             this.events.onActiveMarksChange(e.srcElement.checked ? 'aie-active-mark' : 'aie-unactive-mark')
@@ -61,6 +64,13 @@ class Panel extends EventDispatcher {
     onMouseOut (element) {
         if (element.hasAttribute('aie-name')) {
             this.events.onMarkChange ({ name: element.getAttribute('aie-name'), value: false })
+        }
+    }
+
+    onClick (element) {
+        if (element.hasAttribute('hitmap-filter')) {
+            this.events.onFilterHitmap (element.getAttribute('hitmap-filter'))
+            this.hitmapChecker.checked = true
         }
     }
 }

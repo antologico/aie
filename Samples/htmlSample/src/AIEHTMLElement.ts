@@ -1,7 +1,7 @@
 import AIEElement from './AIEElement'
 import AIEMemory from './AIEMemory'
 import AIEHTMLMemory from './AIEHTMLMemory'
-import AIEHTMLAIEProperty from './AIEHTMLProperty'
+import AIEHTMLProperty from './AIEHTMLProperty'
 
 const MAX_ID = 'max'
 const MIN_ID = 'min'
@@ -17,21 +17,20 @@ export default class AIEHTMLElement extends AIEElement {
 
   public constructor(baseElement: any) {
     super(baseElement)
-    this.setProperties(this.parseAttr(this.getAttr(HTML_SUFFIX_PRESTACE_FIELD)))
   }
 
-  public parseAttr(text: string): Array<AIEHTMLAIEProperty> {
+  public parseAttr(text: string): Array<AIEHTMLProperty> {
       if (!text) {
         return []
       }
 
-      const properties:Array<AIEHTMLAIEProperty> = []
+      const properties:Array<AIEHTMLProperty> = []
       
       text.split(',').forEach(el => {
         const components = el.split('|')
         if (components.length) {
           const name = components.shift().trim()
-          const property = new AIEHTMLAIEProperty(name, this)
+          const property = new AIEHTMLProperty(name, this)
           components.forEach(element => {
             const parts = element.split(':')
             if (parts.length === 2) {
@@ -47,6 +46,11 @@ export default class AIEHTMLElement extends AIEElement {
         }
       })
       return properties
+  }
+
+  public setChildren(element: AIEElement) {
+    super.setChildren(element)
+    this.setProperties(this.parseAttr(this.getAttr(HTML_SUFFIX_PRESTACE_FIELD)))
   }
 
   public initializeMemory(seed: string): AIEMemory {

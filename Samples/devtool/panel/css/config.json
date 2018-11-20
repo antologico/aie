@@ -59,6 +59,24 @@
       "css": "chart-bar",
       "code": 59399,
       "src": "fontawesome"
+    },
+    {
+      "uid": "5bb103cd29de77e0e06a52638527b575",
+      "css": "wrench",
+      "code": 59400,
+      "src": "fontawesome"
+    },
+    {
+      "uid": "k7sao112253txym1egnte7822irbyphe",
+      "css": "eye",
+      "code": 59401,
+      "src": "typicons"
+    },
+    {
+      "uid": "9d4f81f2d81e14141b68706668498441",
+      "css": "print",
+      "code": 59402,
+      "src": "typicons"
     }
   ]
 }

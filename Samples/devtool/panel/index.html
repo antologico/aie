@@ -6,20 +6,20 @@
 		<link rel="stylesheet" href="css/icons.css">
 	</head>
 	<body>
-		<input id="state-table-checker" type="radio" name="tab-control" class="tab-checker" />
+		<input id="state-table-checker" type="radio" name="tab-control" class="tab-checker" checked/>
 		<input id="timemachine-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="config-checker" type="radio" name="tab-control" class="tab-checker" />
-		<input id="hitmap-checker" type="radio" name="tab-control"  class="tab-checker" checked/>
+		<input id="hitmap-checker" type="radio" name="tab-control"  class="tab-checker"/>
 			
 		<div class="toolbar">
 			<input id="active-marks-checker" type="checkbox" />
 			<label class="toolbar-icon" for="active-marks-checker"><i class="icon-target"></i><span class='toolbar-icon-label'>Active marks</span></label>
 			<label class="toolbar-icon" id="toolbar-delete"><i class="icon-trash"></i><span class='toolbar-icon-label'>Delete historial</span></label>
 			<label class="toolbar-icon" for="timemachine-checker"><i class="icon-back-in-time"></i><span class='toolbar-icon-label'>Show historial</span></label>
-			<label class="toolbar-icon" for="hitmap-checker"><i class="icon-chart-bar"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
+			<label class="toolbar-icon" for="hitmap-checker"><i class="icon-eye"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
 			<label class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
 			<label class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
-			<label class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Connect</span></label>
+			<label class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Clean & Connect</span></label>
 			<label class="toolbar-icon" for="config-checker"><i class="icon-wrench"></i><span class='toolbar-icon-label'>Configuration</span></label>
 			<label class="toolbar-info right" id="toolbar-apply">
 				<i class="icon-gauge"></i>&nbsp;<span id="memorySize">0</span>
@@ -42,8 +42,11 @@
 				<fieldset>
 					<legend><i class="icon-back-in-time"></i> Time bar</legend>
 					<input type="range" id="hitmap-input" value="0" width="100%" list="tickmarks"/>
+					<select id="hitmap-search"></select>
 					<datalist id="tickmarks"><option value="100" label="now"></datalist>
 				</fieldset>
+
+				<button id="hitmap-print"><i class="icon-print"></i> Open in new window</button>
 				<svg id="hitmap-image" preserveAspectRatio="none"></svg>
 			</div>
 		</div>
@@ -100,6 +103,7 @@
 						{properties}
 					</label>
 					<div class="value">
+						<i class="itemElementHitmapIcon icon-eye" hitmap-filter={name}></i>
 						<span id="arrow_{name}"></span>
 						<span id="value_{name}">{value}</span>
 					</div>
@@ -109,6 +113,22 @@
 
 		<script type="template" id="item-property">
 			<span class="property">{property}</span>
+		</script>
+
+		<script type="template" id="hitmap-rectangle">
+			<rect x="{left}" y="{top}" width="{width}" height="{height}" fill="{fill}" />
+            <text x="{x}" y="{y}" fill="white" font-size="6">{name}</text>
+		</script>
+
+		<script type="template" id="hitmap-search-option">
+			<option value="{name}" {selected}>{name}</option>
+		</script>
+
+		<script type="template" id="svg-print">
+			<svg class="svgLoader" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				width="{width}px" height="{height}px" viewBox="0 0 {width} {height}" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+				{content}
+			</svg>
 		</script>
 
 		<script type="template" id="timemachine-template">

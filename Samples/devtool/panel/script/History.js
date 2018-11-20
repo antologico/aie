@@ -39,8 +39,9 @@ class History extends EventDispatcher {
       }
     }
   
-    clear () {
+    clean () {
       this.history = []
+      this.history.length = 0
       this.events.change(this)
     }
   

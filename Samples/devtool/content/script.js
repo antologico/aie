@@ -122,7 +122,7 @@ document.addEventListener('mouseout', function (e) {
   sendMark(false, e.srcElement)
 }, false)
 
-console.info('[AIEE Extension] Loaded 1')
+console.info('[AIEE Extension] Loaded')
 
 sendReset()
 

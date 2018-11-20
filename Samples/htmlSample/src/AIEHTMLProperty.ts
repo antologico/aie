@@ -22,7 +22,7 @@ function fontSizeFn(element: AIEElement, initialValues: any) {
     element.getChildren().forEach((child: AIEElement) => {
         const initialValue = initialValues[child.getName()]
         const fontSizeBase: number = parseFloat(initialValue)
-        element.getBaseElement().style.fontSize = Math.round(fontSizeBase * (1 + child.getPrestance())) + 'px'
+        child.getBaseElement().style.fontSize = Math.round(fontSizeBase * (1 + child.getPrestance())) + 'px'
     });
 }
 
@@ -38,7 +38,7 @@ function heightFn(element: AIEElement, initialValues: any) {
     element.getChildren().forEach((child: AIEElement) => {
         const initialValue = initialValues[child.getName()]
         const height: number = parseFloat(initialValue)
-        child.getBaseElement().style.width = Math.round(height * (1 + child.getPrestance())) + 'px'
+        child.getBaseElement().style.height = Math.round(height * (1 + child.getPrestance())) + 'px'
     });
 }
 
@@ -83,9 +83,9 @@ function levelFn(element: AIEHTMLElement, topLevelParent: AIEElement) {
 }
 
 function getInitialValue(property: string, element: AIEHTMLElement) {
-    switch(name) {
+    switch(property) {
         case LEVEL:
-            return element.getParent().getBaseElement();
+            return element.getParent() ? element.getParent().getBaseElement() : null
         default:
             return element.getChildren().reduce(
                 (prev: any, child) => {

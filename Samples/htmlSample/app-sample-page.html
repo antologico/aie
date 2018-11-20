@@ -29,6 +29,7 @@
         padding: 1em;
         cursor: pointer;
         font-weight: bold;
+        font-size: 1.2em;
     }
 
     .item>.title:hover {
@@ -100,7 +101,52 @@
         padding: 0.5em;
     }
 
-    select,
+    .selector {
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
+
+    .selector input {
+        padding-right: 2em;
+    }
+
+    .selector:after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 0; 
+        height: 0; 
+        border-left: 0.5em solid transparent;
+        border-right: 0.5em solid transparent;
+        border-top: 0.8em solid #2F4F4F;
+        right: 1em;
+        top: 0.8em;
+    }
+
+    .selector_options {
+        display: none;
+        position: absolute;
+        background: #2F4F4F;
+        width: 100%;
+    }
+
+    .selector:hover .selector_options {
+        display: block;
+    }
+
+    .selector_option {
+        cursor: pointer;
+        background: white;
+        padding: 5px;
+        width: 100%;
+    }
+
+    .selector_option:hover {
+        background:darkred;
+        color: white;
+    }
+    
     input {
         border: 2px solid darkred;
         padding: 0.5em;
@@ -126,7 +172,7 @@
         <div class="menu">
             <div class="block-title">Menu block</div>
             <div aie aie-prestance-fields="font-size|max:1.1, level, position" aie-name="menu">
-                <div class="item" aie aie-trigger="click" aie-name="menu_level_1">
+                <div class="item" aie aie-trigger="click" aie-name="menu_level_1" aie-prestance-fields="font-size|max:1.1">
                     <div class="title">Level 1</div>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_1_1">
                         <div class="title">Level 1_1</div>
@@ -135,17 +181,17 @@
                         <div class="title">Level 1_1</div>
                     </div>
                 </div>
-                <div class="item" aie aie-trigger="click" aie-name="menu_level_2">
+                <div class="item" aie aie-trigger="click" aie-name="menu_level_2" aie-prestance-fields="font-size|max:1.1">
                     <div class="title">Level 2</div>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1">
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1" aie-prestance-fields="font-size|max:1.1">
                         <div class="title">Level 2_1</div>
-                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1">
+                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1"aie-prestance-fields="font-size|max:1.1">
                             <div class="title">Level 2_1_1</div>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_2">
                                 <div class="title">Level 2_1_2</div>
                             </div>
                         </div>
-                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2">
+                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2"aie-prestance-fields="font-size|max:1.1">
                             <div class="title">Level 2_2</div>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_1">
                                 <div class="title">Level 2_2_1</div>
@@ -173,9 +219,9 @@
 
                 <fieldset aie aie-name="description_group" aie-prestance-fields="height|max:3, position">
                     <legend>Long description</legend>
-                    <textarea aie aie-trigger="onkeypress" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
-                    <textarea aie aie-trigger="onkeypress" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
-                    <textarea aie aie-trigger="onkeypress" aie-name="text_editor_field_3" placeholder="Contact infoe..."></textarea>
+                    <textarea aie aie-trigger="keypress" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
+                    <textarea aie aie-trigger="keypress" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
+                    <textarea aie aie-trigger="keypress" aie-name="text_editor_field_3" placeholder="Contact infoe..."></textarea>
                 </fieldset>
                 <fieldset aie aie-name="main_info_group">
                     <legend>Main info</legend>
@@ -203,22 +249,25 @@
                                     <input type="email" placeholder="Mandatory" />
                                 </div>
                             </td>
-                            <td aie aie-name="main_info_groupm_map"  style="background: url('/img/map-sample.jpg')"></td>
+                            <td aie aie-name="main_info_groupm_map" aie-trigger="mouseover" style="background: url('/img/map-sample.jpg')"></td>
                         </tr>
                     </table>
                 </fieldset>
                 <fieldset aie aie-name="selector_group">
                     <legend>Select Transport</legend>
-                    <select multiple name="transport" aie-name="selector_field" aie-prestance-fields="position, font-size|max: 2">
-                        <option value="1" aie aie-name="selector_field_option_1" aie-trigger="click">Ship</option>
-                        <option value="2" aie aie-name="selector_field_option_2" aie-trigger="click">Train</option>
-                        <option value="3" aie aie-name="selector_field_option_3" aie-trigger="click">Plane</option>
-                        <option value="4" aie aie-name="selector_field_option_4" aie-trigger="click">Car</option>
-                    </select>
+                    <div class="selector">
+                    <input id="select_input" readonly/>
+                        <div class="selector_options" aie aie-name="selector_fields" aie-prestance-fields="position, font-size|max: 2">
+                            <div class="selector_option" aie aie-name="selector_field_option_1" aie-trigger="click">Ship</div>
+                            <div class="selector_option" aie aie-name="selector_field_option_2" aie-trigger="click">Train</div>
+                            <div class="selector_option" aie aie-name="selector_field_option_3" aie-trigger="click">Plane</div>
+                            <div class="selector_option" aie aie-name="selector_field_option_4" aie-trigger="click">Car</div>
+                        </div>
+                    </div>
                 </fieldset>
                 <fieldset aie aie-name="advanced_search_group" aie-prestance-fields="width|max: 2">
                     <legend>Search block</legend>
-                    <input aie aie-name="advanced_search_field" aie-trigger="onkeydown" type="text" placeholder="Text to search" />
+                    <input aie aie-name="advanced_search_field" aie-trigger="keypress" type="text" placeholder="Text to search" />
                     <button aie aie-name="advanced_search_button" aie-trigger="click">Find now!</button>
                 </fieldset>
             </div>
@@ -228,6 +277,10 @@
     <script src="http://localhost:8080/dist/aie.min.js"></script>
     <script>
         initAIE('APPSAMPLE001', '#form-context')  
+    </script>
+    <script>
+        document.querySelectorAll('.selector_option')
+            .forEach(el => el.addEventListener('click', e => document.getElementById('select_input').value = e.target.textContent))
     </script>
 </body>
 

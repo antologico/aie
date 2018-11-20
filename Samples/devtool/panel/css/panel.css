@@ -218,6 +218,15 @@ label.mark {
   margin: 0 1em;
 }
 
+.itemElementHitmapIcon {
+  color: #d405a7;
+  cursor: pointer
+}
+
+.itemElementHitmapIcon:hover {
+  color: white;
+}
+
 input[type='checkbox']:checked + .toolbar-icon {
   background: rgb(7, 19, 39)
 }
@@ -326,18 +335,45 @@ input[type='checkbox']:checked + .toolbar-icon {
   background: black;
   border: 1px solid #d405a7;
   width: 100%; 
+  max-height: 600px;
   height: auto;
 }
 
 #hitmap-input {
-  width: 100%;
+  width: calc(100% - 150px);
   -webkit-appearance: none;
   background: transparent;
+  display: inline-block;
+}
+
+#hitmap-print {
+  border: 0;
+  border-radius: 0.5em;
+  float: right;
+  display: block;
+  padding: 0.3em;
+  border: 0.1em solid #d405a7;
+  background: rgb(32, 60, 105);
+  color: #d405a7;
+  margin-bottom: 2em;
+}
+
+#hitmap-search {
+  width: 120px;
+  border: 0;
+  border-radius: 0.5em;
+  float: right;
+  display: block;
+  height: 3em;
+  margin-top: -0.5em;
+  border: 0.1em solid #d405a7;
+  background: rgb(32, 60, 105);
+  color: #d405a7;
 }
 
 #hitmap-input::-webkit-slider-runnable-track {
   background: #d405a7;
-  height: 5px;
+  height: 0.3em;
   -webkit-appearance: none;
 }
 
