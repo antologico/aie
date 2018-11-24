@@ -2,6 +2,7 @@ import AIEProperty from './AIEProperty'
 import AIEElement from './AIEElement'
 import Color from './Color'
 import AIEHTMLElement from './AIEHTMLElement'
+import AIEHTMLMeasurement from './AIEHTMLMeasurement'
 
 const COLOR = 'color'
 const FONTSIZE = 'font-size'
@@ -20,36 +21,30 @@ function colorFn(element: AIEElement, initialValues: any) {
 
 function fontSizeFn(element: AIEElement, initialValues: any) {
     element.getChildren().forEach((child: AIEElement) => {
-        const initialValue = initialValues[child.getName()]
-        const fontSizeBase: number = parseFloat(initialValue)
-        child.getBaseElement().style.fontSize = Math.round(fontSizeBase * (1 + child.getPrestance())) + 'px'
+        const measure = new AIEHTMLMeasurement(initialValues[child.getName()])
+        child.getBaseElement().style.fontSize = measure.multiply(1 + child.getPrestance()).toString()
     });
 }
 
 function widthFn(element: AIEElement, initialValues: any) {
     element.getChildren().forEach((child: AIEElement) => {
-        const initialValue = initialValues[child.getName()]
-        const width: number = parseFloat(initialValue)
-        child.getBaseElement().style.width = Math.round(width * (1 + child.getPrestance())) + 'px'
+        const measure = new AIEHTMLMeasurement(initialValues[child.getName()])
+        child.getBaseElement().style.width = measure.multiply(1 + child.getPrestance()).toString()
     });
 }
 
 function heightFn(element: AIEElement, initialValues: any) {
     element.getChildren().forEach((child: AIEElement) => {
-        const initialValue = initialValues[child.getName()]
-        const height: number = parseFloat(initialValue)
-        child.getBaseElement().style.height = Math.round(height * (1 + child.getPrestance())) + 'px'
+        const measure = new AIEHTMLMeasurement(initialValues[child.getName()])
+        child.getBaseElement().style.height = measure.multiply(1 + child.getPrestance()).toString()
     });
 }
-
 
 function positionFn(element: AIEElement) {
     const sortedElements = element.getChildren().sort((a:AIEElement, b:AIEElement) => b.getPrestance() - a.getPrestance())
     sortedElements.forEach(el => {
-
         element.getBaseElement().appendChild(el.getBaseElement())
     });
-
 }
 
 function getLevelParentElement(
@@ -82,16 +77,20 @@ function levelFn(element: AIEHTMLElement, topLevelParent: AIEElement) {
     })
 }
 
+function getChildrenComputedStyle(property: string, element: AIEHTMLElement) {
+    return element.getChildren().reduce(
+        (prev: any, child) => {
+            prev[child.getName()] = window.getComputedStyle(child.getBaseElement(), null).getPropertyValue(property)
+            return prev
+        }, {})
+}
+
 function getInitialValue(property: string, element: AIEHTMLElement) {
     switch(property) {
         case LEVEL:
             return element.getParent() ? element.getParent().getBaseElement() : null
         default:
-            return element.getChildren().reduce(
-                (prev: any, child) => {
-                    prev[child.getName()] = window.getComputedStyle(child.getBaseElement(), null).getPropertyValue(property)
-                    return prev
-                }, {})
+            return getChildrenComputedStyle(property, element)
     }
 }
 
@@ -111,3 +110,4 @@ export default class AIEHTMLProperty extends AIEProperty {
         }
     }
 }
+

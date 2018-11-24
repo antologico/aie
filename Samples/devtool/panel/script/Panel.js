@@ -20,7 +20,7 @@ class Panel extends EventDispatcher {
         document.addEventListener('click', (e) => this.onClick(e.srcElement))
           
         document.getElementById('active-marks-checker').addEventListener('change', (e) =>
-            this.events.onActiveMarksChange(e.srcElement.checked ? 'aie-active-mark' : 'aie-unactive-mark')
+            this.events.onActiveMarksChange(e.srcElement.checked)
           , false)
           
         document.getElementById('toolbar-delete').addEventListener('click', (e) => {

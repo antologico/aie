@@ -2,7 +2,7 @@
 <html>
 <style>
     * {
-        font-family: 'Courier New', Courier, monospace;
+        font-family: sans-serif;
     }
 
     body {
@@ -46,7 +46,7 @@
         left: 0;
         top: 0;
         height: 100%;
-        width: 200px;
+        width: 20em;
         background: lightseagreen;
     }
 
@@ -55,14 +55,20 @@
         right: 0;
         top: 0;
         height: 100%;
-        width: calc(100% - 200px);
+        width: calc(100% - 20em);
         background: lightcoral;
+        display: none;
+        overflow: scroll;
+    }
+
+    input.form_selector:checked + .content {
+        display: block;
     }
 
     textarea {
         display: block;
         width: calc(100% - 4px - 0.6em);
-        height: 100%;
+        height: 30px;
         border: 2px solid darkred;
         color: IndianRed;
         background: white;
@@ -77,6 +83,7 @@
         background: darkred;
         font-size: 1em;
         padding: 0.5em;
+        width: 10em;
     }
 
     .form {
@@ -87,6 +94,10 @@
         margin-top: 2em;
         border: 1px dashed darkred;
         padding: 1em;
+    }
+
+    .hidden {
+        display: none;
     }
 
     legend {
@@ -109,6 +120,7 @@
 
     .selector input {
         padding-right: 2em;
+        width: 200px;
     }
 
     .selector:after {
@@ -152,6 +164,11 @@
         padding: 0.5em;
         font-size: 1em;
         -webkit-appearance: none;
+        width: 200px;
+    }
+
+    input.large {
+        width: 80%;
     }
 
     select {
@@ -173,52 +190,54 @@
             <div class="block-title">Menu block</div>
             <div aie aie-prestance-fields="font-size|max:1.1, level, position" aie-name="menu">
                 <div class="item" aie aie-trigger="click" aie-name="menu_level_1" aie-prestance-fields="font-size|max:1.1">
-                    <div class="title">Level 1</div>
+                    <label class="title" for="content1">Level 1</label>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_1_1">
-                        <div class="title">Level 1_1</div>
+                        <label class="title" for="content1_1">Level 1_1</label>
                     </div>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_1_2">
-                        <div class="title">Level 1_1</div>
+                        <label class="title" for="content1_2">Level 1_2</label>
                     </div>
                 </div>
                 <div class="item" aie aie-trigger="click" aie-name="menu_level_2" aie-prestance-fields="font-size|max:1.1">
-                    <div class="title">Level 2</div>
+                    <label class="title" for="content2">Level 2</label>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1" aie-prestance-fields="font-size|max:1.1">
-                        <div class="title">Level 2_1</div>
+                        <label class="title" for="content2_1">Level 2_1</label>
                         <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1"aie-prestance-fields="font-size|max:1.1">
-                            <div class="title">Level 2_1_1</div>
+                            <label class="title" for="content2_1_1">Level 2_1_1</label>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_2">
-                                <div class="title">Level 2_1_2</div>
+                                <label class="title" for="content2_1_2">Level 2_1_2 &#x2605;</label>
                             </div>
                         </div>
                         <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2"aie-prestance-fields="font-size|max:1.1">
-                            <div class="title">Level 2_2</div>
+                            <label class="title" for="content2_2">Level 2_2</label>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_1">
-                                <div class="title">Level 2_2_1</div>
+                                <label class="title" for="content2_2_1">Level 2_2_1</label>
                             </div>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_2">
-                                <div class="title">Level 2_2_2</div>
+                                <label class="title" for="content2_2_2">Level 2_2_2</label>
                             </div>
                         </div>
                     </div>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_3">
-                        <div class="title">Level 3</div>
+                        <label class="title" for="content3">Level 3</label>
                     </div>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_4">
-                        <div class="title">Level 4</div>
+                        <label class="title" for="content4">Level 4</label>
                     </div>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_5">
-                        <div class="title">Level 5</div>
+                        <label class="title" for="content5">Level 5</label>
                     </div>
                 </div>
             </div>
         </div>
+    
+        <input id="content2_1_2" type="radio" name="form_selector" class="hidden form_selector" checked>    
         <div class="content">
-            <div class="content-title">Content block</div>
+            <div class="content-title">Content block 2_1_2</div>
             <div class="form" aie aie-prestance-fields="position" aie-name="form">
 
                 <fieldset aie aie-name="description_group" aie-prestance-fields="height|max:3, position">
-                    <legend>Long description</legend>
+                    <legend>Long descriptions</legend>
                     <textarea aie aie-trigger="keypress" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
                     <textarea aie aie-trigger="keypress" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
                     <textarea aie aie-trigger="keypress" aie-name="text_editor_field_3" placeholder="Contact infoe..."></textarea>
@@ -230,23 +249,23 @@
                             <td aie aie-name="main_info_group_fields" aie-prestance-fields="font-size|max:1.2, height|max:1.2, position">
                                 <div aie aie-name="input_field_username" aie-trigger="click">
                                     <label>Username</label>
-                                    <input type="text" placeholder="Mandatory" />
+                                    <input class="large" type="text" placeholder="Mandatory" />
                                 </div>
                                 <div aie aie-name="input_field_phone" aie-trigger="click">
                                     <label>Phone</label>
-                                    <input type="phone" placeholder="Optional" />
+                                    <input class="large" type="phone" placeholder="Optional" />
                                 </div>
                                 <div aie aie-name="input_field_firstname" aie-trigger="click">
                                     <label>First name</label>
-                                    <input type="text" placeholder="Optional" />
+                                    <input class="large" type="text" placeholder="Optional" />
                                 </div>
                                 <div aie aie-name="input_field_lastname" aie-trigger="click">
                                     <label>Lastname</label>
-                                    <input type="text" placeholder="Optional" />
+                                    <input class="large" type="text" placeholder="Optional" />
                                 </div>
                                 <div aie aie-name="input_field_email" aie-trigger="click">
                                     <label>Email</label>
-                                    <input type="email" placeholder="Mandatory" />
+                                    <input class="large" type="email" placeholder="Mandatory" />
                                 </div>
                             </td>
                             <td aie aie-name="main_info_groupm_map" aie-trigger="mouseover" style="background: url('/img/map-sample.jpg')"></td>
@@ -272,6 +291,31 @@
                 </fieldset>
             </div>
         </div>
+
+        <input id="content1" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 1</div></div>
+        <input id="content1_1" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 1_1</div></div>
+        <input id="content1_2" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 1_2</div></div>
+        <input id="content2" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 2</div></div>
+        <input id="content2_1" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 2_1</div></div>
+        <input id="content2_1_1" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 2_1_1</div></div>
+        <input id="content2_2" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 2_2</div></div>
+        <input id="content2_2_1" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 2_2_1</div></div>
+        <input id="content2_2_2" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 2_2_2</div></div>
+        <input id="content3" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 3</div></div>
+        <input id="content4" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 4</div></div>
+        <input id="content5" type="radio" name="form_selector" class="hidden form_selector">    
+        <div class="content"><div class="content-title">Content block 5</div></div>
     </div>
     </div>
     <script src="http://localhost:8080/dist/aie.min.js"></script>

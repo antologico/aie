@@ -45,9 +45,14 @@
 					<select id="hitmap-search"></select>
 					<datalist id="tickmarks"><option value="100" label="now"></datalist>
 				</fieldset>
-
-				<button id="hitmap-print"><i class="icon-print"></i> Open in new window</button>
-				<svg id="hitmap-image" preserveAspectRatio="none"></svg>
+				<div class="hitmap-buttons-content">
+					<button id="hitmap-restore"><i class="icon-back-in-time"></i> Restore state</button>
+					<button id="hitmap-apply"><i class="icon-flash"></i> Apply state</button>
+					<button id="hitmap-print"><i class="icon-print"></i> Open in new window</button>
+				</div>
+				<div class="hitmap-image-content">
+					<svg id="hitmap-image" preserveAspectRatio="none"></svg>
+				</div>
 			</div>
 		</div>
 		<div id="loader">

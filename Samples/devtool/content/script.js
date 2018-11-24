@@ -54,10 +54,11 @@ function mark (marked, element) {
   }
 
   if (marked) {
-      marker.style.left = `${element.offsetLeft - 3}px`
-      marker.style.top = `${element.offsetTop - 3}px`
-      marker.style.width = `${element.offsetWidth + 3}px`
-      marker.style.height = `${element.offsetHeight + 3}px`
+      const rectagle = element.getBoundingClientRect();
+      marker.style.left = `${rectagle.left - 3}px`
+      marker.style.top = `${rectagle.top - 3}px`
+      marker.style.width = `${rectagle.width + 3}px`
+      marker.style.height = `${rectagle.height + 3}px`
       marker.classList.add('show')
   } else {
       marker.classList.remove('show')

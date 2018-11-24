@@ -1,11 +1,12 @@
 .aie_mouse_highlight {
   display: none;
   position: fixed;
-  background-color: rgba(212, 5, 167, 0.1);
-  border: 1px dotted rgba(212, 5, 167, 0.1);
+  background-color:white;
+  border: 1px dotted rgba(212, 5, 167);
   pointer-events: none;
 }
 
 .aie_mouse_highlight.show {
   display: inline-block;
+  mix-blend-mode: difference;
 }

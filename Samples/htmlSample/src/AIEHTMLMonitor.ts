@@ -11,7 +11,7 @@ export default class AIEHTMLMonitor extends AIEMonitor {
 
     static restorePrestances (event: any) : void  {
         const prestances = JSON.parse(event.detail)
-        console.info('[AIE] AIEHTMLMonitor restore prestances', prestances);
+        console.info('[AIE] AIEHTMLMonitor restore prestances');
 
         prestances.map((group: any) => {
             const aie: AIE = AIEMonitor.environments.find((env:AIE) => env.getName() === group.name)
@@ -22,7 +22,7 @@ export default class AIEHTMLMonitor extends AIEMonitor {
     }
     static mutateElements (event: any) : void  {
         const prestances = JSON.parse(event.detail)
-        console.info('[AIE] AIEHTMLMonitor mutate elements', prestances);
+        console.info('[AIE] AIEHTMLMonitor mutate elements');
 
         prestances 
             ? prestances.map((group: any) => {
@@ -32,6 +32,8 @@ export default class AIEHTMLMonitor extends AIEMonitor {
                     aie.mutate()
                 }})
             : AIEMonitor.environments.forEach((env:AIE) => env.mutate())
+
+        AIEHTMLMonitor.sendPrestances('Reconnect', 'Document', 'All')
     }
 
     static sendPrestances (eventName: string = '', elementName: string = '', environmentName: string = '') : void {
@@ -45,7 +47,7 @@ export default class AIEHTMLMonitor extends AIEMonitor {
                 state,
             }
             const event = new CustomEvent(AIEHTMLMonitor.eventSendName, { 'detail': JSON.stringify(detail) });
-            (<any>window).dispatchEvent(event);
+            (<any>window).dispatchEvent(event)
         }
     }
 

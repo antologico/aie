@@ -1,12 +1,18 @@
-class HitmapPanel {
-    constructor (history) {    
+import EventDispatcher from './EventDispatcher'
+
+class HitmapPanel extends EventDispatcher {
+    constructor (history) {
+        super()
         this.templateTimemachine = document.getElementById('timemachine-template')
         this.image = document.getElementById('hitmap-image')
         this.input = document.getElementById('hitmap-input')
         this.search = document.getElementById('hitmap-search')
         this.printButton = document.getElementById('hitmap-print')
+        this.applyButton = document.getElementById('hitmap-apply')
+        this.restoreButton = document.getElementById('hitmap-restore')
+
         this.history = history
-        this.index = 0
+        this.historyIndex = 0
         this.maxPrestance = 0
         this.searchItem = null
         this.imageHeight = null
@@ -14,10 +20,28 @@ class HitmapPanel {
         this.input.addEventListener('input', (e) => this.onInputChange(e.currentTarget.value))
         this.search.addEventListener('change', (e) => this.onSearchChange(e.currentTarget.value))
         this.printButton.addEventListener('click', () => this.printSVG())
+        
+        this.applyButton.addEventListener('click', () => this.onApply())
+        this.restoreButton.addEventListener('click', () => this.onRestore())
 
         this.templateRectagle = document.getElementById('hitmap-rectangle').innerHTML
         this.templateOption = document.getElementById('hitmap-search-option').innerHTML
         this.templatePrintable = document.getElementById('svg-print').innerHTML
+
+        this.events = {
+            onApply: () => {},
+            onRestore: () => {},
+        }
+    }
+
+    onApply() {
+        const { state } = this.history.toItem(this.historyIndex)
+        this.events.onApply(state)
+    }
+
+    onRestore() {
+        const { state } = this.history.toItem(this.historyIndex)
+        this.events.onRestore(state)
     }
 
     onSearchChange (name) {
@@ -26,8 +50,8 @@ class HitmapPanel {
     }
 
     onInputChange(value) {
-        const index = parseInt((this.history.getLength() - 1) * value / 100)
-        this.updateImage(this.history.getItem(index))
+        this.historyIndex = parseInt((this.history.getLength() - 1) * value / 100)
+        this.updateImage(this.history.getItem(this.historyIndex))
     }
 
     flatTree (list, search) {
@@ -95,21 +119,24 @@ class HitmapPanel {
         const flatTree = this.flatTree(state, this.searchItem)
         let imageHeight = 0, imageWidth = 0
         const html = flatTree.map(({ physicalAttribute, prestance, name }) => {
-            const { width, top, left , height } = physicalAttribute
-            if (height + top > imageHeight) {
-                imageHeight = height + top
-            }
-            if (left + width > imageWidth) {
-                imageWidth = left + width
-            }
             return physicalAttribute ? this.getRectagle ({physicalAttribute, prestance, name}) : ''
         }).join('')
         this.search.innerHTML = this.flatTree(state, null).map(
-            ({ name }) => this.templateOption.replace(/{name}/g, name).replace(/{selected}/g, (this.searchItem === name ? 'selected' : ''))).join('')
+            ({ name, physicalAttribute }) => {
+                const { width, top, left , height } = physicalAttribute
+                if ((height + top) > imageHeight) {
+                    imageHeight = height + top
+                }
+                if ((left + width) > imageWidth) {
+                    imageWidth = left + width
+                }
+                return this.templateOption.replace(/{name}/g, name).replace(/{selected}/g, (this.searchItem === name ? 'selected' : ''))
+            }).join('')
         this.image.innerHTML = html
         this.imageWidth = imageWidth
         this.imageHeight = imageHeight
         this.image.setAttribute('viewBox', [0, 0, imageWidth, imageHeight].join(' '))
+        this.image.setAttribute('width', imageWidth + 'px')
     }
 
     createNewWindowForSVG(printWindow) {

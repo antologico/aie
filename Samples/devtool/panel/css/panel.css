@@ -331,10 +331,16 @@ input[type='checkbox']:checked + .toolbar-icon {
   margin: 1em 2em 0 2em;
 }
 
+.hitmap-image-content {
+  background: black;
+  text-align: center;
+}
+
 #hitmap-image {
+  margin: 0 auto;
   background: black;
   border: 1px solid #d405a7;
-  width: 100%; 
+  max-width: 100%; 
   max-height: 600px;
   height: auto;
 }
@@ -346,11 +352,15 @@ input[type='checkbox']:checked + .toolbar-icon {
   display: inline-block;
 }
 
-#hitmap-print {
+.hitmap-buttons-content {
+  text-align: right;
+}
+
+.hitmap-buttons-content button {
+  margin: 0 auto;
+  margin-left: 1em;
   border: 0;
   border-radius: 0.5em;
-  float: right;
-  display: block;
   padding: 0.3em;
   border: 0.1em solid #d405a7;
   background: rgb(32, 60, 105);
@@ -392,12 +402,11 @@ input[type='checkbox']:checked + .toolbar-icon {
 
 fieldset {
   color: white;
-  padding: 1em;
   font-size: 1em;
   border: 0;
   border-radius: 0.5em;
-  padding: 1em;
-  padding-bottom: 2em;
+  padding: 0.5em 1em;
+  padding-bottom: 1em;
   background: rgb(32, 60, 105);
   margin-bottom: 2em;
 }

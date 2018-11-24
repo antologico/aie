@@ -38,6 +38,9 @@ panel.registerEvent('onMarkChange', connection.sendMark.bind(connection))
 panel.registerEvent('onConnect', connection.sendConnect.bind(connection))
 panel.registerEvent('onFilterHitmap', hitmapPanel.onSearchChange.bind(hitmapPanel))
 
+hitmapPanel.registerEvent('onApply', connection.applyState.bind(connection))
+hitmapPanel.registerEvent('onRestore', connection.applyState.bind(connection))
+
 historyPanel.registerEvent('onApply', connection.applyState.bind(connection))
 historyPanel.registerEvent('onRestore', connection.restoreScores.bind(connection))
 
