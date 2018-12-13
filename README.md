@@ -1,4 +1,4 @@
-# ![AIE](https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png =250x)
+# ![AIE](https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png =250x100)
 
 Adaptative Interface Ecosystem
 
@@ -57,4 +57,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * Sara Rodríguez
-* Eduardo Lanchares
