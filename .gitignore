@@ -1,6 +1,7 @@
-Samples/htmlSample/node_modules
-Samples/htmlSample/yarn.lock
-Samples/htmlSample/yarn-error.log
-Samples/devtool/node_modules
-Samples/devtool/yarn.lock
-Samples/devtool/yarn-error.log
+htmlSample/node_modules
+htmlSample/yarn.lock
+htmlSample/yarn-error.log
+devtool/node_modules
+devtool/yarn.lock
+devtool/yarn-error.log
+aie.code-workspace
