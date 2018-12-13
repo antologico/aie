@@ -1,6 +1,6 @@
 # AIE
 
-![AIE](https://raw.githubusercontent.com/antoniojuansanchez/aie/master/devtool/panel/images/icon-inline.svg)
+![AIE](https://raw.githubusercontent.com/antoniojuansanchez/aie/master/devtool/panel/images/icon-inline.svg?token=AFU-mRR1ais2wX43qP3j76YpiCRCvExsks5cHAWQwA%3D%3D)
 
 Adaptative Interface Ecosystem
 
