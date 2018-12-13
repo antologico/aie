@@ -1,6 +1,4 @@
-# AIE
-
-![AIE](https://raw.githubusercontent.com/antoniojuansanchez/aie/devtool/panel/images/icon-inline.svg)
+# ![AIE](https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png)
 
 Adaptative Interface Ecosystem
 
@@ -28,7 +26,7 @@ Install de extension in Chrome
 
 And when you explore the code you can see the AIE Panel
 
-![Chrome extension](https://raw.githubusercontent.com/antoniojuansanchez/aie/readme/img.png)
+![Chrome extension](https://github.com/antoniojuansanchez/aie/raw/master/readme/img.png)
 
 ### See the example
 
