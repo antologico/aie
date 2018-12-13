@@ -1,4 +1,4 @@
-# ![AIE](https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png)
+# ![AIE](https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png =250x)
 
 Adaptative Interface Ecosystem
 
