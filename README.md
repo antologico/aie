@@ -1,6 +1,9 @@
 <img alt="AIE" src="https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png" width="200">
 Adaptative Interface Ecosystem
 
+
+## What is this?
+
 An Adaptive Interface Ecosystem (EAI) tries to solve conflicts related to the use of an application in a particular way, that is, when the profile of users of an application is so diverse that the interface can not adapt to the needs of all they. It is generally thought that an application must present a UX that suits most of its users, and this interface usually varies through the versions of the application modified according to the use and needs of users. An EIA is an interface that analyzes user usage patterns and mutates to adapt to them without needing to be modified or updated.
 
 ## Getting Started
