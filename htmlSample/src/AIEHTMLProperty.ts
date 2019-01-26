@@ -57,7 +57,10 @@ function getLevelParentElement(
     }
     
     const prestance = element.getPrestance()
-
+    if (parentElement === null) {
+        console.error ("Error in element", element.getName(), ": null parent" )
+        return null
+    }
     if ((parentElement.getMaxPrestance() <= prestance) &&
         (parentElement.getPrestance() < prestance)) {
         return getLevelParentElement(element, parentElement.getParent(), topLevelParent)
@@ -71,7 +74,7 @@ function levelFn(element: AIEHTMLElement, topLevelParent: AIEElement) {
     element.getChildren().forEach((child: AIEHTMLElement) => {
         const parent = getLevelParentElement(child, element, topLevelParent || element)
         !child.hasChildren()
-            ? parent.getBaseElement().appendChild(child.getBaseElement())
+            ? parent && parent.getBaseElement().appendChild(child.getBaseElement())
             : child.getParent().getBaseElement().appendChild(child.getBaseElement())
         levelFn(child, topLevelParent || element)
     })

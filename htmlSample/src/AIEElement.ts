@@ -25,7 +25,7 @@ export default abstract class AIEElement {
     if(baseElement) {
       this.setBaseElement(baseElement)
       this.name = this.getAttr('name')
-      this.trigger = this.getAttr('trigger')
+      this.trigger = this.getAttrs('trigger')
       this.bindTriggers()
     }
     this.born = this.getDate()
@@ -92,8 +92,8 @@ export default abstract class AIEElement {
     return this.name
   }
 
-  public getTriggerName() {
-    return this.trigger
+  public getTriggersName(): any {
+    return this.trigger || []
   }
 
   public getEventName() {
@@ -198,6 +198,7 @@ export default abstract class AIEElement {
   public abstract initializeMemory(seed: string): AIEMemory
   public abstract setBaseElement(baseElement: any): void
   public abstract getAttr(attributeName: string): string
+  public abstract getAttrs(attributeName: string): any
   public abstract getBaseElementParent(): Node
   public abstract getBaseElement(): any
   public abstract bindTriggers(): void

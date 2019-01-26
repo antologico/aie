@@ -77,9 +77,21 @@ export default class AIEHTMLElement extends AIEElement {
     return val ? val.value : undefined
   }
 
+  public getAttrs(attributeName: string) {
+    const values = this.getAttr(attributeName);
+
+    return values === undefined
+      ? undefined
+      : values.split(',').map(function(item) {
+        return item.trim();
+      })
+  }
+
   public bindTriggers() {
-    if (this.getTriggerName()) {
-      this.baseElement.addEventListener(this.getTriggerName(), this.onTrigger.bind(this, this.getTriggerName()))
+    const triggers:any = this.getTriggersName()
+    for (let t in triggers) {
+      console.log(triggers[t], this.getName())
+      this.baseElement.addEventListener(triggers[t], this.onTrigger.bind(this, triggers[t]))
     }
   }
 

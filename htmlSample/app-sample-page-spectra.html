@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        body {
+            background: white;
+            font-size: 12px;
+            padding: 0;
+            margin: 0;
+            color: #8c8c8c;
+        }
+
+        .header {
+            height: 40px;
+            border-bottom: 1px solid #ebebeb;
+            background: #f6f6f6;
+            padding: 10px;
+            font-size: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .header_image {
+            margin-right: 5px;
+            height: 34px;
+            align-self: flex-start;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .header_user {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            width: 100px;
+        }
+        .header_logo {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            width: 100px;
+        }
+
+        .menu {
+            width: 15%;
+            height: calc(100vh - 60px);
+            float: left;
+            background: #EEE;
+        }
+
+        .submenu_title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            height: 30px;
+            display: flex;
+            padding: 0 20px;
+            align-items: flex-end;
+        }
+        .submenu {
+            width: 25%;
+            margin-top: 40px;
+            height: calc(100vh - 100px);
+            float: left;
+        }
+
+        .menu_item {
+            display: block;
+            color: #215d5d;
+            padding: 15px;
+            cursor: pointer;
+        }
+
+        .submenu_item {
+            color: #215d5d;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid #ebebeb;
+            border-bottom: 0;
+        }
+
+        .submenu_item:last-child {
+            border-bottom: 1px solid #ebebeb;
+        }
+
+        
+        .menu_item:hover,
+        .submenu_item:hover {
+            background: #215d5d;
+            color: white;
+        }
+
+        input:checked ~ .submenu_text {
+            background: #215d5d;
+            color: white;
+        }
+
+        input:checked ~ .menu_text {
+            font-weight: bold;
+        }
+        .submenu_icon {
+            width: 30px;
+            height: 30px;
+            border-right: 1px solid #ebebeb;
+            background: white;
+            display: flex;
+            align-content: center;
+            align-items: center;
+        }
+
+        .submenu_icon img {
+            width: 20px;
+            height: 20px;
+            margin: 0 auto;
+        }
+
+        .menu_text {
+            width: 100%;
+            display: flex;
+            align-content: center;
+            align-items: center;
+        }
+
+        .submenu_text {
+            width: 100%;
+            height: 30px;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        .main {
+            width: 60%;
+            margin-top: 40px;
+            height: calc(100vh - 100px);
+            float: left;
+            overflow:scroll;
+        }
+
+        .submenu_content,
+        .main_content {
+            padding: 0 20px;
+        }
+
+        .main_content_map {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: 300px;
+            background: url('/img/spectra/map.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            margin-bottom: 20px;
+        }
+
+        .main_content_graph1,
+        .main_content_graph2 {
+            display: inline-block;
+            max-width: 100%;
+            background-image: url('/img/spectra/graph1.png');
+            height: 150px;
+            width: 90%;
+            background-size:contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .main_content_graph2 {
+            background-image: url('/img/spectra/graph2.png');
+        }
+        .main_content_graph1:hover,
+        .main_content_graph2:hover,
+        .main_content_map:hover {
+            box-shadow: inset 0 0 20px #AAA;
+        }
+
+    </style>
+    <body>
+        <div class="header">
+            <div class="header_logo">
+                <img src="/img/spectra/logo-santander.png" class="header_image" />
+                Santanter
+            </div>
+            <div class="header_user">
+                <img src="/img/spectra/user.png" class="header_image" />
+                Diego &#9660;
+            </div>
+        </div>
+        <div id='form-context'> 
+            <div aie aie-name="spectra_page" aie-prestance-fields="position"> 
+                <div class="menu" aie aie-name="menu" aie-prestance-fields="position, font-size|max:1.2">
+                    <label for="chk_m_1" class="menu_item" aie aie-name="menu_1" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_1" />
+                        <div class="menu_text">Panel principal</div>
+                    </label>
+                    <label for="chk_m_2" class="menu_item" aie aie-name="menu_2" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_2" />
+                        <div class="menu_text">Servicios</div>
+                    </label>
+                    <label for="chk_m_3" class="menu_item" aie aie-name="menu_3" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_3" />
+                        <div class="menu_text">Transporte</div>
+                    </label>
+                    <label for="chk_m_4" class="menu_item" aie aie-name="menu_4" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_4" />
+                        <div class="menu_text">Medio ambiente</div>
+                    </label>
+                    <label for="chk_m_5" class="menu_item" aie aie-name="menu_5" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_5" />
+                        <div class="menu_text">Urbanismo</div>
+                    </label>
+                    <label for="chk_m_6" class="menu_item" aie aie-name="menu_6" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_6" />
+                        <div class="menu_text">Eventos culturales</div>
+                    </label>
+                    <label for="chk_m_7" class="menu_item" aie aie-name="menu_7" aie-trigger="click">
+                        <input type="radio" class="hidden" name="chk_m" id="chk_m_7" />
+                        <div class="menu_text">Incidencias</div>
+                    </label>
+                </div>
+                <div class="submenu" aie aie-name="submenu">
+                    <div class="submenu_title">
+                        Medio ambiente
+                    </div>
+                    <div class="submenu_content" aie aie-name="submenu_items" aie-prestance-fields="position">
+                        <label class="submenu_item" for="chk_sb_1" aie aie-name="submenu_1" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_1" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/Temperatura.png" />
+                            </div>
+                            <div class="submenu_text">
+                                Temperatura
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_2" aie aie-name="submenu_2" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_2" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/Ruido.png" />
+                            </div>
+                            <div class="submenu_text">
+                                Ruido
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_3" aie aie-name="submenu_3" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_3" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/Luz.png" />
+                            </div>
+                            <div class="submenu_text">
+                                Luz
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_4" aie aie-name="submenu_4" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_4" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/Particulas.png" />
+                            </div>
+                            <div class="submenu_text">
+                                Particulas
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_5" aie aie-name="submenu_5" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_5" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/NO2.png" />
+                            </div>
+                            <div class="submenu_text">
+                                NO<sub>2</sub>
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_6" aie aie-name="submenu_6" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_6" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/CO.png" />
+                            </div>
+                            <div class="submenu_text">
+                                CO
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_7" aie aie-name="submenu_7" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_7" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/Ozono.png" />
+                            </div>
+                            <div class="submenu_text">
+                                Ozono
+                            </div>
+                        </label>
+                        <label class="submenu_item" for="chk_sb_8" aie aie-name="submenu_8" aie-trigger="click">
+                            <input type="radio" class="hidden" name="chk_sb" id="chk_sb_8" />
+                            <div class="submenu_icon">
+                                <img src="img/spectra/Sensores.png" />
+                            </div>
+                            <div class="submenu_text">
+                                Sensores de riego
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="main" aie aie-name="content" aie-prestance-fields="position">
+                    <div class="submenu_title">
+                        Ozono
+                    </div>
+                    <div class="main_content" aie aie-name="graphs" aie-prestance-fields="position,width|max:2,height|max:1.5">
+                        <div class="main_content_map" aie aie-name="map" aie-trigger="mouseover, click">
+                            <img src="img/spectra/bar.png" />
+                        </div>
+                        <div class="main_content_graph1" aie aie-name="graph_1" aie-trigger="mouseover">
+
+                        </div><div class="main_content_graph2" aie aie-name="graph_2" aie-trigger="mouseover"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="http://localhost:8080/dist/aie.min.js"></script>
+        <script>
+            initAIE('APPSAMPLE_SPECTRA_2', '#form-context')  
+        </script>
+    </body>
+</html>

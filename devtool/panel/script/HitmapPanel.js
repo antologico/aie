@@ -88,7 +88,7 @@ class HitmapPanel extends EventDispatcher {
     }
 
     getFillColor (prestance) {
-        const color = parseInt(prestance / this.maxPrestance  * 255)
+        const color = parseInt((prestance / this.maxPrestance)  * 255)
         return 'rgb(' + [color, 30, color].join(',') + ')'
     }
 
