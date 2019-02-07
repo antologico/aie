@@ -81,7 +81,6 @@ export default abstract class AIE {
   }
 
   public start() {
-    console.info('[AIE] Running ...')
     this.initializeElements(this.getElements())
   }
 

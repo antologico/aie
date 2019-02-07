@@ -36,7 +36,7 @@ label {
   text-overflow: ellipsis; 
   overflow: hidden;
   white-space: nowrap;
-  padding-left: 2em;
+  padding-left: 0;
   cursor: cell;
   color: white;
   border-bottom: 1px solid rgb(32, 60, 105);
@@ -75,7 +75,7 @@ input[type='checkbox']:checked ~ .item > label {
   border-bottom: 4px solid transparent;
   border-left: 4px solid white;
   top: 1.2em;
-  left: 0.4em;
+  left: -1em;
 }
 
 .itemPair:last-of-type:before {
@@ -336,6 +336,15 @@ input[type='checkbox']:checked + .toolbar-icon {
   text-align: center;
 }
 
+#hitmap-image-leyend {
+  position: absolute;
+  line-height: 30px;
+  padding: 10px;
+  border: 1px solid  #ff0475;
+  background: #10213D;
+  color: white;
+}
+
 #hitmap-image {
   margin: 0 auto;
   background: black;
@@ -360,7 +369,7 @@ input[type='checkbox']:checked + .toolbar-icon {
   margin: 0 auto;
   margin-left: 1em;
   border: 0;
-  border-radius: 0.5em;
+  border-radius: 0.2em;
   padding: 0.3em;
   border: 0.1em solid #d405a7;
   background: rgb(32, 60, 105);
@@ -371,7 +380,7 @@ input[type='checkbox']:checked + .toolbar-icon {
 #hitmap-search {
   width: 120px;
   border: 0;
-  border-radius: 0.5em;
+  border-radius: 0.2em;
   float: right;
   display: block;
   height: 3em;
@@ -403,8 +412,8 @@ input[type='checkbox']:checked + .toolbar-icon {
 fieldset {
   color: white;
   font-size: 1em;
-  border: 0;
-  border-radius: 0.5em;
+  border: 2px solid rgb(32, 60, 105);
+  border-radius: 0.2em;
   padding: 0.5em 1em;
   padding-bottom: 1em;
   background: rgb(32, 60, 105);
@@ -413,14 +422,22 @@ fieldset {
 
 fieldset legend {
   padding: 0.5em 1em;
-  border-radius: 0.5em;
+  border-radius: 0.2em;
   color: #d405a7;
   background: rgb(32, 60, 105);
   font-weight: 800;
   font-size: 1.2em;
+  margin: 0 -1em;
 }
 
 fieldset input {
-  border: 0;
-  border-radius: 0.5em;
+  border: 1px solid rgb(50, 100, 150);
+  border-radius: 0.2em;
+  color: white;
+  background: #10213D;
+  padding: 0.5em;
+}
+
+.fieldset-line {
+  margin-bottom: 1em;
 }

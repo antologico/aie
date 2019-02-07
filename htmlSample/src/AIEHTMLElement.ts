@@ -2,6 +2,7 @@ import AIEElement from './AIEElement'
 import AIEMemory from './AIEMemory'
 import AIEHTMLMemory from './AIEHTMLMemory'
 import AIEHTMLProperty from './AIEHTMLProperty'
+import AIEHTMLMonitor from './AIEHTMLMonitor'
 
 const MAX_ID = 'max'
 const MIN_ID = 'min'
@@ -90,7 +91,6 @@ export default class AIEHTMLElement extends AIEElement {
   public bindTriggers() {
     const triggers:any = this.getTriggersName()
     for (let t in triggers) {
-      console.log(triggers[t], this.getName())
       this.baseElement.addEventListener(triggers[t], this.onTrigger.bind(this, triggers[t]))
     }
   }

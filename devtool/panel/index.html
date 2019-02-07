@@ -31,8 +31,14 @@
 			<div class="tab" id="config">
 				<fieldset>
 					<legend><i class="icon-gauge"></i> Resources</legend>
-					<label for="config_level">History levels</label>
-					<input id="config_level" type="number" min="0"> <small><i>0 for disable</i></small>
+					<div class="fieldset-line">
+						<label for="config_level">History levels</label>
+						<input id="config_level" type="number" min="0"> <small><i>0 for disable</i></small>
+					</div>
+					<div class="fieldset-line">
+						<label for="config_level">Auto application</label>
+						<input id="config_autoapply" type="number" min="0"> cicles number <small><i>0 for disable</i></small>
+					</div>
 				</fieldset>
 			</div>
 			<div class="tab" id="timemachine">
@@ -121,7 +127,7 @@
 		</script>
 
 		<script type="template" id="hitmap-rectangle">
-			<rect x="{left}" y="{top}" width="{width}" height="{height}" fill="{fill}" />
+			<rect aie-name="{name}" x="{left}" y="{top}" width="{width}" height="{height}" fill="{fill}" />
             <text x="{x}" y="{y}" fill="white" font-size="6">{name}</text>
 		</script>
 
