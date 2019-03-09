@@ -3,9 +3,6 @@
     "short_name": "AIEToolPanel",
     "version": "0.1",
     "description": "A inspector for AIE module. 2018 (c) Antonio Juan Sánchez ",
-    "browser_action": {
-        "default_title": "AIE Tool Panel"
-    },
     "icons": {
       "16": "./icons/icon16.png",
       "48": "./icons/icon48.png",

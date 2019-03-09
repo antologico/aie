@@ -109,7 +109,7 @@ export default class AIEHTMLElement extends AIEElement {
   }
 
   public transform(percent: number): void {
-    this.getProperties().forEach(prop => {
+    this.getProperties().forEach(prop => { 
       prop.transform(this)
     })
   }
@@ -119,6 +119,36 @@ export default class AIEHTMLElement extends AIEElement {
     if (!el) {
       return {}
     }
-    return el.getBoundingClientRect()
+    const val = this.getAbsoluteBoundingRect(el)
+    return this.getAbsoluteBoundingRect(el)
+  }
+
+  private getAbsoluteBoundingRect (el: HTMLElement) {
+    const doc  = document,
+        win  = window,
+        body = doc.body,
+        rect = el.getBoundingClientRect()
+        // pageXOffset and pageYOffset work everywhere except IE <9.
+    let offsetX = win.pageXOffset,
+        offsetY = win.pageYOffset
+
+    if (el !== body) {
+        let parentNode: any = el.parentNode
+        // The element's rect will be affected by the scroll positions of
+        // *all* of its scrollable parents, not just the window, so we have
+        // to walk up the tree and collect every scroll offset. Good times.
+        while (parentNode !== body) {
+            offsetX += parentNode.scrollLeft;
+            offsetY += parentNode.scrollTop;
+            parentNode = parentNode.parentNode;
+        }
+    }
+
+    return {
+        height: rect.height,
+        left  : rect.left + offsetX,
+        top   : rect.top + offsetY,
+        width : rect.width
+    };
   }
 }

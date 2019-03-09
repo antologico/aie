@@ -2,11 +2,11 @@ const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  entry: './panel/script/index.js',
+  entry: './dev/panel/script/index.js',
   output: {
     path: __dirname,
     publicPath: '/',
-    filename: './panel/panel.min.js'
+    filename: './dist/panel/panel.min.js'
   },
   devtool: 'source-map',
   module: {
@@ -16,8 +16,8 @@ module.exports = {
     ]
   },
   resolve: {
-        extensions: ['.js', '.json']
-    },
+      extensions: ['.ts', '.tsx', '.js', '.json']
+  },
   plugins: [
     new UglifyJSPlugin({
       test: /\.js($|\?)/i,
