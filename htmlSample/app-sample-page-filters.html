@@ -105,9 +105,8 @@
     </div>
     <script src="http://localhost:8080/dist/aie.min.js"></script>
     <script>
-        initAIE('APPSAMPLE_FILTERS_6', '#form-context')  
-    </script>
-    <script>
+        initAIE('APPSAMPLE_FILTERS_6', '#form-context')
+        exposeAIE ()
         document.querySelectorAll('.selector_options > .selector_option')
             .forEach(el => el.addEventListener('click', e => {
                 console.log(e.target.parentNode.parentNode.querySelector('input'))
