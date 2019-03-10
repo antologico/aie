@@ -1,11 +1,11 @@
 {
   "name": "aie",
-  "version": "0.0.1",
-  "main": "dis/aie.js",
+  "version": "0.0.3",
+  "main": "index.js",
   "license": "MIT",
   "author": {
     "name": "Antonio Juan Sánchez",
-    "email" : "anto@usal.es"
+    "email": "anto@usal.es"
   },
   "scripts": {
     "start": "webpack-dev-server",
@@ -25,6 +25,7 @@
     "source-map-loader": "^0.2.3",
     "typescript": "^2.6.2",
     "typescript-eslint-parser": "^11.0.0",
+    "typings": "^2.1.1",
     "uglify-js": "^3.3.4",
     "uglifyjs-webpack-plugin": "^1.1.5",
     "webpack": "^3.10.0",

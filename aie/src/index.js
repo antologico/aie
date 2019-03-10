@@ -1,20 +1,16 @@
 import AIEHTML from './AIEHTML'
 import AIEHTMLMonitor from './AIEHTMLMonitor'
 
-function initAIE (name: string, selector: string) {
+const initAIE = (name, selector) => {
     const aie = new AIEHTML(name, selector)
     aie.start() 
 }
 
-(<any>window).initAIE = initAIE
-
-function exposeAIE() {
+const exposeAIE = () => {
     AIEHTMLMonitor.exposeEnviroments() 
 }
 
-export {
-    AIEHTML,
-    AIEHTMLMonitor,
+module.export = {
     initAIE,
     exposeAIE
 }

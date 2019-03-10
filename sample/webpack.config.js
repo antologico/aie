@@ -2,11 +2,11 @@ const webpack = require('webpack')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
-  entry: './src/sample.ts',
+  entry: './src/sample.js',
   output: {
     path: __dirname,
     publicPath: '/',
-    filename: './dist/sample.js'
+    filename: './dist/aie.min.js'
   },
   devtool: 'source-map',
   module: {
