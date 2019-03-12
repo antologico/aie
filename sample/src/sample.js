@@ -1,3 +1,4 @@
-import * as AAA from 'aie'
+import * as aie from 'aie'
 
-console.log('--->>', AAA)
+window.initAIE = aie.default.initAIE
+window.exposeAIE = aie.default.exposeAIE
