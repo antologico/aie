@@ -50,7 +50,7 @@ export default abstract class AIE {
     if (!element) {
       return null
     }
-    const parent:AIEElement = elements.find((el) => {
+    const parent:AIEElement = elements.find((el: AIEElement) => {
       return el.getBaseElement() === element
     })
 
