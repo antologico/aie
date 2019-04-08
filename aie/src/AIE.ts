@@ -1,8 +1,8 @@
 import AIEElement from './AIEElement'
 import AIEMonitor from './AIEMonitor'
 import AIEEventProcessor from './AIEEventProcessor'
-import AIEPrestanceCalculator from './AIEPrestanceCalculator'
-import AIEAbstractPrestanceSpeed from './AIEAbstractPrestanceSpeed'
+import AIEPregnancyCalculator from './AIEPregnancyCalculator'
+import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed'
 import AIEAbstractMaduration from './AIEAbstractMaduration'
 
 export default abstract class AIE {
@@ -10,20 +10,20 @@ export default abstract class AIE {
   private environment: AIEElement
   private name: string
   private context: string
-  private prestanceCalculator: AIEPrestanceCalculator
+  private pregnancyCalculator: AIEPregnancyCalculator
 
   public constructor(name: string, context: any) {
     this.eventProcessor = new AIEEventProcessor(this)
     this.name = name
     this.context = context
-    this.prestanceCalculator = new AIEPrestanceCalculator(
-      this.getPrestanceSpeed(),
+    this.pregnancyCalculator = new AIEPregnancyCalculator(
+      this.getPregnancySpeed(),
       this.getMaduration()
     )
     AIEMonitor.addEnvironments(this)
   }
 
-  public abstract getPrestanceSpeed(): AIEAbstractPrestanceSpeed
+  public abstract getPregnancySpeed(): AIEAbstractPregnancySpeed
   public abstract getMaduration(): AIEAbstractMaduration
   public abstract getElements():NodeListOf<any>
 
@@ -73,7 +73,7 @@ export default abstract class AIE {
     const elements: Array<AIEElement> = []
     matches.forEach((el: Node) => {
       const aiee = this.createElement(el)
-      aiee.setPrestanceCalculator(this.prestanceCalculator)
+      aiee.setPregnancyCalculator(this.pregnancyCalculator)
       aiee.setProccesor(this.eventProcessor)
       elements.push(aiee)
     })
@@ -91,7 +91,7 @@ export default abstract class AIE {
   public setState(value: any, child: AIEElement = null) {
     const parent = child ? child : this.environment
     parent.setScore(value.score)
-    parent.setPrestance(value.prestance)
+    parent.setPregnancy(value.pregnancy)
     value.children.map((childValues: any) => {
       const el = parent.getChildren().find((e: AIEElement) => e.getName() === childValues.name)
       if (el) {
@@ -105,16 +105,16 @@ export default abstract class AIE {
   }
 
   public mutate() {
-    const maxGroupPrestance = this.environment.getMaxPrestance()
+    const maxGroupPregnancy = this.environment.getMaxPregnancy()
     this.environment.getChildren().forEach((child: AIEElement) => {
-      child.mutate(maxGroupPrestance)
+      child.mutate(maxGroupPregnancy)
     })
   }
 
   private getElementState(element: AIEElement):any {
     const values:any = {
       name: element.getName(),
-      prestance: element.getPrestance(),
+      pregnancy: element.getPregnancy(),
       score: element.getScore(),
       properties: element.getPropertiesNames(),
       physicalAttribute: element.getPhysicalAttributes(),

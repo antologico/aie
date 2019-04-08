@@ -35,8 +35,8 @@ export default class AIEEventProcessor {
     if (event) {
       if (event.element.hasParent()) {
         const elParent: AIEElement = event.element.getParent()
-        const increment = event.element.updatePrestance()
-        elParent.updateChildrenPrestance(-increment, [ event.element ])
+        const increment = event.element.updatePregnancy()
+        elParent.updateChildrenPregnancy(-increment, [ event.element ])
         elParent.onTrigger(event.name)
         event.name && this.events.change(event.name, event.element)
       }

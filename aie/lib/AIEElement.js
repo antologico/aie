@@ -12,17 +12,17 @@ export default class AIEElement {
         this.children = [];
         this.processor = null;
         this.parent = null;
-        this.prestance = 0;
+        this.pregnancy = 0;
         this.updates = 0;
         this.properties = [];
-        this.maxPrestance = DEFAULT_MAX_PRESTANCE; // By default
+        this.maxPregnancy = DEFAULT_MAX_PRESTANCE; // By default
         this.memory = this.initializeMemory(this.generateId());
     }
     setUpdates(updates) {
         this.maxUpdates = updates;
     }
-    setMaxPrestance(prestance) {
-        this.maxPrestance = prestance;
+    setMaxPregnancy(pregnancy) {
+        this.maxPregnancy = pregnancy;
     }
     setName(name) {
         this.name = name;
@@ -31,17 +31,17 @@ export default class AIEElement {
     generateId() {
         return 'aie::' + this.name;
     }
-    updatePrestance(increment = null) {
+    updatePregnancy(increment = null) {
         if (!this.hasParent() || (this.maxUpdates && (this.updates >= this.maxUpdates))) {
             return 0;
         }
         if (increment !== null) {
-            this.prestance += (this.prestance + increment > 0) ? increment : 0;
+            this.pregnancy += (this.pregnancy + increment > 0) ? increment : 0;
             return increment;
         }
         this.updates++;
-        const newIncrement = this.prestanceCalculator.calculateIncrement(this);
-        this.prestance += newIncrement;
+        const newIncrement = this.pregnancyCalculator.calculateIncrement(this);
+        this.pregnancy += newIncrement;
         return newIncrement;
     }
     getInteractions() {
@@ -109,11 +109,11 @@ export default class AIEElement {
             ? this.children.reduce((total, child) => total + child.getScore(), 0)
             : 0;
     }
-    updateChildrenPrestance(increment, excluded = []) {
-        this.children.forEach((child) => !excluded.includes(child) && child.updatePrestance(increment));
+    updateChildrenPregnancy(increment, excluded = []) {
+        this.children.forEach((child) => !excluded.includes(child) && child.updatePregnancy(increment));
     }
-    getMaxPrestance() {
-        return this.children.reduce((total, child) => Math.max(total, child.getPrestance()), 0);
+    getMaxPregnancy() {
+        return this.children.reduce((total, child) => Math.max(total, child.getPregnancy()), 0);
     }
     hasParent() {
         return !!this.parent;
@@ -121,23 +121,23 @@ export default class AIEElement {
     hasChildren() {
         return this.children.length !== 0;
     }
-    setPrestanceCalculator(prestanceCalculator) {
-        this.prestanceCalculator = prestanceCalculator;
+    setPregnancyCalculator(pregnancyCalculator) {
+        this.pregnancyCalculator = pregnancyCalculator;
     }
-    getPrestance() {
-        return this.prestance;
+    getPregnancy() {
+        return this.pregnancy;
     }
     setScore(value) {
         return this.memory.setScore(value);
     }
-    setPrestance(value) {
-        this.prestance = value;
+    setPregnancy(value) {
+        this.pregnancy = value;
     }
-    mutate(maxPrestance) {
-        this.transform(maxPrestance ? this.getPrestance() / maxPrestance : 0);
-        const maxGroupPrestance = this.getMaxPrestance();
+    mutate(maxPregnancy) {
+        this.transform(maxPregnancy ? this.getPregnancy() / maxPregnancy : 0);
+        const maxGroupPregnancy = this.getMaxPregnancy();
         this.getChildren().forEach((child) => {
-            child.mutate(maxGroupPrestance);
+            child.mutate(maxGroupPregnancy);
         });
     }
 }

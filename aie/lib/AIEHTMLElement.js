@@ -3,7 +3,7 @@ import AIEHTMLMemory from './AIEHTMLMemory';
 import AIEHTMLProperty from './AIEHTMLProperty';
 const MAX_ID = 'max';
 const MIN_ID = 'min';
-const HTML_SUFFIX_PRESTACE_FIELD = 'prestance-fields';
+const HTML_SUFFIX_PRESTACE_FIELD = 'pregnancy-fields';
 const HTML_PREFIX = 'aie-';
 /*
   The BaseElement is a DOM element

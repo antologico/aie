@@ -6,7 +6,7 @@ import AIEHTMLMonitor from './AIEHTMLMonitor'
 
 const MAX_ID = 'max'
 const MIN_ID = 'min'
-const HTML_SUFFIX_PRESTACE_FIELD = 'prestance-fields'
+const HTML_SUFFIX_PRESTACE_FIELD = 'pregnancy-fields'
 const HTML_PREFIX = 'aie-'
 
 /*

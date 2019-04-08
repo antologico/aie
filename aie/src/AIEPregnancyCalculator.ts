@@ -1,12 +1,12 @@
 import AIEAbstractMaduration from './AIEAbstractMaduration'
-import AIEAbstractPrestanceSpeed from './AIEAbstractPrestanceSpeed'
+import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed'
 import AIEElement from './AIEElement'
 
-export default class AIEPrestanceCalculator {
+export default class AIEPregnancyCalculator {
   private maduration: AIEAbstractMaduration
-  private speed: AIEAbstractPrestanceSpeed
+  private speed: AIEAbstractPregnancySpeed
 
-  public constructor(speed: AIEAbstractPrestanceSpeed, maduration: AIEAbstractMaduration) {
+  public constructor(speed: AIEAbstractPregnancySpeed, maduration: AIEAbstractMaduration) {
     this.maduration = maduration
     this.speed = speed
   }

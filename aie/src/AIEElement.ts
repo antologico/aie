@@ -1,6 +1,6 @@
 import AIEMemory from './AIEMemory'
 import AIEEventProcessor from './AIEEventProcessor'
-import AIEPrestanceCalculator from './AIEPrestanceCalculator'
+import AIEPregnancyCalculator from './AIEPregnancyCalculator'
 import AIEProperty from './AIEProperty'
 
 const DEFAULT_MAX_PRESTANCE = 1
@@ -13,9 +13,9 @@ export default abstract class AIEElement {
   private processor: AIEEventProcessor
   private parent: AIEElement
   private memory: AIEMemory
-  private prestance: number
-  private prestanceCalculator: AIEPrestanceCalculator
-  private maxPrestance: number
+  private pregnancy: number
+  private pregnancyCalculator: AIEPregnancyCalculator
+  private maxPregnancy: number
   private updates: number
   private maxUpdates: number = null
   private born: number
@@ -32,10 +32,10 @@ export default abstract class AIEElement {
     this.children = []
     this.processor = null
     this.parent = null
-    this.prestance = 0
+    this.pregnancy = 0
     this.updates = 0
     this.properties = []
-    this.maxPrestance = DEFAULT_MAX_PRESTANCE // By default
+    this.maxPregnancy = DEFAULT_MAX_PRESTANCE // By default
     this.memory = this.initializeMemory(this.generateId())
   }
 
@@ -43,8 +43,8 @@ export default abstract class AIEElement {
     this.maxUpdates = updates
   }
 
-  public setMaxPrestance(prestance: number) {
-    this.maxPrestance = prestance
+  public setMaxPregnancy(pregnancy: number) {
+    this.maxPregnancy = pregnancy
   }
 
   public setName(name: string) {
@@ -56,17 +56,17 @@ export default abstract class AIEElement {
     return 'aie::' + this.name
   }
 
-  public updatePrestance(increment: number = null): number {
+  public updatePregnancy(increment: number = null): number {
     if (!this.hasParent() || (this.maxUpdates && (this.updates >= this.maxUpdates))) {
       return 0
     }
     if (increment !== null) {
-      this.prestance += (this.prestance + increment > 0) ? increment : 0
+      this.pregnancy += (this.pregnancy + increment > 0) ? increment : 0
       return increment
     }
     this.updates ++
-    const newIncrement = this.prestanceCalculator.calculateIncrement(this)
-    this.prestance += newIncrement
+    const newIncrement = this.pregnancyCalculator.calculateIncrement(this)
+    this.pregnancy += newIncrement
     return newIncrement
   }
 
@@ -155,11 +155,11 @@ export default abstract class AIEElement {
       : 0
   }
 
-  public updateChildrenPrestance(increment: number, excluded: Array<AIEElement> = []): void {
-    this.children.forEach((child) => !excluded.includes(child) && child.updatePrestance(increment))
+  public updateChildrenPregnancy(increment: number, excluded: Array<AIEElement> = []): void {
+    this.children.forEach((child) => !excluded.includes(child) && child.updatePregnancy(increment))
   }
-  public getMaxPrestance(): number {
-    return this.children.reduce((total, child) => Math.max(total, child.getPrestance()), 0)
+  public getMaxPregnancy(): number {
+    return this.children.reduce((total, child) => Math.max(total, child.getPregnancy()), 0)
   }
 
   public hasParent(): boolean {
@@ -170,27 +170,27 @@ export default abstract class AIEElement {
     return this.children.length !== 0
   }
 
-  public setPrestanceCalculator(prestanceCalculator: AIEPrestanceCalculator) {
-    this.prestanceCalculator = prestanceCalculator
+  public setPregnancyCalculator(pregnancyCalculator: AIEPregnancyCalculator) {
+    this.pregnancyCalculator = pregnancyCalculator
   }
 
-  public getPrestance(): number {
-    return this.prestance
+  public getPregnancy(): number {
+    return this.pregnancy
   }
 
   public setScore(value: number) {
     return this.memory.setScore(value)
   }
 
-  public setPrestance(value:number) {
-    this.prestance = value
+  public setPregnancy(value:number) {
+    this.pregnancy = value
   }
 
-  public mutate(maxPrestance: number): void {
-    this.transform(maxPrestance ? this.getPrestance() / maxPrestance : 0)
-    const maxGroupPrestance = this.getMaxPrestance()
+  public mutate(maxPregnancy: number): void {
+    this.transform(maxPregnancy ? this.getPregnancy() / maxPregnancy : 0)
+    const maxGroupPregnancy = this.getMaxPregnancy()
     this.getChildren().forEach((child: AIEElement) => {
-      child.mutate(maxGroupPrestance)
+      child.mutate(maxGroupPregnancy)
     })
 
   }

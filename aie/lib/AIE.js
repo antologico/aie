@@ -1,12 +1,12 @@
 import AIEMonitor from './AIEMonitor';
 import AIEEventProcessor from './AIEEventProcessor';
-import AIEPrestanceCalculator from './AIEPrestanceCalculator';
+import AIEPregnancyCalculator from './AIEPregnancyCalculator';
 export default class AIE {
     constructor(name, context) {
         this.eventProcessor = new AIEEventProcessor(this);
         this.name = name;
         this.context = context;
-        this.prestanceCalculator = new AIEPrestanceCalculator(this.getPrestanceSpeed(), this.getMaduration());
+        this.pregnancyCalculator = new AIEPregnancyCalculator(this.getPregnancySpeed(), this.getMaduration());
         AIEMonitor.addEnvironments(this);
     }
     registerEvent(event, func) {
@@ -48,7 +48,7 @@ export default class AIE {
         const elements = [];
         matches.forEach((el) => {
             const aiee = this.createElement(el);
-            aiee.setPrestanceCalculator(this.prestanceCalculator);
+            aiee.setPregnancyCalculator(this.pregnancyCalculator);
             aiee.setProccesor(this.eventProcessor);
             elements.push(aiee);
         });
@@ -63,7 +63,7 @@ export default class AIE {
     setState(value, child = null) {
         const parent = child ? child : this.environment;
         parent.setScore(value.score);
-        parent.setPrestance(value.prestance);
+        parent.setPregnancy(value.pregnancy);
         value.children.map((childValues) => {
             const el = parent.getChildren().find((e) => e.getName() === childValues.name);
             if (el) {
@@ -75,15 +75,15 @@ export default class AIE {
         return this.context;
     }
     mutate() {
-        const maxGroupPrestance = this.environment.getMaxPrestance();
+        const maxGroupPregnancy = this.environment.getMaxPregnancy();
         this.environment.getChildren().forEach((child) => {
-            child.mutate(maxGroupPrestance);
+            child.mutate(maxGroupPregnancy);
         });
     }
     getElementState(element) {
         const values = {
             name: element.getName(),
-            prestance: element.getPrestance(),
+            pregnancy: element.getPregnancy(),
             score: element.getScore(),
             properties: element.getPropertiesNames(),
             physicalAttribute: element.getPhysicalAttributes(),

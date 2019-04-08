@@ -23,6 +23,7 @@ class Connection extends EventDispatcher {
             }
             switch(message.action) {
               case 'aie-update':
+              console.log(message)
                 this.receiveUpdate(message)
                 break
               case 'aie-reset':

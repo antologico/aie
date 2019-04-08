@@ -1,9 +1,9 @@
 import AIE from './AIE'
 import AIEElement from './AIEElement'
 import AIEHTMLElement from './AIEHTMLElement'
-import AIEAbstractPrestanceSpeed from './AIEAbstractPrestanceSpeed'
+import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed'
 import AIEAbstractMaduration from './AIEAbstractMaduration'
-import AIEDefaultPrestanceSpeed from './AIEDefaultPrestanceSpeed'
+import AIEDefaultPregnancySpeed from './AIEDefaultPregnancySpeed'
 import AIEDefaultMaduration from './AIEDefaultMaduration'
 import AIEHTMLMonitor from './AIEHTMLMonitor'
 
@@ -24,8 +24,8 @@ export default class AIEHTML extends AIE {
     return new AIEHTMLElement(el)
   }
 
-  public getPrestanceSpeed(): AIEAbstractPrestanceSpeed {
-    return new AIEDefaultPrestanceSpeed()
+  public getPregnancySpeed(): AIEAbstractPregnancySpeed {
+    return new AIEDefaultPregnancySpeed()
   }
 
   public getMaduration(): AIEAbstractMaduration {

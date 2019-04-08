@@ -1,9 +1,9 @@
 import AIEMonitor from './AIEMonitor';
 export default class AIEHTMLMonitor extends AIEMonitor {
-    static restorePrestances(event) {
-        const prestances = JSON.parse(event.detail);
-        AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor restore prestances');
-        prestances.map((group) => {
+    static restorePregnancies(event) {
+        const pregnancies = JSON.parse(event.detail);
+        AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor restore pregnancies');
+        pregnancies.map((group) => {
             const aie = AIEMonitor.environments.find((env) => env.getName() === group.name);
             if (aie) {
                 aie.setState(group);
@@ -11,10 +11,10 @@ export default class AIEHTMLMonitor extends AIEMonitor {
         });
     }
     static mutateElements(event) {
-        const prestances = JSON.parse(event.detail);
+        const pregnancies = JSON.parse(event.detail);
         AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor mutate elements');
-        prestances
-            ? prestances.map((group) => {
+        pregnancies
+            ? pregnancies.map((group) => {
                 const aie = AIEMonitor.environments.find((env) => env.getName() === group.name);
                 if (aie) {
                     aie.setState(group);
@@ -22,10 +22,10 @@ export default class AIEHTMLMonitor extends AIEMonitor {
                 }
             })
             : AIEMonitor.environments.forEach((env) => env.mutate());
-        AIEHTMLMonitor.sendPrestances('Reconnect', 'Document', 'All');
+        AIEHTMLMonitor.sendPregnancies('Reconnect', 'Document', 'All');
     }
-    static sendPrestances(eventName = '', elementName = '', environmentName = '') {
-        AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor send prestances for <' + eventName + '>');
+    static sendPregnancies(eventName = '', elementName = '', environmentName = '') {
+        AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor send pregnancies for <' + eventName + '>');
         const state = AIEMonitor.getState();
         if (state && state.length) {
             const detail = {
@@ -44,13 +44,13 @@ export default class AIEHTMLMonitor extends AIEMonitor {
     static exposeEnviroments() {
         // Wait for events
         const w = window;
-        w.addEventListener(AIEHTMLMonitor.eventConnectName, () => { AIEHTMLMonitor.sendPrestances('Reconnect', 'Document', 'All'); });
-        w.addEventListener(AIEHTMLMonitor.eventRestoreName, AIEHTMLMonitor.restorePrestances);
+        w.addEventListener(AIEHTMLMonitor.eventConnectName, () => { AIEHTMLMonitor.sendPregnancies('Reconnect', 'Document', 'All'); });
+        w.addEventListener(AIEHTMLMonitor.eventRestoreName, AIEHTMLMonitor.restorePregnancies);
         w.addEventListener(AIEHTMLMonitor.eventApplyName, AIEHTMLMonitor.mutateElements);
         // Dispatch events
         AIEMonitor.environments.map((env) => {
             env.registerEvent('change', (myEvent, element) => {
-                AIEHTMLMonitor.sendPrestances(myEvent, element.getName(), env.getName());
+                AIEHTMLMonitor.sendPregnancies(myEvent, element.getName(), env.getName());
             });
         });
     }

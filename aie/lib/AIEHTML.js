@@ -1,6 +1,6 @@
 import AIE from './AIE';
 import AIEHTMLElement from './AIEHTMLElement';
-import AIEDefaultPrestanceSpeed from './AIEDefaultPrestanceSpeed';
+import AIEDefaultPregnancySpeed from './AIEDefaultPregnancySpeed';
 import AIEDefaultMaduration from './AIEDefaultMaduration';
 import AIEHTMLMonitor from './AIEHTMLMonitor';
 /*
@@ -16,8 +16,8 @@ export default class AIEHTML extends AIE {
     createElement(el) {
         return new AIEHTMLElement(el);
     }
-    getPrestanceSpeed() {
-        return new AIEDefaultPrestanceSpeed();
+    getPregnancySpeed() {
+        return new AIEDefaultPregnancySpeed();
     }
     getMaduration() {
         return new AIEDefaultMaduration();

@@ -11,29 +11,29 @@ function colorFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const initialValue = initialValues[child.getName()];
         const color = new Color(initialValue);
-        child.getBaseElement().style.color = color.increment(1 + child.getPrestance()).toString();
+        child.getBaseElement().style.color = color.increment(1 + child.getPregnancy()).toString();
     });
 }
 function fontSizeFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const measure = new AIEHTMLMeasurement(initialValues[child.getName()]);
-        child.getBaseElement().style.fontSize = measure.multiply(1 + child.getPrestance()).toString();
+        child.getBaseElement().style.fontSize = measure.multiply(1 + child.getPregnancy()).toString();
     });
 }
 function widthFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const measure = new AIEHTMLMeasurement(initialValues[child.getName()]);
-        child.getBaseElement().style.width = measure.multiply(1 + child.getPrestance()).toString();
+        child.getBaseElement().style.width = measure.multiply(1 + child.getPregnancy()).toString();
     });
 }
 function heightFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const measure = new AIEHTMLMeasurement(initialValues[child.getName()]);
-        child.getBaseElement().style.height = measure.multiply(1 + child.getPrestance()).toString();
+        child.getBaseElement().style.height = measure.multiply(1 + child.getPregnancy()).toString();
     });
 }
 function positionFn(element) {
-    const sortedElements = element.getChildren().sort((a, b) => b.getPrestance() - a.getPrestance());
+    const sortedElements = element.getChildren().sort((a, b) => b.getPregnancy() - a.getPregnancy());
     sortedElements.forEach(el => {
         element.getBaseElement().appendChild(el.getBaseElement());
     });
@@ -42,13 +42,13 @@ function getLevelParentElement(element, parentElement, topLevelParent) {
     if (parentElement === topLevelParent) {
         return parentElement;
     }
-    const prestance = element.getPrestance();
+    const pregnancy = element.getPregnancy();
     if (parentElement === null) {
         console.error("Error in element", element.getName(), ": null parent");
         return null;
     }
-    if ((parentElement.getMaxPrestance() <= prestance) &&
-        (parentElement.getPrestance() < prestance)) {
+    if ((parentElement.getMaxPregnancy() <= pregnancy) &&
+        (parentElement.getPregnancy() < pregnancy)) {
         return getLevelParentElement(element, parentElement.getParent(), topLevelParent);
     }
     return parentElement;

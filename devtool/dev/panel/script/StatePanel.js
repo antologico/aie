@@ -23,17 +23,17 @@ class StatePanel {
         return htmlCode
       }
       
-    getPrestace (prestance) {
-        return prestance ? prestance.toFixed(4) : ''
+    getPrestace (pregnancy) {
+        return pregnancy ? pregnancy.toFixed(4) : ''
     }
       
-    generateItem ({ name, prestance, properties, children}, id) {
+    generateItem ({ name, pregnancy, properties, children}, id) {
         let htmlCode = this.templateItem.replace(/{id}/g, name)
         htmlCode = htmlCode.replace(/{name}/g, name)
         htmlCode = htmlCode.replace(
           /{properties}/g,
           properties.map(property => this.propertyItem.replace(/{property}/i, property)).join(''))
-        htmlCode = htmlCode.replace(/{value}/i, this.getPrestace(prestance))
+        htmlCode = htmlCode.replace(/{value}/i, this.getPrestace(pregnancy))
         htmlCode = htmlCode.replace(
           /{content}/i,
           this.generateList(children, id))
@@ -51,10 +51,10 @@ class StatePanel {
           return []
         }
         if (list) {
-          const map = list.reduce((prev, {name, prestance, children}) => ([
+          const map = list.reduce((prev, {name, pregnancy, children}) => ([
             ...prev,
             ...this.flatTree(children),
-            { name, prestance },
+            { name, pregnancy },
           ]), [])
           return map
         }
@@ -65,27 +65,27 @@ class StatePanel {
           return null
         }
         const valueList = this.flatTree(list)
-        const minVal = valueList.map(a => a.prestance).reduce((a, b) => Math.min(a, b), 1)
-        const maxVal = valueList.map(a => a.prestance).reduce((a, b) => Math.max(a, b), 0)
+        const minVal = valueList.map(a => a.pregnancy).reduce((a, b) => Math.min(a, b), 1)
+        const maxVal = valueList.map(a => a.pregnancy).reduce((a, b) => Math.max(a, b), 0)
         if (list) {
-          valueList.map(({name, prestance}) => {
+          valueList.map(({name, pregnancy}) => {
             const el = document.getElementById(`value_${name}`)
             const arrowEl = document.getElementById(`arrow_${name}`)
             if (el) {
-              const color = 'rgb(100, 100, ' + parseInt(255*(prestance-minVal)/(maxVal-minVal)) + ')'
+              const color = 'rgb(100, 100, ' + parseInt(255*(pregnancy-minVal)/(maxVal-minVal)) + ')'
               el.style.color = color
               arrowEl.style.color = color
               const prevValue = parseFloat(el.innerHTML)
-              if (prevValue > prestance) {
+              if (prevValue > pregnancy) {
                 arrowEl.innerHTML = '&darr;'
-              } else if (prevValue < prestance) {
+              } else if (prevValue < pregnancy) {
                 arrowEl.innerHTML = '&uarr;'
               } else if (!prevValue) {
                 arrowEl.innerHTML = ''
               } else {
                 arrowEl.innerHTML = '='
               }
-              el.innerHTML = this.getPrestace(prestance)
+              el.innerHTML = this.getPrestace(pregnancy)
             }
           })
         }

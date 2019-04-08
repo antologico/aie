@@ -13,7 +13,7 @@ class HitmapPanel extends EventDispatcher {
 
         this.history = history
         this.historyIndex = 0
-        this.maxPrestance = 0
+        this.maxPregnancy = 0
         this.searchItem = null
         this.imageHeight = null
         this.imageWidth = null
@@ -70,38 +70,38 @@ class HitmapPanel extends EventDispatcher {
                 }, []) 
           }
 
-          const map = list.reduce((prev, {name, prestance, children, physicalAttribute}) => ([
+          const map = list.reduce((prev, {name, pregnancy, children, physicalAttribute}) => ([
             ...prev,
-            { name, prestance, physicalAttribute },
+            { name, pregnancy, physicalAttribute },
             ...this.flatTree(children, null),
           ]), [])
           return map
         }
     }
 
-    updateMaxPrestance(flatTree) {
-        flatTree.forEach(({prestance}) => {
-            if (prestance > this.maxPrestance) {
-                this.maxPrestance = prestance
+    updateMaxPregnancy(flatTree) {
+        flatTree.forEach(({pregnancy}) => {
+            if (pregnancy > this.maxPregnancy) {
+                this.maxPregnancy = pregnancy
             }
         })
     }
 
-    getFillColor (prestance) {
-        const color = parseInt((prestance / this.maxPrestance)  * 255)
+    getFillColor (pregnancy) {
+        const color = parseInt((pregnancy / this.maxPregnancy)  * 255)
         return 'rgb(' + [color, 30, color].join(',') + ')'
     }
 
-    getRectagle ({physicalAttribute, prestance, name}) {
+    getRectagle ({physicalAttribute, pregnancy, name}) {
         const { left, top, width, height } = physicalAttribute
 
-        return (left !== undefined) && prestance 
+        return (left !== undefined) && pregnancy 
             ? this.templateRectagle
                 .replace(/{left}/g, left)
                 .replace(/{top}/g, top)
                 .replace(/{width}/g, width)
                 .replace(/{height}/g, height)
-                .replace(/{fill}/g, this.getFillColor(prestance))
+                .replace(/{fill}/g, this.getFillColor(pregnancy))
                 .replace(/{x}/g, (left + 2))
                 .replace(/{y}/g, (top + 8))
                 .replace(/{name}/g, name)
@@ -110,7 +110,7 @@ class HitmapPanel extends EventDispatcher {
 
     update(list) {
         const flatTree = this.flatTree(list)
-        this.updateMaxPrestance(flatTree)
+        this.updateMaxPregnancy(flatTree)
         this.input.value = 100
         this.onInputChange(100)
     }
@@ -118,8 +118,8 @@ class HitmapPanel extends EventDispatcher {
     updateImage ({ state }) {
         const flatTree = this.flatTree(state, this.searchItem)
         let imageHeight = 0, imageWidth = 0
-        const html = flatTree.map(({ physicalAttribute, prestance, name }) => {
-            return physicalAttribute ? this.getRectagle ({physicalAttribute, prestance, name}) : ''
+        const html = flatTree.map(({ physicalAttribute, pregnancy, name }) => {
+            return physicalAttribute ? this.getRectagle ({physicalAttribute, pregnancy, name}) : ''
         }).join('')
         this.search.innerHTML = this.flatTree(state, null).map(
             ({ name, physicalAttribute }) => {

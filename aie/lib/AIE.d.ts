@@ -1,14 +1,14 @@
 import AIEElement from './AIEElement';
-import AIEAbstractPrestanceSpeed from './AIEAbstractPrestanceSpeed';
+import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed';
 import AIEAbstractMaduration from './AIEAbstractMaduration';
 export default abstract class AIE {
     private eventProcessor;
     private environment;
     private name;
     private context;
-    private prestanceCalculator;
+    private pregnancyCalculator;
     constructor(name: string, context: any);
-    abstract getPrestanceSpeed(): AIEAbstractPrestanceSpeed;
+    abstract getPregnancySpeed(): AIEAbstractPregnancySpeed;
     abstract getMaduration(): AIEAbstractMaduration;
     abstract getElements(): NodeListOf<any>;
     registerEvent(event: string, func: any): void;
