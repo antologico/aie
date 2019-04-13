@@ -1,1 +1,0 @@
-{"version":3,"file":"AIEDefaultPregnancySpeed.js","sourceRoot":"","sources":["../src/AIEDefaultPregnancySpeed.ts"],"names":[],"mappings":"AAAA,OAAO,yBAAyB,MAAM,6BAA6B,CAAA;AAEnE,MAAM,CAAC,OAAO,OAAO,wBAAyB,SAAQ,yBAAyB;IACtE,SAAS,CAAC,YAAoB;QACjC,OAAO,YAAY,CAAC,CAAC,CAAC,CAAC,GAAG,YAAY,CAAC,CAAC,CAAC,CAAC,CAAA;IAC9C,CAAC;CACF"}

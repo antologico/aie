@@ -1,10 +1,11 @@
 {
   "scripts": {
-    "start": "webpack-dev-server",
-    "build": "webpack",
+    "start": "rm -rf ./node_modules/aie && yarn && webpack-dev-server",
+    "build": "rm -rf ./node_modules/aie && yarn && webpack",
     "lint": "eslint --fix \"./src\""
   },
   "dependencies": {
+    "aie": "caie",
     "@types/lodash": "^4.14.91",
     "awesome-typescript-loader": "^3.4.1",
     "eslint": "^4.14.0",
@@ -21,7 +22,6 @@
     "uglifyjs-webpack-plugin": "^1.1.5",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.9.7",
-    "webpack-hot-middleware": "^2.21.0",
-    "aie": "file:../aie"
+    "webpack-hot-middleware": "^2.21.0"
   }
 }
