@@ -1,0 +1,8 @@
+{
+    "protocol": "mongodb://{dbServer}:{port}/{dbName}",
+    "dbName": "aie",
+    "dbServer": "localhost",
+    "user": "aie",
+    "password": "kKvayl0EtE0XFlzI",
+    "port": "27017"
+}

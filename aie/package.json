@@ -1,8 +1,9 @@
 {
   "name": "aie",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "index.js",
   "license": "MIT",
+  "description": "AIE library",
   "author": {
     "name": "Antonio Juan Sánchez",
     "email": "anto@usal.es"
@@ -14,5 +15,8 @@
   },
   "dependencies": {
     "typescript": "^3.3.3333"
+  },
+  "repository": {
+    "type": "git"
   }
 }

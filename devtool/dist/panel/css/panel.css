@@ -1,3 +1,7 @@
+* {
+  outline: 0;
+}
+
 .itemElement {
   list-style: none;
 }
@@ -6,10 +10,13 @@
   display: flex;
   flex: flex-wrap;
   width: 100%;
-  position: relative
+  position: relative;
+  padding-left: 1em;
+  border-radius: 3em 0 0 3em;
 }
 
-.itemElement > .item .property {
+.itemElement > .item .property,
+.itemElement > .item .trigger {
   border: 1px solid white;
   color: white;
   display: inline-block;
@@ -19,9 +26,26 @@
   border-radius: 5px;
 }
 
+.itemElement > .item .trigger {
+  background: darkslategray;
+}
+
+.itemElement > .item:hover {
+  background: darksalmon;
+}
+
 .itemList {
   padding-left: 2em;
   margin: 0;
+}
+
+#container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
 }
 
 #container > .itemContent > .itemList {
@@ -39,11 +63,10 @@ label {
   padding-left: 0;
   cursor: cell;
   color: white;
-  border-bottom: 1px solid rgb(32, 60, 105);
 }
 
 label:hover {
-  color: #ff0475
+  color: floralwhite;
 }
 
 .value {
@@ -62,8 +85,7 @@ input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked ~ .item > label {
-  color: #d405a7;
-  border-bottom: 1px solid #d405a7;
+  color: floralwhite;
 }
 
 .item:before {
@@ -86,7 +108,7 @@ input[type='checkbox']:checked ~ .item:before {
   -webkit-animation: rotateRight 0.3s;
   transform: rotate(90deg);
   -webkit-transform: rotate(90deg);
-  border-left-color: #d405a7;
+  border-left-color: floralwhite;
 }
 
 input[type='checkbox']:not(checked) ~ .itemContent {
@@ -122,8 +144,9 @@ input[type='checkbox']:checked ~ .itemContent {
   width: 100%;
   align-items: center;
   justify-content: center;
-  height: calc(100vh - 6em);
-  color: #ff0475;
+  height: calc(100vh);
+  color: floralwhite;
+  background: darksalmon;
 }
 
 .svgLoader {
@@ -135,7 +158,7 @@ input[type='checkbox']:checked ~ .itemContent {
 }
 
 body {
-  background: #10213D;
+  background: slategrey;
   border: 0;
   margin: 0;
   padding: 0;
@@ -150,7 +173,7 @@ body {
 }
 
 label.mark {
-  color: #ff0475;
+  color: floralwhite;
   animation-name: blinker;
   animation-duration: 0.5s;
   animation-timing-function: linear;
@@ -179,15 +202,16 @@ label.mark {
 
 .toolbar {
   z-index: 1;
-  background: rgb(32, 60, 105);
-  color: #d405a7;
+  background: darksalmon;
+  color: floralwhite;
   width: 100%;
   top: 0;
   left: 0;
   position: fixed;
-  height: 2.5em;
-  border-bottom: 1px solid  rgb(44, 87, 155);
-  box-shadow: 0 3px 3px #000;
+  height: 3em;
+  padding-top: 0.4em;
+  padding-left: 1em;
+  width: calc(100% - 1em);
 }
 
 
@@ -199,27 +223,31 @@ label.mark {
 .toolbar-icon {
   font-size: 1.5em;
   display: inline-block;
-  width: auto;
+  width: 3em;
   cursor: pointer;
   padding: 0;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 0 0.5em;
-  color: #d405a7;
-  border-bottom: 1px solid rgb(54, 106, 190);
+  color: floralwhite;
   margin: 0 auto;
+  border-radius: 5px 5px 0 0;
+  overflow: visible;
+  position: relative;
+  transition-duration: 0.5s;
+  float: left;
 }
 .toolbar-info {
   font-size: 1em;
   border-bottom: 0;
   color: white;
   margin: 0 1em;
+  width: auto;
 }
 
 .itemElementHitmapIcon {
-  color: #d405a7;
+  color: floralwhite;
   cursor: pointer
 }
 
@@ -228,12 +256,15 @@ label.mark {
 }
 
 input[type='checkbox']:checked + .toolbar-icon {
-  background: rgb(7, 19, 39)
+  background: slategrey;
+  border-radius: 0 0 5px 5px;
+  margin-top: -0.3em;
+  color: lightsalmon;
 }
 
 .toolbar-icon:hover {
-  color: #ff0475;
-  border-bottom-color: #ff0475;
+  color: floralwhite;
+  background: darkslategrey;
 }
 
 #timemachine-table {
@@ -253,22 +284,22 @@ input[type='checkbox']:checked + .toolbar-icon {
 .timemachine-item td {
   padding: 15px;
   margin: 0;
-  border-bottom: 1px solid rgb(32, 60, 105);
 }
 
 .timemachine-item:hover td {
-  background: rgb(7, 19, 39);
+  background: darkgray;
 }
 
 .toolbar-icon-label {
   display: none;
   overflow: hidden;
-  padding: 1em;
+  padding: 0.8em 0.6em;
   position: absolute;
-  margin-left: 2em;
-  font-size: 0.8em;
-  margin-top: 2.5em;
-  background: rgba(7, 19, 39, 0.8);
+  font-size: 0.6em;
+  margin-top: 3em;
+  background: darkslategrey;
+  text-transform: uppercase;
+  left: 0;
 }
 
 .timemachine-restore-button > *,
@@ -278,11 +309,11 @@ input[type='checkbox']:checked + .toolbar-icon {
 
 .timemachine-restore-button,
 .timemachine-apply-button {
-  background: rgb(7, 19, 39);
+  background: darksalmon;
   padding: 0.5em 1em 0.5em 0.5em;
-  color: #d405a7;
+  color: floralwhite;
   cursor: pointer;
-  border: 1px solid #d405a7;
+  border: 1px solid floralwhite;
 }
 
 .timemachine-apply-button {
@@ -297,8 +328,8 @@ input[type='checkbox']:checked + .toolbar-icon {
 
 .timemachine-restore-button:hover,
 .timemachine-apply-button:hover {
-  color: white;
-  background: #ff0475;
+  color: darksalmon;
+  background: floralwhite;
 }
 
 .toolbar-icon:hover > .toolbar-icon-label {
@@ -315,7 +346,7 @@ input[type='checkbox']:checked + .toolbar-icon {
 #hitmap-checker:checked ~ .toolbar label[for=hitmap-checker],
 #config-checker:checked ~ .toolbar label[for=config-checker]
 {
-  background: rgb(7, 19, 39)
+  background: slategray;
 }
 
 #state-table-checker:checked ~ #container #state-table,
@@ -324,7 +355,7 @@ input[type='checkbox']:checked + .toolbar-icon {
 #config-checker:checked ~ #container #config
 {
   display: block;
-  padding-top: 3em;
+  padding-top: 4em;
 }
 
 #hitmap {
@@ -332,7 +363,6 @@ input[type='checkbox']:checked + .toolbar-icon {
 }
 
 .hitmap-image-content {
-  background: black;
   text-align: center;
 }
 
@@ -340,69 +370,95 @@ input[type='checkbox']:checked + .toolbar-icon {
   position: absolute;
   line-height: 30px;
   padding: 10px;
-  border: 1px solid  #ff0475;
-  background: #10213D;
+  border: 1px solid floralwhite;;
+  background: slategrey;
   color: white;
 }
 
 #hitmap-image {
   margin: 0 auto;
   background: black;
-  border: 1px solid #d405a7;
+  border: 1px solid floralwhite;
   max-width: 100%; 
   max-height: 600px;
   height: auto;
 }
 
 #hitmap-input {
-  width: calc(100% - 150px);
+  width: calc(80% - 10px);
   -webkit-appearance: none;
   background: transparent;
   display: inline-block;
+  border: 0;
 }
 
 .hitmap-buttons-content {
-  text-align: right;
+  float:left; 
+  width: 15em;
+  padding-right: 2em;
 }
 
 .hitmap-buttons-content button {
-  margin: 0 auto;
-  margin-left: 1em;
-  border: 0;
-  border-radius: 0.2em;
-  padding: 0.3em;
-  border: 0.1em solid #d405a7;
-  background: rgb(32, 60, 105);
-  color: #d405a7;
+  width: 100%;
   margin-bottom: 2em;
 }
 
+button:hover {
+  background: lightsalmon;
+  color: darkslategrey;
+  border: 1px solid lightsalmon;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+button {
+  transition-duration: 0.5s;
+  margin: 0 auto;
+  border-radius: 0.5em;
+  padding: 1em;
+  background: floralwhite;
+  color: slategrey;
+  cursor: pointer;
+  text-transform: uppercase;
+  border: 1px solid slategrey;
+}
+
+.hitmap-image-content {
+  width: calc(100% - 20em);
+  max-width: 80em;
+  float: left;
+  margin-top: 2em;
+}
+
 #hitmap-search {
-  width: 120px;
+  width: calc(18%);
   border: 0;
   border-radius: 0.2em;
   float: right;
   display: block;
   height: 3em;
-  margin-top: -0.5em;
-  border: 0.1em solid #d405a7;
-  background: rgb(32, 60, 105);
-  color: #d405a7;
+  border: 1px solid slategrey;
+  background: floralwhite;
+  color: slategrey;
+}
+
+#config fieldset {
+  max-width: 50em;
 }
 
 #hitmap-input::-webkit-slider-runnable-track {
-  background: #d405a7;
+  background: floralwhite;
   height: 0.3em;
   -webkit-appearance: none;
 }
 
 #hitmap-input::-webkit-slider-thumb {
-  background: rgb(32, 60, 105);
+  background: slategrey;
   margin-top: -10px;
   width: 10px;
   height: 25px;
   -webkit-appearance: none;
-  border: 1px solid #d405a7;
+  border: 1px solid floralwhite;
+  border-radius: 0.5em;
 }
 
 #config {
@@ -410,34 +466,76 @@ input[type='checkbox']:checked + .toolbar-icon {
 }
 
 fieldset {
-  color: white;
+  color: floralwhite;
   font-size: 1em;
-  border: 2px solid rgb(32, 60, 105);
-  border-radius: 0.2em;
-  padding: 0.5em 1em;
-  padding-bottom: 1em;
-  background: rgb(32, 60, 105);
-  margin-bottom: 2em;
+  background: darksalmon;
+  border-radius: 0;
+  padding: 1em;
+  border: 1px solid lightsalmon;
+  margin: 3em 0;
 }
 
 fieldset legend {
   padding: 0.5em 1em;
-  border-radius: 0.2em;
-  color: #d405a7;
-  background: rgb(32, 60, 105);
+  border-radius: 0;
   font-weight: 800;
-  font-size: 1.2em;
-  margin: 0 -1em;
+  font-size: 1em;
+  margin: 0;
+  text-transform: uppercase;
+  border: 1px solid lightsalmon;
+  border-bottom: 0;
+  margin-left: calc(-1em - 1px);
+  margin-top: calc(-3.5em + 3px);
+  background: darksalmon;
+  position: absolute;
 }
 
 fieldset input {
-  border: 1px solid rgb(50, 100, 150);
+  border: 1px solid floralwhite;
   border-radius: 0.2em;
-  color: white;
-  background: #10213D;
+  color: floralwhite;
+  background: slategrey;
   padding: 0.5em;
+}
+
+fieldset input:focus {
+  background: darkslategray;
+}
+
+fieldset input:disabled {
+  background: antiquewhite;
+  color: darkslategrey;
+}
+
+fieldset label {
+  min-width: 12em;
+  width: auto;
+  display: inline-table;
 }
 
 .fieldset-line {
   margin-bottom: 1em;
+}
+
+hr {
+  border-bottom: 0;
+  border-right: 0;
+  border-left: 0;
+  border-top: 2px;
+  border-top-width: 1px;
+  border-style: solid;
+  border-color: darkgray;
+  margin: 2em -1em;
+}
+
+.hitmap-image-content-buttons {
+  padding-bottom: 1em;
+}
+
+.right {
+  text-align: right;
+}
+
+#config_md5 {
+  width: 20em;
 }

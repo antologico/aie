@@ -117,6 +117,7 @@ export default abstract class AIE {
       pregnancy: element.getPregnancy(),
       score: element.getScore(),
       properties: element.getPropertiesNames(),
+      triggers: element.getTriggersName(),
       physicalAttribute: element.getPhysicalAttributes(),
       children: element.getChildren().map((children: AIEElement) => {
         return this.getElementState(children)

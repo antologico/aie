@@ -1,5 +1,5 @@
 const path = require('path')
-const webpack = require('webpack')
+require('webpack')
 const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
@@ -25,7 +25,10 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: "babel-loader",
+          query: {
+              presets: ['es2015']
+          }
         }
       }
     ]

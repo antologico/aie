@@ -3,6 +3,7 @@ class StatePanel {
     constructor () {
         this.templateItem = document.getElementById('item-template').innerHTML
         this.propertyItem = document.getElementById('item-property').innerHTML
+        this.propertyTrigger = document.getElementById('item-trigger').innerHTML
         this.templateList = document.getElementById('list-template').innerHTML
         this.table = document.getElementById('state-table')
     }
@@ -22,17 +23,20 @@ class StatePanel {
         )
         return htmlCode
       }
-      
+
     getPrestace (pregnancy) {
         return pregnancy ? pregnancy.toFixed(4) : ''
     }
       
-    generateItem ({ name, pregnancy, properties, children}, id) {
+    generateItem ({ name, pregnancy, properties, children, triggers}, id) {
         let htmlCode = this.templateItem.replace(/{id}/g, name)
         htmlCode = htmlCode.replace(/{name}/g, name)
         htmlCode = htmlCode.replace(
           /{properties}/g,
-          properties.map(property => this.propertyItem.replace(/{property}/i, property)).join(''))
+          triggers.map(property => this.propertyItem.replace(/{property}/i, property)).join(''))
+        htmlCode = htmlCode.replace(
+          /{triggers}/g,
+          triggers.map(trigger => this.propertyTrigger.replace(/{trigger}/i, trigger)).join(''))
         htmlCode = htmlCode.replace(/{value}/i, this.getPrestace(pregnancy))
         htmlCode = htmlCode.replace(
           /{content}/i,
@@ -72,7 +76,7 @@ class StatePanel {
             const el = document.getElementById(`value_${name}`)
             const arrowEl = document.getElementById(`arrow_${name}`)
             if (el) {
-              const color = 'rgb(100, 100, ' + parseInt(255*(pregnancy-minVal)/(maxVal-minVal)) + ')'
+              const color = 'rgb(' + parseInt(255*(pregnancy-minVal)/(maxVal-minVal)) + ', 200, 200)'
               el.style.color = color
               arrowEl.style.color = color
               const prevValue = parseFloat(el.innerHTML)

@@ -6,8 +6,8 @@ const initAIE = (name, selector) => {
     aie.start() 
 }
 
-const exposeAIE = () => {
-    AIEHTMLMonitor.exposeEnviroments() 
+const exposeAIE = (serverUrl = null, userName = null) => {
+    AIEHTMLMonitor.exposeEnviroments(serverUrl, userName)
 }
 
 export default  {

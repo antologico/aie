@@ -1,1 +1,216 @@
-!function(e){function r(e){var r=require("./"+e+"."+o+".hot-update.js");!function(e,r){if(!O[e]||!b[e])return;for(var n in b[e]=!1,r)Object.prototype.hasOwnProperty.call(r,n)&&(h[n]=r[n]);0==--v&&0===y&&R()}(r.id,r.modules)}var n,t=!0,o="5734fdd3eb3c74d0896d",i={},d=[],c=[];function a(e){var r=E[e];if(!r)return D;var t=function(t){return r.hot.active?(E[t]?-1===E[t].parents.indexOf(e)&&E[t].parents.push(e):(d=[e],n=t),-1===r.children.indexOf(t)&&r.children.push(t)):(console.warn("[HMR] unexpected require("+t+") from disposed module "+e),d=[]),D(t)},o=function(e){return{configurable:!0,enumerable:!0,get:function(){return D[e]},set:function(r){D[e]=r}}};for(var i in D)Object.prototype.hasOwnProperty.call(D,i)&&"e"!==i&&"t"!==i&&Object.defineProperty(t,i,o(i));return t.e=function(e){return"ready"===u&&f("prepare"),y++,D.e(e).then(r,function(e){throw r(),e});function r(){y--,"prepare"===u&&(m[e]||L(e),0===y&&0===v&&R())}},t.t=function(e,r){return 1&r&&(e=t(e)),D.t(e,-2&r)},t}function l(e){var r={_acceptedDependencies:{},_declinedDependencies:{},_selfAccepted:!1,_selfDeclined:!1,_disposeHandlers:[],_main:n!==e,active:!0,accept:function(e,n){if(void 0===e)r._selfAccepted=!0;else if("function"==typeof e)r._selfAccepted=e;else if("object"==typeof e)for(var t=0;t<e.length;t++)r._acceptedDependencies[e[t]]=n||function(){};else r._acceptedDependencies[e]=n||function(){}},decline:function(e){if(void 0===e)r._selfDeclined=!0;else if("object"==typeof e)for(var n=0;n<e.length;n++)r._declinedDependencies[e[n]]=!0;else r._declinedDependencies[e]=!0},dispose:function(e){r._disposeHandlers.push(e)},addDisposeHandler:function(e){r._disposeHandlers.push(e)},removeDisposeHandler:function(e){var n=r._disposeHandlers.indexOf(e);n>=0&&r._disposeHandlers.splice(n,1)},check:_,apply:j,status:function(e){if(!e)return u;s.push(e)},addStatusHandler:function(e){s.push(e)},removeStatusHandler:function(e){var r=s.indexOf(e);r>=0&&s.splice(r,1)},data:i[e]};return n=void 0,r}var s=[],u="idle";function f(e){u=e;for(var r=0;r<s.length;r++)s[r].call(null,e)}var p,h,g,v=0,y=0,m={},b={},O={};function w(e){return+e+""===e?+e:e}function _(e){if("idle"!==u)throw new Error("check() is only allowed in idle status");return t=e,f("check"),function(){try{var e=require("./"+o+".hot-update.json")}catch(e){return Promise.resolve()}return Promise.resolve(e)}().then(function(e){if(!e)return f("idle"),null;b={},m={},O=e.c,g=e.h,f("prepare");var r=new Promise(function(e,r){p={resolve:e,reject:r}});h={};return L(0),"prepare"===u&&0===y&&0===v&&R(),r})}function L(e){O[e]?(b[e]=!0,v++,r(e)):m[e]=!0}function R(){f("ready");var e=p;if(p=null,e)if(t)Promise.resolve().then(function(){return j(t)}).then(function(r){e.resolve(r)},function(r){e.reject(r)});else{var r=[];for(var n in h)Object.prototype.hasOwnProperty.call(h,n)&&r.push(w(n));e.resolve(r)}}function j(r){if("ready"!==u)throw new Error("apply() is only allowed in ready status");var n,t,c,a,l;function s(e){for(var r=[e],n={},t=r.slice().map(function(e){return{chain:[e],id:e}});t.length>0;){var o=t.pop(),i=o.id,d=o.chain;if((a=E[i])&&!a.hot._selfAccepted){if(a.hot._selfDeclined)return{type:"self-declined",chain:d,moduleId:i};if(a.hot._main)return{type:"unaccepted",chain:d,moduleId:i};for(var c=0;c<a.parents.length;c++){var l=a.parents[c],s=E[l];if(s){if(s.hot._declinedDependencies[i])return{type:"declined",chain:d.concat([l]),moduleId:i,parentId:l};-1===r.indexOf(l)&&(s.hot._acceptedDependencies[i]?(n[l]||(n[l]=[]),p(n[l],[i])):(delete n[l],r.push(l),t.push({chain:d.concat([l]),id:l})))}}}}return{type:"accepted",moduleId:e,outdatedModules:r,outdatedDependencies:n}}function p(e,r){for(var n=0;n<r.length;n++){var t=r[n];-1===e.indexOf(t)&&e.push(t)}}r=r||{};var v={},y=[],m={},b=function(){console.warn("[HMR] unexpected require("+L.moduleId+") to disposed module")};for(var _ in h)if(Object.prototype.hasOwnProperty.call(h,_)){var L;l=w(_);var R=!1,j=!1,x=!1,P="";switch((L=h[_]?s(l):{type:"disposed",moduleId:_}).chain&&(P="\nUpdate propagation: "+L.chain.join(" -> ")),L.type){case"self-declined":r.onDeclined&&r.onDeclined(L),r.ignoreDeclined||(R=new Error("Aborted because of self decline: "+L.moduleId+P));break;case"declined":r.onDeclined&&r.onDeclined(L),r.ignoreDeclined||(R=new Error("Aborted because of declined dependency: "+L.moduleId+" in "+L.parentId+P));break;case"unaccepted":r.onUnaccepted&&r.onUnaccepted(L),r.ignoreUnaccepted||(R=new Error("Aborted because "+l+" is not accepted"+P));break;case"accepted":r.onAccepted&&r.onAccepted(L),j=!0;break;case"disposed":r.onDisposed&&r.onDisposed(L),x=!0;break;default:throw new Error("Unexception type "+L.type)}if(R)return f("abort"),Promise.reject(R);if(j)for(l in m[l]=h[l],p(y,L.outdatedModules),L.outdatedDependencies)Object.prototype.hasOwnProperty.call(L.outdatedDependencies,l)&&(v[l]||(v[l]=[]),p(v[l],L.outdatedDependencies[l]));x&&(p(y,[L.moduleId]),m[l]=b)}var I,M=[];for(t=0;t<y.length;t++)l=y[t],E[l]&&E[l].hot._selfAccepted&&M.push({module:l,errorHandler:E[l].hot._selfAccepted});f("dispose"),Object.keys(O).forEach(function(e){!1===O[e]&&function(e){delete installedChunks[e]}(e)});for(var k,N,A=y.slice();A.length>0;)if(l=A.pop(),a=E[l]){var S={},H=a.hot._disposeHandlers;for(c=0;c<H.length;c++)(n=H[c])(S);for(i[l]=S,a.hot.active=!1,delete E[l],delete v[l],c=0;c<a.children.length;c++){var U=E[a.children[c]];U&&((I=U.parents.indexOf(l))>=0&&U.parents.splice(I,1))}}for(l in v)if(Object.prototype.hasOwnProperty.call(v,l)&&(a=E[l]))for(N=v[l],c=0;c<N.length;c++)k=N[c],(I=a.children.indexOf(k))>=0&&a.children.splice(I,1);for(l in f("apply"),o=g,m)Object.prototype.hasOwnProperty.call(m,l)&&(e[l]=m[l]);var C=null;for(l in v)if(Object.prototype.hasOwnProperty.call(v,l)&&(a=E[l])){N=v[l];var T=[];for(t=0;t<N.length;t++)if(k=N[t],n=a.hot._acceptedDependencies[k]){if(-1!==T.indexOf(n))continue;T.push(n)}for(t=0;t<T.length;t++){n=T[t];try{n(N)}catch(e){r.onErrored&&r.onErrored({type:"accept-errored",moduleId:l,dependencyId:N[t],error:e}),r.ignoreErrored||C||(C=e)}}}for(t=0;t<M.length;t++){var q=M[t];l=q.module,d=[l];try{D(l)}catch(e){if("function"==typeof q.errorHandler)try{q.errorHandler(e)}catch(n){r.onErrored&&r.onErrored({type:"self-accept-error-handler-errored",moduleId:l,error:n,originalError:e}),r.ignoreErrored||C||(C=n),C||(C=e)}else r.onErrored&&r.onErrored({type:"self-accept-errored",moduleId:l,error:e}),r.ignoreErrored||C||(C=e)}}return C?(f("fail"),Promise.reject(C)):(f("idle"),new Promise(function(e){e(y)}))}var E={};function D(r){if(E[r])return E[r].exports;var n=E[r]={i:r,l:!1,exports:{},hot:l(r),parents:(c=d,d=[],c),children:[]};return e[r].call(n.exports,n,n.exports,a(r)),n.l=!0,n.exports}D.m=e,D.c=E,D.d=function(e,r,n){D.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:n})},D.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},D.t=function(e,r){if(1&r&&(e=D(e)),8&r)return e;if(4&r&&"object"==typeof e&&e&&e.__esModule)return e;var n=Object.create(null);if(D.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:e}),2&r&&"string"!=typeof e)for(var t in e)D.d(n,t,function(r){return e[r]}.bind(null,t));return n},D.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return D.d(r,"a",r),r},D.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},D.p="/",D.h=function(){return o},a(5)(D.s=5)}([function(e,r){e.exports=require("mongoose")},function(e){e.exports={dbName:"aie",dbServer:"cluster0-qsnvv.gcp.mongodb.net",user:"aie",password:"kKvayl0EtE0XFlzI"}},function(e,r){e.exports=require("express")},function(e,r){e.exports=require("body-parser")},function(e,r,n){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.default=void 0;class t{}var o,i,d;r.default=t,d={bold:"[1m",yellow:"[1m[33m",red:"[1m[31m",green:"[1m[32m",cyan:"[1m[36m",magenta:"[1m[35m"},(i="defaultColors")in(o=t)?Object.defineProperty(o,i,{value:d,enumerable:!0,configurable:!0,writable:!0}):o[i]=d,Object.keys(t.defaultColors).forEach(e=>{t[e]=(r=>`${t.defaultColors[e]}${r}[39m[22m`)})},function(e,r,n){n(6),e.exports=n(9)},function(e,r,n){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.default=r.HmrClient=void 0;var t=d(n(4)),o=d(n(7)),i=n(8);function d(e){return e&&e.__esModule?e:{default:e}}function c(e,r,n){return r in e?Object.defineProperty(e,r,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[r]=n,e}class a{constructor(){c(this,"logger",new o.default(t.default.cyan("[HMR]"))),c(this,"logApplyResult",(e,r,n)=>{const t=n&&n.length?r.filter(e=>n.indexOf(e)<0):r;if(t.length>0&&e>=i.LogLevel.ERRORS&&(this.logger.warn("The following modules couldn't be hot updated: (They would need restart the server!)"),t.forEach(e=>{this.logger.warn(` - ${e}`)})),n&&n.length){if(e>=i.LogLevel.NORMAL){this.logger.info("Updated modules:"),n.forEach(e=>{this.logger.info(` - ${e}`)}),n.every(e=>"number"==typeof e)&&this.logger.info("Consider using the NamedModulesPlugin for module names.")}this.upToDate()&&this.logUpToDate(e)}else e>=i.LogLevel.MINIMAL&&this.logger.info("Nothing hot updated.")}),c(this,"logUpToDate",e=>{e>=i.LogLevel.MINIMAL&&this.logger.info("App is up to date.")}),c(this,"defaultListener",r=>{if("built"!==r.action)return;this.lastHash=r.stats.hash;const{logLevel:n}=r;if(this.upToDate())this.logUpToDate(n);else{const r=e.hot.status();"idle"===r?(n>=i.LogLevel.MINIMAL&&this.logger.info("Checking for updates..."),this.check(n)):["abort","fail"].indexOf(r)>=0&&n>=i.LogLevel.ERRORS&&this.logger.warn(`Cannot apply update as a previous update ${r}ed. Need to do restart the server!`)}}),c(this,"upToDate",()=>this.lastHash.indexOf(n.h())>=0),c(this,"check",r=>{e.hot.check().then(n=>n?e.hot.apply({ignoreUnaccepted:!0,ignoreDeclined:!0,ignoreErrored:!0,onUnaccepted:e=>{r>=i.LogLevel.ERRORS&&this.logger.warn(`Ignored an update to unaccepted module ${e.chain.join(" -> ")}`)},onDeclined:e=>{r>=i.LogLevel.ERRORS&&this.logger.warn(`Ignored an update to declined module ${e.chain.join(" -> ")}`)},onErrored:e=>{r>=i.LogLevel.ERRORS&&(this.logger.warn(`Ignored an error while updating module ${e.moduleId} (${e.type})`),this.logger.error(e.error))}}).then(e=>{this.upToDate()||this.check(r),this.logApplyResult(r,n,e)}):(r>=i.LogLevel.ERRORS&&this.logger.warn("Cannot find update. Need to do restart the server!"),Promise.resolve())).catch(n=>{if(r>=i.LogLevel.ERRORS){const r=e.hot.status();["abort","fail"].indexOf(r)>=0?(this.logger.error("Cannot check for update. Need to do restart the server!"),this.logger.error(n.stack||n.message)):this.logger.error(`Update check failed: ${n.stack}`||n.message)}})})}run(e=this.defaultListener){return this.logger.info("Waiting for update signal from webpack..."),process.on("message",e),this}}r.HmrClient=a;var l=(new a).run();r.default=l},function(e,r,n){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.default=void 0;var t,o=(t=n(4))&&t.__esModule?t:{default:t};r.default=class{constructor(e){var r,n,t;t=void 0,(n="prefix")in(r=this)?Object.defineProperty(r,n,{value:t,enumerable:!0,configurable:!0,writable:!0}):r[n]=t,this.prefix=e}info(e,...r){console.log(this.prefix,e,...r)}warn(e,...r){console.warn(this.prefix,o.default.yellow(e),...r)}error(e,...r){const n=e.stack||e;console.error(this.prefix,o.default.red(n),...r)}}},function(e,r,n){"use strict";Object.defineProperty(r,"__esModule",{value:!0}),r.parseLogLevel=function(e){let r=t.NORMAL;return r=!1===e?t.NONE:r,r="none"===e?t.NONE:r,r="errors-only"===e?t.ERRORS:r,r="minimal"===e?t.MINIMAL:r},r.LogLevel=void 0;const t={NONE:0,ERRORS:1,MINIMAL:2,NORMAL:3};r.LogLevel=t},function(e,r,n){"use strict";n.r(r);var t=n(2),o=n.n(t),i=n(3),d=n.n(i),c=n(0),a=n.n(c),l=n(1);const s=new c.Schema({name:{type:String,required:!0,max:100},price:{type:Number,required:!0}});var u=a.a.model("Pregnancy",s),f=(e,r)=>{u.findById(e.params.id,function(e,n){e&&console.log(e),r.send(n)})},p=(e,r)=>{new u({name:e.body.name,price:e.body.price}).save(e=>{if(e)return e;r.send("Created successfully")})};let h=Object(t.Router)();h.get("/:id",f),h.post("/save",p);var g=h;const v="mongodb+srv://"+l.user+":"+l.password+"@"+l.dbServer+"/"+l.dbName;a.a.connect(v,{useNewUrlParser:!0},function(e,r){e?console.log("ERROR connecting to: "+v+". "+e):console.log("Succeeded connected to: "+v)}),a.a.Promise=global.Promise;const y=o()();y.use(d.a.json()),y.use(d.a.urlencoded({extended:!1})),y.use("/pregnancy",g);y.listen(1234,()=>{console.log("Server is up and running on port numner 1234")})}]);
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "/";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/server.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./src/config-local.json":
+/*!*******************************!*\
+  !*** ./src/config-local.json ***!
+  \*******************************/
+/*! exports provided: protocol, dbName, dbServer, user, password, port, default */
+/***/ (function(module) {
+
+eval("module.exports = {\"protocol\":\"mongodb://{dbServer}:{port}/{dbName}\",\"dbName\":\"aie\",\"dbServer\":\"localhost\",\"user\":\"aie\",\"password\":\"kKvayl0EtE0XFlzI\",\"port\":\"27017\"};\n\n//# sourceURL=webpack:///./src/config-local.json?");
+
+/***/ }),
+
+/***/ "./src/controllers/pregnancy.js":
+/*!**************************************!*\
+  !*** ./src/controllers/pregnancy.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports[\"default\"] = void 0;\n\nvar _pregnancy = _interopRequireDefault(__webpack_require__(/*! ../models/pregnancy */ \"./src/models/pregnancy.js\"));\n\nvar _status = __webpack_require__(/*! ../converters/status */ \"./src/converters/status.js\");\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { \"default\": obj }; }\n\n//Simple version, without validation or sanitation\nvar _default = {\n  get: function get(req, res) {\n    _pregnancy[\"default\"].aggregate([{\n      \"$match\": {\n        aie: req.params.id,\n        md5estructure: req.params.md5\n      }\n    }, {\n      \"$sort\": {\n        date: -1\n      }\n    }, {\n      \"$group\": {\n        _id: \"$user\",\n        status: {\n          \"$first\": \"$state\"\n        }\n      }\n    }], function (err, pregnances) {\n      if (err) {\n        console.log(err);\n      }\n\n      if (pregnances) {\n        res.send((0, _status.addStates)(pregnances.map(function (_ref) {\n          var status = _ref.status;\n          return status;\n        })));\n      } else {\n        res.send([]);\n      }\n    });\n  },\n  save: function save(req, res) {\n    try {\n      var pregnancy = new _pregnancy[\"default\"]({\n        event: req.body.event,\n        aie: req.body.aie,\n        element: req.body.element,\n        state: (0, _status.getBasicState)(req.body.state),\n        md5estructure: (0, _status.getMD5State)(req.body.state),\n        user: req.body.userName,\n        date: Date.now()\n      });\n      pregnancy.save(function (err) {\n        if (err) {\n          console.log('DB Error', err);\n          res.status(424).send('DB Error');\n          return err;\n        }\n\n        console.log('Created successfully');\n        res.send('Created successfully');\n      });\n    } catch (exception) {\n      res.status(423).send('Unexpected Error!');\n      console.log('Unexpected Error', exception);\n    }\n  }\n};\nexports[\"default\"] = _default;\n\n//# sourceURL=webpack:///./src/controllers/pregnancy.js?");
+
+/***/ }),
+
+/***/ "./src/converters/status.js":
+/*!**********************************!*\
+  !*** ./src/converters/status.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.getBasicState = getBasicState;\nexports.getMD5State = getMD5State;\nexports.addStates = addStates;\n\nvar _crypto = _interopRequireDefault(__webpack_require__(/*! crypto */ \"crypto\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { \"default\": obj }; }\n\nfunction getMD5State(element) {\n  return _crypto[\"default\"].createHash('md5').update(JSON.stringify(getBasicStructure(element))).digest(\"hex\");\n}\n\nfunction getBasicStructure() {\n  var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];\n  return element.map(function (_ref) {\n    var name = _ref.name,\n        children = _ref.children;\n    return {\n      name: name,\n      children: getBasicStructure(children)\n    };\n  });\n}\n\nfunction getBasicState() {\n  var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];\n  return element.map(function (_ref2) {\n    var name = _ref2.name,\n        pregnancy = _ref2.pregnancy,\n        score = _ref2.score,\n        children = _ref2.children;\n    return {\n      name: name,\n      pregnancy: pregnancy,\n      score: score,\n      children: getBasicState(children)\n    };\n  });\n}\n\nfunction getPregnancyAverage(elements, totalScore) {\n  if (totalScore === 0) {\n    return 0;\n  }\n\n  var pregnancy = elements.reduce(function (total, _ref3) {\n    var pregnancy = _ref3.pregnancy,\n        score = _ref3.score;\n    return total + pregnancy * parseFloat(score);\n  }, 0);\n  return parseFloat((pregnancy / totalScore).toPrecision(12));\n}\n\nfunction getScoresAddition(scores) {\n  return scores.reduce(function (total, score) {\n    return total + score;\n  }, 0);\n}\n\nfunction addStates() {\n  var elements = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];\n\n  if (!elements || !elements.length || !elements[0]) {\n    return;\n  }\n\n  return elements[0].map(function (_ref4, index) {\n    var name = _ref4.name;\n    var score = getScoresAddition(elements.map(function (element) {\n      return element[index].score;\n    }));\n    var pregnancy = getPregnancyAverage(elements.map(function (element) {\n      return element[index];\n    }), score);\n    var children = addStates(elements.map(function (element) {\n      return element[index].children;\n    }));\n    var value = {\n      name: name,\n      pregnancy: pregnancy,\n      score: score\n    };\n    children && (value.children = children);\n    return value;\n  });\n}\n\n//# sourceURL=webpack:///./src/converters/status.js?");
+
+/***/ }),
+
+/***/ "./src/initConnection.js":
+/*!*******************************!*\
+  !*** ./src/initConnection.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports[\"default\"] = void 0;\n\nvar _mongoose = _interopRequireDefault(__webpack_require__(/*! mongoose */ \"mongoose\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { \"default\": obj }; }\n\nfunction initConnection(config) {\n  var protocol = config.protocol;\n  var devDbUrl = protocol.replace(/\\{[^}]+\\}/g, function (match) {\n    return config[match.slice(1, -1)];\n  });\n\n  _mongoose[\"default\"].connect(devDbUrl, {\n    useNewUrlParser: true\n  }, function (err, res) {\n    if (err) {\n      console.log('ERROR connecting to: ' + devDbUrl + '. ' + err);\n    } else {\n      console.log('Succeeded connected to: ' + devDbUrl);\n    }\n  });\n\n  _mongoose[\"default\"].Promise = global.Promise;\n}\n\nvar _default = initConnection;\nexports[\"default\"] = _default;\n\n//# sourceURL=webpack:///./src/initConnection.js?");
+
+/***/ }),
+
+/***/ "./src/models/pregnancy.js":
+/*!*********************************!*\
+  !*** ./src/models/pregnancy.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports[\"default\"] = void 0;\n\nvar _mongoose = _interopRequireWildcard(__webpack_require__(/*! mongoose */ \"mongoose\"));\n\nfunction _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj[\"default\"] = obj; return newObj; } }\n\nvar schema = new _mongoose.Schema({\n  state: {\n    type: Array,\n    required: true\n  },\n  date: {\n    type: Number,\n    required: true\n  },\n  aie: {\n    type: String,\n    required: true\n  },\n  event: {\n    type: String,\n    required: true\n  },\n  element: {\n    type: String,\n    required: true\n  },\n  user: {\n    type: String,\n    required: true\n  },\n  md5estructure: {\n    type: String,\n    required: true\n  }\n});\n\nvar Pregnancy = _mongoose[\"default\"].model('Pregnancy', schema);\n\nvar _default = Pregnancy;\nexports[\"default\"] = _default;\n\n//# sourceURL=webpack:///./src/models/pregnancy.js?");
+
+/***/ }),
+
+/***/ "./src/routes/pregnancy.js":
+/*!*********************************!*\
+  !*** ./src/routes/pregnancy.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports[\"default\"] = void 0;\n\nvar _express = __webpack_require__(/*! express */ \"express\");\n\nvar _pregnancy = _interopRequireDefault(__webpack_require__(/*! ../controllers/pregnancy */ \"./src/controllers/pregnancy.js\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { \"default\": obj }; }\n\nvar router = (0, _express.Router)(); // a simple test url to check that all of our files are communicating correctly.\n\nrouter.get('/:id/:md5', _pregnancy[\"default\"].get);\nrouter.post('/save', _pregnancy[\"default\"].save);\nvar _default = router;\nexports[\"default\"] = _default;\n\n//# sourceURL=webpack:///./src/routes/pregnancy.js?");
+
+/***/ }),
+
+/***/ "./src/server.js":
+/*!***********************!*\
+  !*** ./src/server.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _express = _interopRequireDefault(__webpack_require__(/*! express */ \"express\"));\n\nvar _bodyParser = _interopRequireDefault(__webpack_require__(/*! body-parser */ \"body-parser\"));\n\nvar _initConnection = _interopRequireDefault(__webpack_require__(/*! ./initConnection */ \"./src/initConnection.js\"));\n\nvar _configLocal = _interopRequireDefault(__webpack_require__(/*! ./config-local.json */ \"./src/config-local.json\"));\n\nvar _pregnancy = _interopRequireDefault(__webpack_require__(/*! ./routes/pregnancy */ \"./src/routes/pregnancy.js\"));\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { \"default\": obj }; }\n\n// initialize our Express app\nvar app = (0, _express[\"default\"])();\n(0, _initConnection[\"default\"])(_configLocal[\"default\"]);\napp.use(_express[\"default\"].json({\n  type: 'application/x-www-form-urlencoded'\n}));\napp.use(_bodyParser[\"default\"].urlencoded({\n  extended: false\n}));\napp.use('/pregnancy', _pregnancy[\"default\"]);\nvar port = 1234;\napp.listen(port, function () {\n  console.log('Server is up and running on port numner ' + port);\n});\n\n//# sourceURL=webpack:///./src/server.js?");
+
+/***/ }),
+
+/***/ "body-parser":
+/*!******************************!*\
+  !*** external "body-parser" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"body-parser\");\n\n//# sourceURL=webpack:///external_%22body-parser%22?");
+
+/***/ }),
+
+/***/ "crypto":
+/*!*************************!*\
+  !*** external "crypto" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"crypto\");\n\n//# sourceURL=webpack:///external_%22crypto%22?");
+
+/***/ }),
+
+/***/ "express":
+/*!**************************!*\
+  !*** external "express" ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"express\");\n\n//# sourceURL=webpack:///external_%22express%22?");
+
+/***/ }),
+
+/***/ "mongoose":
+/*!***************************!*\
+  !*** external "mongoose" ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("module.exports = require(\"mongoose\");\n\n//# sourceURL=webpack:///external_%22mongoose%22?");
+
+/***/ })
+
+/******/ });

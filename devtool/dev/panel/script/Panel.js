@@ -14,6 +14,7 @@ class Panel extends EventDispatcher {
         this.loader = document.getElementById('loader')
         this.container = document.getElementById('container')
         this.hitmapChecker = document.getElementById('hitmap-checker')
+        this.stateTableChecker = document.getElementById('state-table-checker')
 
         document.addEventListener('mouseover', (e) => this.onMouseOver(e.srcElement))
         document.addEventListener('mouseout', (e) => this.onMouseOut(e.srcElement))
@@ -27,9 +28,10 @@ class Panel extends EventDispatcher {
             this.events.onDeleteHistory()
           }, false)
         document.getElementById('toolbar-connect').addEventListener('click', (e) => {
+            this.loader.classList.remove('hide')
             this.events.onConnect()
           }, false)
-          
+        
         document.getElementById('toolbar-apply').addEventListener('click', (e) => {
             this.events.onApply()
           }, false)
@@ -57,7 +59,10 @@ class Panel extends EventDispatcher {
     }
 
     reciveValues () {
-        this.loader.classList.add('hide')
+        if (!this.loader.classList.contains('hide')) {
+            this.stateTableChecker.checked = true
+            this.loader.classList.add('hide')
+        }
         this.container.classList.remove('hide')
     }
 

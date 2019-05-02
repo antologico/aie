@@ -123,14 +123,17 @@ class HitmapPanel extends EventDispatcher {
         }).join('')
         this.search.innerHTML = this.flatTree(state, null).map(
             ({ name, physicalAttribute }) => {
-                const { width, top, left , height } = physicalAttribute
-                if ((height + top) > imageHeight) {
-                    imageHeight = height + top
+                if (physicalAttribute) {
+                    const { width, top, left , height } = physicalAttribute
+                    if ((height + top) > imageHeight) {
+                        imageHeight = height + top
+                    }
+                    if ((left + width) > imageWidth) {
+                        imageWidth = left + width
+                    }
+                    return this.templateOption.replace(/{name}/g, name).replace(/{selected}/g, (this.searchItem === name ? 'selected' : ''))
                 }
-                if ((left + width) > imageWidth) {
-                    imageWidth = left + width
-                }
-                return this.templateOption.replace(/{name}/g, name).replace(/{selected}/g, (this.searchItem === name ? 'selected' : ''))
+                return ''
             }).join('')
         this.image.innerHTML = html
         this.imageWidth = imageWidth

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<style>
+    * {
+        font-family: sans-serif;
+    }
+
+    body {
+        background: whitesmoke;
+        font-size: 15px;
+    }
+
+    .selector {
+        display: inline-block;
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+    }
+
+    .selector input {
+        padding-right: 2em;
+        width: 200px;
+        padding: 8px;
+        padding-right: 2em;
+    }
+
+    .selector:after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 0; 
+        height: 0; 
+        border-left: 0.5em solid transparent;
+        border-right: 0.5em solid transparent;
+        border-top: 0.8em solid #2F4F4F;
+        left: 220px;
+        top: 2em;
+    }
+
+    .selector > .selector_option {
+        display: inline;
+        color: red;
+        font-weight: 700;
+        padding: 8px;
+        z-index: 3;
+    }
+
+    .selector_options {
+        display: none;
+        position: absolute;
+        z-index: 2;
+        background: #2F4F4F;
+        width: 100%;
+    }
+
+    .selector:hover .selector_options {
+        display: block;
+    }
+
+    .selector_options > .selector_option {
+        cursor: pointer;
+        background: white;
+        padding: 8px;
+        width: 100%;
+    }
+
+    .selector_option:hover {
+        background:darkred;
+        color: white;
+    }
+</style>
+
+<body>
+    <div id='form-context' aie aie-name="filters">
+            <fieldset 
+                id="options_district"
+                class="selector" 
+                aie
+                aie-pregnancy-fields="position, level"
+                aie-name="selector_group_fields">
+                <legend>Select district</legend>
+                <input readonly/>
+                <div id="selector_options_district" class="selector_options" aie aie-name="selector_district_fields" >
+                    <div class="selector_option" aie aie-name="selector_district_field_option_1" aie-trigger="click">Moncloa</div>
+                    <div class="selector_option" aie aie-name="selector_district_field_option_2" aie-trigger="click">Argüelles</div>
+                    <div class="selector_option" aie aie-name="selector_field_district_option_3" aie-trigger="click">Zona de Huertas</div>
+                    <div class="selector_option" aie aie-name="selector_field_district_option_4" aie-trigger="click">Lavapiés</div>
+                </div>
+            </fieldset>
+            <fieldset
+                id="options_year"
+                class="selector" 
+                aie
+                aie-pregnancy-fields="position, level"
+                aie-name="selector_group_year">
+                <legend>Select years</legend>
+                <input readonly/>
+                <div id="selector_options_year" class="selector_options" aie aie-name="selector_year_fields">
+                    <div class="selector_option" aie aie-name="selector_year_field_option_1" aie-trigger="click">2018</div>
+                    <div class="selector_option" aie aie-name="selector_year_field_option_2" aie-trigger="click">2017</div>
+                    <div class="selector_option" aie aie-name="selector_year_field_option_3" aie-trigger="click">2016</div>
+                    <div class="selector_option" aie aie-name="selector_year_field_option_4" aie-trigger="click">2015</div>
+                </div>
+            </fieldset>
+    </div>
+    <script src="http://localhost:8080/dist/aie.min.js"></script>
+    <script>
+        initAIE('APPSAMPLE_FILTERS_3', '#form-context')
+        exposeAIE ('http://localhost:1234/pregnancy/save', 'USER002')
+        document.querySelectorAll('.selector_options > .selector_option')
+            .forEach(el => el.addEventListener('click', e => {
+                e.target.parentNode.parentNode.querySelector('input').value = e.target.textContent
+            }))
+        document.querySelectorAll('.selector > .selector_option')
+            .forEach(el => el.addEventListener('click', e => {
+                e.target.parentNode.querySelector('input').value = e.target.textContent
+            }))
+    </script>
+</body>
+
+</html>

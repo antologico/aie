@@ -23,7 +23,6 @@ class Connection extends EventDispatcher {
             }
             switch(message.action) {
               case 'aie-update':
-              console.log(message)
                 this.receiveUpdate(message)
                 break
               case 'aie-reset':
@@ -119,7 +118,22 @@ class Connection extends EventDispatcher {
             action: 'aie-trash',
         })
     }
-      
+
+    onLoadFromServer({baseUrl, md5, name}) {
+        if (baseUrl && md5 && name) {
+            const url = baseUrl +'/'+ name + '/' + md5
+            fetch(url)
+                .then((response) => response.json())
+                .then((state) => {
+                    this.events.onReceiveUpdate({
+                        event: `Load from server (${baseUrl})`,
+                        state,
+                        element: 'Document',
+                    })
+                    this.events.updateValues(state)
+                });
+        }
+    }
 }
 
 export default Connection

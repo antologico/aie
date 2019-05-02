@@ -1,7 +1,26 @@
 import EventDispatcher from './EventDispatcher'
 import MemoryBlock from './MemoryBlock'
+import Crypto from 'crypto'
 
 export const DEFAULT_MAX_LEVELS = 1000
+
+
+function getMD5State(element) {
+  return Crypto.createHash('md5').update(
+      JSON.stringify(
+          getBasicStructure(element)
+      )
+  ).digest("hex")
+}
+
+function getBasicStructure(element = []) {
+  return element.map(({name, children}) => (
+      {
+          name,
+          children: getBasicStructure(children),
+      })
+  )
+}
 
 class History extends EventDispatcher {
     constructor () {
@@ -9,11 +28,13 @@ class History extends EventDispatcher {
       this.maxLevels = null
       this.history = []
       this.disabled = false
+      this.md5 = ''
+      this.name = ''
       this.events = {
         change: () => {},
       }
     }
-  
+
     changeMaxLevels (maxLevels) {
       this.maxLevels = parseInt(maxLevels)
     }
@@ -35,8 +56,18 @@ class History extends EventDispatcher {
           element,
           state,
         })
+        this.md5 = getMD5State(state)
+        this.name = state[0].name
         this.events.change(this)
       }
+    }
+
+    getMD5 () {
+      return this.md5
+    }
+
+    getName () {
+      return this.name
     }
   
     clean () {

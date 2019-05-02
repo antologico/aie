@@ -36,26 +36,48 @@ export default class AIEHTMLMonitor extends AIEMonitor {
         AIEHTMLMonitor.sendPregnancies('Reconnect', 'Document', 'All')
     }
 
-    static sendPregnancies (eventName: string = '', elementName: string = '', environmentName: string = '') : void {
+    static sendPregnancies (eventName: string = '', elementName: string = '', environmentName: string = '', serverUrl: string = null, userName = null) : void {
         AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor send pregnancies for <' + eventName + '>');
         const state = AIEMonitor.getState()
         if (state && state.length) {
-            const detail = {
+            const detailObj = {
                 event: eventName,
                 aie: environmentName,
                 element: elementName,
                 state,
+                userName,
             }
-            const event = new CustomEvent(AIEHTMLMonitor.eventSendName, { 'detail': JSON.stringify(detail) });
+            const detail = JSON.stringify(detailObj)
+            const event = new CustomEvent(AIEHTMLMonitor.eventSendName, { detail });
             (<any>window).dispatchEvent(event)
+            if (serverUrl && userName) {
+                AIEHTMLMonitor.sendPost(serverUrl, detail)
+            }
         }
+    }
+
+    static sendPost(serverUrl: string, body: string) {
+        const headers = new Headers({
+            'Content-Type': 'application/x-www-form-urlencoded'
+        });
+
+        const data = {
+            method: 'POST',
+            headers,
+            body,
+        };
+
+        fetch(serverUrl, data)
+            .then(function() {
+                AIEHTMLMonitor.log('[AIE] AIEHTMLMonitor send pregnancies to <' + serverUrl + '>');
+            })
     }
 
     static log(text: string): void {
         AIEHTMLMonitor.enableLog && console.log(text)
     }
 
-    static exposeEnviroments (): void {
+    static exposeEnviroments (serverUrl: string = null, userName: string = null): void {
         // Wait for events
         const w = (<any>window)
         w.addEventListener(AIEHTMLMonitor.eventConnectName, () => { AIEHTMLMonitor.sendPregnancies('Reconnect', 'Document', 'All') })
@@ -64,8 +86,8 @@ export default class AIEHTMLMonitor extends AIEMonitor {
         
         // Dispatch events
         AIEMonitor.environments.map((env: AIE) => {
-            env.registerEvent('change', (myEvent: string, element: AIEElement) => {
-                AIEHTMLMonitor.sendPregnancies(myEvent, element.getName(), env.getName())
+            env.registerEvent('change', (myEvent: string, element: AIEElement, config: Object) => {
+                AIEHTMLMonitor.sendPregnancies(myEvent, element.getName(), env.getName(), serverUrl, userName)
             })
         })
     }

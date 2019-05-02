@@ -20,10 +20,12 @@ history.registerEvent('change', panel.updateMemoryField.bind(panel))
 
 configPanel.registerEvent('onLevelChange', history.changeMaxLevels.bind(history))
 configPanel.registerEvent('onApply', connection.applyState.bind(connection))
+configPanel.registerEvent('onLoadFromServer', connection.onLoadFromServer.bind(connection))
 configPanel.loadConfig()
 
 connection.registerEvent('initValues', panel.reciveValues.bind(panel))
 connection.registerEvent('initValues', statePanel.drawTable.bind(statePanel))
+connection.registerEvent('initValues', configPanel.update.bind(configPanel))
 connection.registerEvent('updateValues', statePanel.updateValues.bind(statePanel))
 connection.registerEvent('updateValues', hitmapPanel.update.bind(hitmapPanel))
 connection.registerEvent('updateValues', configPanel.update.bind(configPanel))

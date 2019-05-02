@@ -2,24 +2,45 @@
   "scripts": {
     "build": "rm -rf dist && webpack --mode production --config webpack.server.config.js",
     "hot": "node-hot --config webpack.server.config.js",
-    "start": "webpack --mode development --config webpack.server.config.js && node ./dist/server.js"
+    "start": "webpack --mode development --config webpack.server.config.js && node ./dist/server.js",
+    "test": "jest"
   },
   "dependencies": {
-    "@babel/core": "^7.3.4",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.x",
+    "@babel/core": "^7.4.3",
+    "@babel/cli": "^7.4.3",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.1.1",
     "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^7.24.1",
+    "babel-preset-es2016": "^7.24.1",
+    "crypto-js": "^3.1.9-1",
     "express": "^4.16.4",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.7.1",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.17",
-    "typescript": "^3.3.3333",
     "webpack-cli": "^3.2.3",
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.4.3",
+    "babel-jest": "^24.7.1",
+    "babel-loader": "^7.1.5",
     "node-hot-loader": "^1.12.3",
-    "webpack": "^4.29.6"
+    "webpack": "^4.30.0"
+  },
+  "jest": {
+    "verbose": true,
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ]
+  },
+  "babel": {
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
   }
 }
