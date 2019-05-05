@@ -15,6 +15,8 @@ class Connection extends EventDispatcher {
             reciveMark: () => {},
             onReceiveUpdate: () => {},
             onClean: () => {},
+            onFailUpdate: () => {},
+            onMessage: () => {},
         }
 
         this.port.onMessage.addListener((message) => {
@@ -122,7 +124,7 @@ class Connection extends EventDispatcher {
     onLoadFromServer({baseUrl, md5, name}) {
         if (baseUrl && md5 && name) {
             const url = baseUrl +'/'+ name + '/' + md5
-            fetch(url)
+            fetch(url + '?t=' + Date.now())
                 .then((response) => response.json())
                 .then((state) => {
                     this.events.onReceiveUpdate({
@@ -131,7 +133,19 @@ class Connection extends EventDispatcher {
                         element: 'Document',
                     })
                     this.events.updateValues(state)
-                });
+                    this.applyState()
+                    this.events.onMessage({
+                        message: 'Data loaded from server',
+                        type: 'success',
+                    })
+                })
+                .catch(() => {
+                    this.events.onFailUpdate()
+                    this.events.onMessage({
+                        message: 'Error loading from server',
+                        type: 'error',
+                    })
+                })
         }
     }
 }

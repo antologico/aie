@@ -1,5 +1,7 @@
 import EventDispatcher from './EventDispatcher'
 
+const SET_ERROR_TIMEOUT_MS = 5000
+
 class Panel extends EventDispatcher {
     constructor() {
         super()
@@ -15,7 +17,8 @@ class Panel extends EventDispatcher {
         this.container = document.getElementById('container')
         this.hitmapChecker = document.getElementById('hitmap-checker')
         this.stateTableChecker = document.getElementById('state-table-checker')
-
+        this.messageText = document.getElementById('message')
+        
         document.addEventListener('mouseover', (e) => this.onMouseOver(e.srcElement))
         document.addEventListener('mouseout', (e) => this.onMouseOut(e.srcElement))
         document.addEventListener('click', (e) => this.onClick(e.srcElement))
@@ -77,6 +80,16 @@ class Panel extends EventDispatcher {
             this.events.onFilterHitmap (element.getAttribute('hitmap-filter'))
             this.hitmapChecker.checked = true
         }
+    }
+
+    onMessage ({message, type = ''}) {
+        this.messageText.innerHTML = message
+        this.messageText.classList.add('showed')
+        this.messageText.classList.add(type)
+        setTimeout(() => {
+            this.messageText.classList.remove('showed')
+            this.messageText.classList.remove(type)
+        }, SET_ERROR_TIMEOUT_MS)
     }
 }
 

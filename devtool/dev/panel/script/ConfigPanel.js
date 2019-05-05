@@ -11,7 +11,7 @@ class ConfigPanel extends EventDispatcher {
         this.autoApply = document.getElementById('config_autoapply')
         this.md5Field = document.getElementById('config_md5')
         this.nameField = document.getElementById('config_name')
-        this.loadFromserverButton = document.getElementById('config_load_from_server')
+        this.loadFromServerButton = document.getElementById('config_load_from_server')
         this.serverField = document.getElementById('config_loader_server')
         this.serverUrl = document.getElementById('config_get_call')
 
@@ -19,18 +19,27 @@ class ConfigPanel extends EventDispatcher {
             onLevelChange: () => {},
             onApply: () => {},
             onLoadFromServer: () => {},
+            onError: () => {},
         }
+
+        this.updateServerURI(localStorage.getItem('aie_server'))
 
         this.serverField.addEventListener('input', (e) => this.updateServerURI(e.currentTarget.value))
         this.levels.addEventListener('input', (e) => this.onLevelChange(e.currentTarget.value))
         this.autoApply.addEventListener('input', (e) => this.onAutoApplyChange(e.currentTarget.value))
-        this.loadFromserverButton.addEventListener('click', 
-            (e) => this.events.onLoadFromServer({
+        this.loadFromServerButton.addEventListener('click', 
+            () => {
+                this.enableFromServerButton('Data loaded from server', 'message')
+                this.events.onLoadFromServer({
                 baseUrl: this.serverField.value,
                 md5: this.history.getMD5(),
                 name: this.history.getName()
-            })
+            })}
         )
+    }
+
+    enableFromServerButton() {
+        this.loadFromServerButton.removeAttribute('disabled')
     }
 
     loadConfig() {
@@ -56,6 +65,7 @@ class ConfigPanel extends EventDispatcher {
 
     updateServerURI (server) {
         if (server) {
+            localStorage.setItem('aie_server', server)
             this.serverUrl.innerHTML =
                 server + '/' +
                 this.history.getName() + '/' +
@@ -67,7 +77,8 @@ class ConfigPanel extends EventDispatcher {
         const val = parseInt(this.autoApply.value)
         this.md5Field.value = this.history.getMD5()
         this.nameField.value = this.history.getName()
-        this.updateServerURI(this.serverField.value) 
+        this.loadFromServerButton.removeAttribute('disabled')
+        this.updateServerURI(this.serverField.value)
         if (val && (this.history.getLength() % val === 0)) {
             this.events.onApply()
         }

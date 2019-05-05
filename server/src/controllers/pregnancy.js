@@ -22,7 +22,7 @@ export default {
                 function (err, pregnances) {
                     if (err) { console.log(err) }
                     if (pregnances) {
-                    res.send(addStates(pregnances.map(({status}) => (status))))
+                        res.send(addStates(pregnances.map(({status}) => (status))))
                     } else {
                         res.send([])
                     }
