@@ -1,14 +1,27 @@
 import AIEMemory from './AIEMemory';
+import AIEHTMLMonitor from './AIEHTMLMonitor';
+import { IndexDBWarehouse, LocalStorageWarehouse } from './Warehouse';
 export default class AIEHTMLMemory extends AIEMemory {
+    constructor(name) {
+        super(name);
+        this.name = name;
+    }
+    getWarehouseAvailble() {
+        const indexDB = new IndexDBWarehouse(name);
+        if (indexDB.isAvailable()) {
+            return indexDB;
+        }
+        AIEHTMLMonitor.log('[AIE] LocalStorage enabled');
+        return new LocalStorageWarehouse(name);
+    }
     loadScoreFromStore(id) {
-        const value = localStorage.getItem(id);
-        return value ? parseFloat(value) : 0;
+        return this.warehouse.load(id);
     }
     saveScoreToStore(id, value) {
-        localStorage.setItem(id, `${value}`);
+        this.warehouse.save(id, `${value}`);
     }
     removeScoreFromStore(id) {
-        localStorage.removeItem(id);
+        this.warehouse.remove(id);
     }
 }
 //# sourceMappingURL=AIEHTMLMemory.js.map

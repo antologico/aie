@@ -1,16 +1,33 @@
 import AIEMemory from './AIEMemory'
+import AIEHTMLMonitor from './AIEHTMLMonitor'
+import Warehouse, { IndexDBWarehouse, LocalStorageWarehouse } from './Warehouse'
 
 export default class AIEHTMLMemory extends AIEMemory {
+  private name: string
+
+  public constructor(name: string) {
+    super (name)
+    this.name = name
+  }
+
+  public getWarehouseAvailble (): Warehouse {
+    const indexDB = new IndexDBWarehouse(name)
+    if (indexDB.isAvailable()) {
+      return indexDB;
+    }
+    AIEHTMLMonitor.log('[AIE] LocalStorage enabled')
+    return new LocalStorageWarehouse(name)
+  }
+
   public loadScoreFromStore (id: string): number {
-    const value = localStorage.getItem(id)
-    return value ? parseFloat(value) : 0
+    return this.warehouse.load(id)
   }
 
   public saveScoreToStore (id: string, value: number): void {
-    localStorage.setItem(id, `${value}`)
+    this.warehouse.save(id, `${value}`)
   }
 
   public removeScoreFromStore (id: string): void {
-    localStorage.removeItem(id)
+    this.warehouse.remove(id)
   }
 }

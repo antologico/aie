@@ -89,7 +89,7 @@ class HitmapPanel extends EventDispatcher {
 
     getFillColor (pregnancy) {
         const color = parseInt((pregnancy / this.maxPregnancy)  * 255)
-        return 'rgb(' + [color, 30, color].join(',') + ')'
+        return 'rgb(' + [color, 60, 50].join(',') + ')'
     }
 
     getRectagle ({physicalAttribute, pregnancy, name}) {

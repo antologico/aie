@@ -5,22 +5,22 @@
 		<link rel="stylesheet" href="css/panel.css">
 		<link rel="stylesheet" href="css/icons.css">
 	</head>
-	<body>
+	<body id='aie-devtool'>
 		<input id="state-table-checker" type="radio" name="tab-control" class="tab-checker"/>
 		<input id="timemachine-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="config-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="hitmap-checker" type="radio" name="tab-control"  class="tab-checker"/>
-			
-		<div class="toolbar">
-			<input id="active-marks-checker" type="checkbox" />
-			<label class="toolbar-icon" for="active-marks-checker"><i class="icon-target"></i><span class='toolbar-icon-label'>Active marks</span></label>
-			<label class="toolbar-icon" id="toolbar-delete"><i class="icon-trash"></i><span class='toolbar-icon-label'>Delete historial</span></label>
-			<label class="toolbar-icon" for="timemachine-checker"><i class="icon-back-in-time"></i><span class='toolbar-icon-label'>Show historial</span></label>
-			<label class="toolbar-icon" for="hitmap-checker"><i class="icon-eye"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
-			<label class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
-			<label class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
-			<label class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Clean & Connect</span></label>
-			<label class="toolbar-icon" for="config-checker"><i class="icon-wrench"></i><span class='toolbar-icon-label'>Configuration</span></label>
+		<input id="active-marks-checker" type="checkbox" />
+		
+		<div class="toolbar" aie-pregnancy-fields="position" aie-name="Toolbar">
+			<label aie-trigger="click" aie-name="menu-marks" class="toolbar-icon" for="active-marks-checker"><i class="icon-target"></i><span class='toolbar-icon-label'>Active marks</span></label>
+			<label aie-trigger="click" aie-name="menu-delete" class="toolbar-icon" id="toolbar-delete"><i class="icon-trash"></i><span class='toolbar-icon-label'>Delete historial</span></label>
+			<label aie-trigger="click" aie-name="timemachine" class="toolbar-icon" for="timemachine-checker"><i class="icon-back-in-time"></i><span class='toolbar-icon-label'>Show historial</span></label>
+			<label aie-trigger="click" aie-name="hitmap" class="toolbar-icon" for="hitmap-checker"><i class="icon-eye"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
+			<label aie-trigger="click" aie-name="sitemap" class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
+			<label aie-trigger="click" aie-name="apply" class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
+			<label aie-trigger="click" aie-name="connect" class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Clean & Connect</span></label>
+			<label aie-trigger="click" aie-name="cofig" class="toolbar-icon" for="config-checker"><i class="icon-wrench"></i><span class='toolbar-icon-label'>Configuration</span></label>
 			<label class="toolbar-info right" id="toolbar-apply">
 				<i class="icon-gauge"></i>&nbsp;<span id="memorySize">0</span>
 			</label>
@@ -121,8 +121,10 @@
 		</script>
 
 		<script type="template" id="hitmap-rectangle">
-			<rect aie-name="{name}" x="{left}" y="{top}" width="{width}" height="{height}" fill="{fill}" />
-            <text x="{x}" y="{y}" fill="white" font-size="6">{name}</text>
+			<g class="hitmap-rectagle" transform="translate({left},{top})" aie-name="{name}" >
+				<rect x="0" y="0" width="{width}" height="{height}" fill="{fill}" />
+				<text x="14" y="20" fill="white" font-size="12">{name}</text>
+			</g>
 		</script>
 
 		<script type="template" id="hitmap-search-option">
@@ -160,5 +162,6 @@
 			</script>
 		<div class="message" id="message"></div>
 		<script src="panel.min.js"></script>
+		<script src="aie.min.js"></script>
 	</body>
 </html>

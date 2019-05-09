@@ -1,6 +1,7 @@
 export default class AIEMemory {
     constructor(id) {
         this.id = id;
+        this.warehouse = this.getWarehouseAvailble();
         this.score = this.loadScoreFromStore(id);
     }
     setId(id) {

@@ -77,6 +77,10 @@ export default class AIEHTMLMonitor extends AIEMonitor {
         AIEHTMLMonitor.enableLog && console.log(text)
     }
 
+    static error(text: string): void {
+        AIEHTMLMonitor.enableLog && console.error(text)
+    }
+
     static exposeEnviroments (serverUrl: string = null, userName: string = null): void {
         // Wait for events
         const w = (<any>window)

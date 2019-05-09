@@ -223,7 +223,6 @@ label.mark {
 .toolbar-icon {
   font-size: 1.5em;
   display: inline-block;
-  width: 3em;
   cursor: pointer;
   padding: 0;
   display: inline-flex;
@@ -231,7 +230,8 @@ label.mark {
   align-items: center;
   height: 100%;
   color: floralwhite;
-  margin: 0 auto;
+  margin: 0 2px;
+  width: calc(3em - 2px);
   border-radius: 5px 5px 0 0;
   overflow: visible;
   position: relative;
@@ -586,4 +586,24 @@ hr {
   color: lightgreen;
   background: darkslategrey;
   border: 1px solid lightgreen;
+}
+
+g.hitmap-rectagle rect {
+  transition-duration: 0.5s;
+}
+
+g.hitmap-rectagle:hover rect {
+  fill: white;
+  cursor: pointer;
+}
+
+g.hitmap-rectagle > text {
+  display: none;
+}
+
+g.hitmap-rectagle:hover > text {
+  fill: black;
+  display: block;
+  background: red;
+  font-size: 1em;
 }
