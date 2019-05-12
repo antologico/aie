@@ -1,12 +1,10 @@
 export default class AIEMemory {
     constructor(id) {
         this.id = id;
-        this.warehouse = this.getWarehouseAvailble();
         this.score = this.loadScoreFromStore(id);
     }
     setId(id) {
         this.id = id;
-        this.removeScoreFromStore(id);
         this.saveScoreToStore(id, this.score);
     }
     anoteEvent(goal = 1) {
