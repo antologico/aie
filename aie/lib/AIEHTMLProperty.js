@@ -7,6 +7,7 @@ const HEIGHT = 'height';
 const WIDTH = 'width';
 const POSITION = 'position';
 const LEVEL = 'level';
+const DISPLAY = 'display';
 function colorFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const initialValue = initialValues[child.getName()];
@@ -37,6 +38,14 @@ function positionFn(element) {
     sortedElements.forEach(el => {
         element.getBaseElement().appendChild(el.getBaseElement());
     });
+}
+function displayFn(element) {
+    console.log('display', element.getName(), 'false?', !element.getPregnancy());
+    let display = 'inherit';
+    if (!element.getPregnancy()) {
+        display = 'none';
+    }
+    element.getBaseElement().style.display = display;
 }
 function getLevelParentElement(element, parentElement, topLevelParent) {
     if (parentElement === topLevelParent) {
@@ -80,6 +89,9 @@ export default class AIEHTMLProperty extends AIEProperty {
     constructor(name, element) {
         super(name, getInitialValue(name, element));
         switch (name) {
+            case DISPLAY:
+                this.setTransform(displayFn);
+                break;
             case COLOR:
                 this.setTransform(colorFn);
                 break;
