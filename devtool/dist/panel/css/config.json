@@ -89,6 +89,12 @@
       "css": "server",
       "code": 62003,
       "src": "fontawesome"
+    },
+    {
+      "uid": "b1887b423d2fd15c345e090320c91ca0",
+      "css": "th",
+      "code": 59404,
+      "src": "fontawesome"
     }
   ]
 }

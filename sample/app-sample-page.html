@@ -188,8 +188,8 @@
     <div id='form-context'>
         <div class="menu">
             <div class="block-title">Menu block</div>
-            <div aie aie-pregnancy-fields="font-size|max:1.1, level, position" aie-name="menu">
-                <div class="item" aie aie-trigger="click" aie-name="menu_level_1" aie-pregnancy-fields="font-size|max:1.1">
+            <div aie aie-properties="font-size|max:1.1, level, position" aie-name="menu">
+                <div class="item" aie aie-trigger="click" aie-name="menu_level_1" aie-properties="font-size|max:1.1">
                     <label class="title" for="content1">Level 1</label>
                     <div class="item" aie aie-trigger="click" aie-name="menu_level_1_1">
                         <label class="title" for="content1_1">Level 1_1</label>
@@ -198,17 +198,17 @@
                         <label class="title" for="content1_2">Level 1_2</label>
                     </div>
                 </div>
-                <div class="item" aie aie-trigger="click" aie-name="menu_level_2" aie-pregnancy-fields="font-size|max:1.1">
+                <div class="item" aie aie-trigger="click" aie-name="menu_level_2" aie-properties="font-size|max:1.1">
                     <label class="title" for="content2">Level 2</label>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1" aie-pregnancy-fields="font-size|max:1.1">
+                    <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1" aie-properties="font-size|max:1.1">
                         <label class="title" for="content2_1">Level 2_1</label>
-                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1"aie-pregnancy-fields="font-size|max:1.1">
+                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1"aie-properties="font-size|max:1.1">
                             <label class="title" for="content2_1_1">Level 2_1_1</label>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_2">
                                 <label class="title" for="content2_1_2">Level 2_1_2 &#x2605;</label>
                             </div>
                         </div>
-                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2"aie-pregnancy-fields="font-size|max:1.1">
+                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2"aie-properties="font-size|max:1.1">
                             <label class="title" for="content2_2">Level 2_2</label>
                             <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_1">
                                 <label class="title" for="content2_2_1">Level 2_2_1</label>
@@ -234,9 +234,9 @@
         <input id="content2_1_2" type="radio" name="form_selector" class="hidden form_selector" checked>    
         <div class="content">
             <div class="content-title">Content block 2_1_2</div>
-            <div class="form" aie aie-pregnancy-fields="position" aie-name="form">
+            <div class="form" aie aie-properties="position" aie-name="form">
 
-                <fieldset aie aie-name="description_group" aie-pregnancy-fields="height|max:3, position">
+                <fieldset aie aie-name="description_group" aie-properties="height|max:3, position">
                     <legend>Long descriptions</legend>
                     <textarea aie aie-trigger="keypress" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
                     <textarea aie aie-trigger="keypress" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
@@ -245,8 +245,8 @@
                 <fieldset aie aie-name="main_info_group">
                     <legend>Main info</legend>
                     <table width="100%">
-                        <tr aie aie-name="main_info_group_columns" aie-pregnancy-fields="width">
-                            <td aie aie-name="main_info_group_fields" aie-pregnancy-fields="font-size|max:1.2, height|max:1.2, position">
+                        <tr aie aie-name="main_info_group_columns" aie-properties="width">
+                            <td aie aie-name="main_info_group_fields" aie-properties="font-size|max:1.2, height|max:1.2, position">
                                 <div aie aie-name="input_field_username" aie-trigger="click">
                                     <label>Username</label>
                                     <input class="large" type="text" placeholder="Mandatory" />
@@ -276,7 +276,7 @@
                     <legend>Select Transport</legend>
                     <div class="selector">
                     <input id="select_input" readonly/>
-                        <div class="selector_options" aie aie-name="selector_fields" aie-pregnancy-fields="position, font-size|max: 2">
+                        <div class="selector_options" aie aie-name="selector_fields" aie-properties="position, font-size|max: 2">
                             <div class="selector_option" aie aie-name="selector_field_option_1" aie-trigger="click">Ship</div>
                             <div class="selector_option" aie aie-name="selector_field_option_2" aie-trigger="click">Train</div>
                             <div class="selector_option" aie aie-name="selector_field_option_3" aie-trigger="click">Plane</div>
@@ -284,7 +284,7 @@
                         </div>
                     </div>
                 </fieldset>
-                <fieldset aie aie-name="advanced_search_group" aie-pregnancy-fields="width|max: 2">
+                <fieldset aie aie-name="advanced_search_group" aie-properties="width|max: 2">
                     <legend>Search block</legend>
                     <input aie aie-name="advanced_search_field" aie-trigger="keypress" type="text" placeholder="Text to search" />
                     <button aie aie-name="advanced_search_button" aie-trigger="click">Find now!</button>

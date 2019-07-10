@@ -82,6 +82,24 @@ export default class AIEElement {
     setProperties(properties) {
         this.properties = properties;
     }
+    setOnChangeTrigger(trigger) {
+        this.onChangeTrigger = trigger;
+    }
+    hasOnChangeTrigger() {
+        return !!this.onChangeTrigger;
+    }
+    runOnChangeTrigger() {
+        try {
+            if (this.onChangeTrigger) {
+                const trigger = new Function('pregnancy', this.onChangeTrigger);
+                return trigger(this.getPregnancy());
+            }
+        }
+        catch (excep) {
+            console.warn('Error parsing on change of <', this.getName(), '>:', excep);
+        }
+        return false;
+    }
     getProperties() {
         return this.properties || [];
     }

@@ -6,7 +6,8 @@ import AIEHTMLMonitor from './AIEHTMLMonitor'
 
 const MAX_ID = 'max'
 const MIN_ID = 'min'
-const HTML_SUFFIX_PRESTACE_FIELD = 'pregnancy-fields'
+const HTML_SUFFIX_PRESTACE_FIELD = 'properties'
+const HTML_SUFFIX_TRIGGER_ON_CHANGE = 'on-change'
 const HTML_PREFIX = 'aie-'
 
 /*
@@ -52,6 +53,7 @@ export default class AIEHTMLElement extends AIEElement {
   public setChildren(element: AIEElement) {
     super.setChildren(element)
     this.setProperties(this.parseAttr(this.getAttr(HTML_SUFFIX_PRESTACE_FIELD)))
+    this.setOnChangeTrigger(this.getAttr(HTML_SUFFIX_TRIGGER_ON_CHANGE))
   }
 
   public initializeMemory(seed: string): AIEMemory {

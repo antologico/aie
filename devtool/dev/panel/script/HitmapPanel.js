@@ -25,7 +25,7 @@ class HitmapPanel extends EventDispatcher {
         this.restoreButton.addEventListener('click', () => this.onRestore())
 
         this.templateRectagle = document.getElementById('hitmap-rectangle').innerHTML
-        this.templateOption = document.getElementById('hitmap-search-option').innerHTML
+        this.templateOption = document.getElementById('chart-search-option').innerHTML
         this.templatePrintable = document.getElementById('svg-print').innerHTML
 
         this.events = {

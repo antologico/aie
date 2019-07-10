@@ -23,7 +23,7 @@
   margin-left: 0.3em;
   padding: 0.2em 0.4em;
   font-size: 0.8em;
-  border-radius: 5px;
+  border-radius: 0.3em;
 }
 
 .itemElement > .item .trigger {
@@ -212,6 +212,7 @@ label.mark {
   padding-top: 0.4em;
   padding-left: 1em;
   width: calc(100% - 1em);
+  border-bottom: 1px solid slategray;
 }
 
 
@@ -232,10 +233,10 @@ label.mark {
   color: floralwhite;
   margin: 0 2px;
   width: calc(3em - 2px);
-  border-radius: 5px 5px 0 0;
+  border-radius: 0.3em 0.3em 0 0;
   overflow: visible;
   position: relative;
-  transition-duration: 0.3s;
+  transition-duration: 0.1s;
   float: left;
 }
 .toolbar-info {
@@ -319,12 +320,12 @@ input[type='checkbox']:checked + .toolbar-icon {
 }
 
 .timemachine-apply-button {
-  border-radius: 0 5px 5px 0;
+  border-radius: 0 0.3em 0.3em 0;
   border-left: 0;
 }
 
 .timemachine-restore-button {
-  border-radius: 5px 0 0 5px;
+  border-radius: 0.3em 0 0 0.3em;
   margin-left: 1em;
 }
 
@@ -343,10 +344,12 @@ input[type='checkbox']:checked + .toolbar-icon {
   display: none;
 }
 
+#active-marks-checker:checked ~ .toolbar label[for=active-marks-checker],
 #state-table-checker:checked ~ .toolbar label[for=state-table-checker],
 #timemachine-checker:checked ~ .toolbar label[for=timemachine-checker],
 #hitmap-checker:checked ~ .toolbar label[for=hitmap-checker],
-#config-checker:checked ~ .toolbar label[for=config-checker]
+#config-checker:checked ~ .toolbar label[for=config-checker],
+#treemap-checker:checked ~ .toolbar label[for=treemap-checker]
 {
   background: slategray;
 }
@@ -354,41 +357,40 @@ input[type='checkbox']:checked + .toolbar-icon {
 #state-table-checker:checked ~ #container #state-table,
 #timemachine-checker:checked ~ #container #timemachine,
 #hitmap-checker:checked ~ #container #hitmap,
-#config-checker:checked ~ #container #config
+#config-checker:checked ~ #container #config,
+#treemap-checker:checked ~ #container #treemap
 {
   display: block;
   padding-top: 4em;
 }
 
+#active-marks-checker:checked ~ .toolbar label[for=active-marks-checker] {
+  background: darkslategray;
+  border-radius: 0.3em;
+  height: 90%;
+}  
+
+#treemap,
 #hitmap {
   margin: 1em 2em 0 2em;
 }
 
-.hitmap-image-content {
-  text-align: center;
-}
-
-#hitmap-image-leyend {
-  position: absolute;
-  line-height: 30px;
-  padding: 10px;
-  border: 1px solid floralwhite;;
-  background: slategrey;
-  color: white;
-}
-
-#hitmap-image {
+.chart {
   margin: 0 auto;
   background: rgba(0,0,0,0.2);
-  max-width: calc(100% - 2px);
-  max-height: 600px;
-  height: auto;
   padding: 2px;
-  border-radius: 0.5em;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  border-radius: 0.3em;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  position: absolute;
+  left: 1em;
+  right: 1em;
+  top: 4.5em;
+  bottom: 1em;
+  width: calc(100% - 2em);
+  height: calc(100% - 5.5em);
 }
 
-#hitmap-input {
+.chart-input {
   width: calc(80% - 10px);
   -webkit-appearance: none;
   background: transparent;
@@ -396,13 +398,13 @@ input[type='checkbox']:checked + .toolbar-icon {
   border: 0;
 }
 
-.hitmap-buttons-content {
+.chart-buttons-content {
   float:left; 
   width: 15em;
   padding-right: 2em;
 }
 
-.hitmap-buttons-content button {
+.chart-buttons-content button {
   width: 100%;
   margin-bottom: 2em;
 }
@@ -440,14 +442,16 @@ button:disabled {
   100% { opacity: lightsalmon; }
 }
 
-.hitmap-image-content {
+.chart-image-content {
+  text-align: center;
   width: calc(100% - 20em);
-  max-width: 80em;
   float: left;
-  margin-top: 2em;
+  position: relative;
+  height: calc(100vh - 8em);
+  margin: 0;
 }
 
-#hitmap-search {
+.chart-search {
   width: calc(18%);
   border: 0;
   border-radius: 0.2em;
@@ -460,16 +464,26 @@ button:disabled {
 }
 
 #config fieldset {
-  max-width: 50em;
+  float: left;
+  width: calc(100% - 2em);
+  margin-right: 2em;
 }
-
-#hitmap-input::-webkit-slider-runnable-track {
+@media (min-width: 600px) {
+  #config fieldset {
+    max-width: 60em;
+  }
+}
+.fieldset-help {
+  margin-top: -0.2em;
+  color: darkslategrey;
+}
+.chart-input::-webkit-slider-runnable-track {
   background: floralwhite;
   height: 0.3em;
   -webkit-appearance: none;
 }
 
-#hitmap-input::-webkit-slider-thumb {
+.chart-input::-webkit-slider-thumb {
   background: slategrey;
   margin-top: -10px;
   width: 10px;
@@ -546,10 +560,6 @@ hr {
   margin: 2em -1em;
 }
 
-.hitmap-image-content-buttons {
-  padding-bottom: 1em;
-}
-
 .right {
   text-align: right;
 }
@@ -590,22 +600,34 @@ hr {
   border: 1px solid lightgreen;
 }
 
-g.hitmap-rectagle rect {
+g.treemap-group > rect {
+  fill: darksalmon;
+  stroke: darkslategray;
+  stroke-width: 1px;
+}  
+
+g.treemap-group > rect,
+g.hitmap-rectagle > rect {
   transition-duration: 0.5s;
 }
 
-g.hitmap-rectagle:hover rect {
+g.treemap-group:hover > rect,
+g.hitmap-rectagle:hover > rect {
   fill: white;
   cursor: pointer;
 }
+
+g.treemap-group > text {
+  fill: lightgray;
+} 
 
 g.hitmap-rectagle > text {
   display: none;
 }
 
+g.treemap-group:hover > text,
 g.hitmap-rectagle:hover > text {
-  fill: black;
+  fill: darkslategrey;
   display: block;
-  background: red;
   font-size: 1em;
 }

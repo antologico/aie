@@ -40,7 +40,6 @@ function positionFn(element) {
     });
 }
 function displayFn(element) {
-    console.log('display', element.getName(), 'false?', !element.getPregnancy());
     let display = 'inherit';
     if (!element.getPregnancy()) {
         display = 'none';

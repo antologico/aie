@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+    version="1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:aie="http://aie.org/schema/"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <xs:element name="AIEElement">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element
+                    name="AIETiggers"
+                    type="AIETiggersType"
+                    minOccurs="0"
+                    maxOccurs="1"/>
+                <xs:element
+                    name="AIEProperties"
+                    type="AIEPropertiesType"
+                    minOccurs="0"
+                    maxOccurs="1"/>
+                <xs:any 
+                    namespace="http://schemas.android.com/apk/res/android"
+                    minOccurs="1"
+                    processContents="lax" 
+                    maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute
+                name="name"
+                type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="AIETiggersType">
+        <xs:sequence>
+            <xs:element
+                name="AIETigger"
+                type="AIETiggerType"
+                maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType
+        name="AIETiggerType">
+        <xs:attribute
+            name="name"
+            type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="AIEPropertiesType">
+        <xs:sequence>
+            <xs:element
+                name="AIEProperty"
+                type="AIEPropertyType" 
+                maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="AIEPropertyType">
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="min" type="xs:string"/>
+        <xs:attribute name="max" type="xs:string"/>
+        <xs:attribute name="unit" type="xs:string"/>
+    </xs:complexType>
+
+</xs:schema>

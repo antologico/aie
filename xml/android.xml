@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AIEElement 
+    xmlns:aie="http://aie.org/schema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="example-layout">
+    <AIETiggers>
+        <AIETigger name="click"/>
+        <AIETigger name="scroll"/>
+    </AIETiggers>
+    <LinearLayout
+        xmlns="http://schemas.android.com/apk/res/android"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <AIEElement
+            xmlns:aie="http://aie.org/schema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            name="example-button">
+            <AIETiggers>
+                <AIETigger name="click"/>
+                <AIETigger name="scroll"/>
+            </AIETiggers>
+            <AIEProperties>
+                <AIEProperty name="layout_width" max="200" min="100" unit="px" />
+            </AIEProperties>
+            <Button android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello, I am a Button" />
+        </AIEElement>  
+        <AIEElement
+            xmlns:aie="http://aie.org/schema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            name="example-button">
+            <AIETiggers>
+                <AIETigger name="click"/>
+            </AIETiggers>
+            <AIEProperties>
+                <AIEProperty name="font_size" min="6" max="20" unit="px" />
+            </AIEProperties>
+            <TextView android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello, I am a TextView" />
+        </AIEElement>  
+    </LinearLayout>
+</AIEElement>   

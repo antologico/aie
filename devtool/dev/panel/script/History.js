@@ -107,6 +107,10 @@ class History extends EventDispatcher {
     getLength() {
       return this.history.length
     }
+
+    getLastest() {
+      return this.history[this.history.length - 1]
+    }
   }
 
   export default History

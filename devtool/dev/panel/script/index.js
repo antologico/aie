@@ -6,9 +6,11 @@ import Panel from './Panel'
 import StatePanel from './StatePanel'
 import HitmapPanel from './HitmapPanel'
 import ConfigPanel from './ConfigPanel'
+import TreeMapPanel from './TreeMapPanel'
 
 const history = new History()
 const historyPanel = new HistoryPanel(history)
+const treemapPanel = new TreeMapPanel(history)
 const hitmapPanel = new HitmapPanel(history)
 const statePanel = new StatePanel()
 const connection = new Connection()
@@ -16,6 +18,7 @@ const configPanel = new ConfigPanel(history)
 const panel = new Panel()
 
 history.registerEvent('change', historyPanel.update.bind(historyPanel))
+history.registerEvent('change', treemapPanel.update.bind(treemapPanel))
 history.registerEvent('change', panel.updateMemoryField.bind(panel))
 
 configPanel.registerEvent('onLevelChange', history.changeMaxLevels.bind(history))
@@ -46,6 +49,10 @@ panel.registerEvent('onFilterHitmap', hitmapPanel.onSearchChange.bind(hitmapPane
 
 hitmapPanel.registerEvent('onApply', connection.applyState.bind(connection))
 hitmapPanel.registerEvent('onRestore', connection.applyState.bind(connection))
+
+treemapPanel.registerEvent('onApply', connection.applyState.bind(connection))
+treemapPanel.registerEvent('onRestore', connection.applyState.bind(connection))
+treemapPanel.registerEvent('onMarkChange', connection.sendMark.bind(connection))
 
 historyPanel.registerEvent('onApply', connection.applyState.bind(connection))
 historyPanel.registerEvent('onRestore', connection.restoreScores.bind(connection))

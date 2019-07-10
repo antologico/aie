@@ -13,6 +13,7 @@ export default abstract class AIEElement {
   private processor: AIEEventProcessor
   private parent: AIEElement
   private memory: AIEMemory
+  private onChangeTrigger: string
   private pregnancy: number
   private pregnancyCalculator: AIEPregnancyCalculator
   private maxPregnancy: number
@@ -119,6 +120,26 @@ export default abstract class AIEElement {
   
   public setProperties(properties: Array<AIEProperty>) {
     this.properties = properties
+  }
+  
+  public setOnChangeTrigger(trigger: string) {
+    this.onChangeTrigger = trigger
+  }
+  
+  public hasOnChangeTrigger(): boolean {
+    return !!this.onChangeTrigger
+  }
+  
+  public runOnChangeTrigger(): boolean {
+    try {
+      if (this.onChangeTrigger) {
+        const trigger = new Function('pregnancy', this.onChangeTrigger )
+        return trigger(this.getPregnancy())
+      }
+    } catch (excep) {
+      console.warn ('Error parsing on change of <',this.getName(),'>:', excep)
+    }
+    return false
   }
 
   public getProperties(): Array<AIEProperty> {

@@ -2,7 +2,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
-    "lint": "eslint --fix \"./src\""
+    "lint": "eslint --fix \"./src\"",
+    "import-lib": "cd ../aie/ && yarn build && cd ../sample && rm -rf node_modules/aie && yarn && yarn start"
   },
   "dependencies": {
     "@types/lodash": "^4.14.91",

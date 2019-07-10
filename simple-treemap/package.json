@@ -1,0 +1,14 @@
+{
+  "name": "simple-treemap",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "TreeMap Charts",
+  "author": {
+    "name": "Antonio Juan Sánchez",
+    "email": "anto@usal.es"
+  },
+  "repository": {
+    "type": "git"
+  }
+}

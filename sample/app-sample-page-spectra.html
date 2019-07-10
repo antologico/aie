@@ -193,8 +193,8 @@
             </div>
         </div>
         <div id='form-context'> 
-            <div aie aie-name="spectra_page" aie-pregnancy-fields="position"> 
-                <div class="menu" aie aie-name="menu" aie-pregnancy-fields="position, font-size|max:1.2">
+            <div aie aie-name="spectra_page" aie-properties="position"> 
+                <div class="menu" aie aie-name="menu" aie-properties="position, font-size|max:1.2">
                     <label for="chk_m_1" class="menu_item" aie aie-name="menu_1" aie-trigger="click">
                         <input type="radio" class="hidden" name="chk_m" id="chk_m_1" />
                         <div class="menu_text">Panel principal</div>
@@ -224,11 +224,12 @@
                         <div class="menu_text">Incidencias</div>
                     </label>
                 </div>
-                <div class="submenu" aie aie-name="submenu" aie-pregnancy-fields="display">
+                <div class="submenu" aie aie-name="submenu" aie-properties="display"
+                    aie-on-change="return pregnancy || confirm('The submenu become hidden. Sure?')">
                     <div class="submenu_title">
                         Medio ambiente
                     </div>
-                    <div class="submenu_content" aie aie-name="submenu_items" aie-pregnancy-fields="position">
+                    <div class="submenu_content" aie aie-name="submenu_items" aie-properties="position">
                         <label class="submenu_item" for="chk_sb_1" aie aie-name="submenu_1" aie-trigger="click">
                             <input type="radio" class="hidden" name="chk_sb" id="chk_sb_1" />
                             <div class="submenu_icon">
@@ -303,11 +304,11 @@
                         </label>
                     </div>
                 </div>
-                <div class="main" aie aie-name="content" aie-pregnancy-fields="position">
+                <div class="main" aie aie-name="content" aie-properties="position">
                     <div class="submenu_title">
                         Ozono
                     </div>
-                    <div class="main_content" aie aie-name="graphs" aie-pregnancy-fields="position,height|max:1.5">
+                    <div class="main_content" aie aie-name="graphs" aie-properties="position,height|max:1.5">
                         <div class="main_content_map" aie aie-name="map" aie-trigger="mouseover, click">
                             <img src="img/spectra/bar.png" />
                         </div>

@@ -10,17 +10,19 @@
 		<input id="timemachine-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="config-checker" type="radio" name="tab-control" class="tab-checker" />
 		<input id="hitmap-checker" type="radio" name="tab-control"  class="tab-checker"/>
+		<input id="treemap-checker" type="radio" name="tab-control"  class="tab-checker"/>
 		<input id="active-marks-checker" type="checkbox" />
 		
-		<div class="toolbar" aie-pregnancy-fields="position" aie-name="Toolbar">
-			<label aie-trigger="click" aie-name="menu-marks" class="toolbar-icon" for="active-marks-checker"><i class="icon-target"></i><span class='toolbar-icon-label'>Active marks</span></label>
-			<label aie-trigger="click" aie-name="menu-delete" class="toolbar-icon" id="toolbar-delete"><i class="icon-trash"></i><span class='toolbar-icon-label'>Delete historial</span></label>
-			<label aie-trigger="click" aie-name="timemachine" class="toolbar-icon" for="timemachine-checker"><i class="icon-back-in-time"></i><span class='toolbar-icon-label'>Show historial</span></label>
-			<label aie-trigger="click" aie-name="hitmap" class="toolbar-icon" for="hitmap-checker"><i class="icon-eye"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
-			<label aie-trigger="click" aie-name="sitemap" class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
-			<label aie-trigger="click" aie-name="apply" class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
-			<label aie-trigger="click" aie-name="connect" class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Clean & Connect</span></label>
-			<label aie-trigger="click" aie-name="cofig" class="toolbar-icon" for="config-checker"><i class="icon-wrench"></i><span class='toolbar-icon-label'>Configuration</span></label>
+		<div class="toolbar">
+			<label class="toolbar-icon" for="active-marks-checker"><i class="icon-target"></i><span class='toolbar-icon-label'>Active marks</span></label>
+			<label class="toolbar-icon" id="toolbar-delete"><i class="icon-trash"></i><span class='toolbar-icon-label'>Delete historial</span></label>
+			<label class="toolbar-icon" for="timemachine-checker"><i class="icon-back-in-time"></i><span class='toolbar-icon-label'>Show historial</span></label>
+			<label class="toolbar-icon" for="hitmap-checker"><i class="icon-eye"></i><span class='toolbar-icon-label'>Show hitmap</span></label>
+			<label class="toolbar-icon" for="treemap-checker"><i class="icon-th"></i><span class='toolbar-icon-label'>Show treemap</span></label>
+			<label class="toolbar-icon" for="state-table-checker"><i class="icon-sitemap"></i><span class='toolbar-icon-label'>Show state</span></label>
+			<label class="toolbar-icon" id="toolbar-apply"><i class="icon-flash"></i><span class='toolbar-icon-label'>Apply changes</span></label>
+			<label class="toolbar-icon" id="toolbar-connect"><i class="icon-loop"></i><span class='toolbar-icon-label'>Clean & Connect</span></label>
+			<label class="toolbar-icon" for="config-checker"><i class="icon-wrench"></i><span class='toolbar-icon-label'>Configuration</span></label>
 			<label class="toolbar-info right" id="toolbar-apply">
 				<i class="icon-gauge"></i>&nbsp;<span id="memorySize">0</span>
 			</label>
@@ -33,18 +35,21 @@
 					<legend><i class="icon-gauge"></i> Resources</legend>
 					<div class="fieldset-line">
 						<label for="config_level">History levels</label>
-						<input id="config_level" type="number" min="0"> <small><i>0 for disable</i></small>
+						<input id="config_level" type="number" min="0">
+						<div class="fieldset-help"><small><i>0 for disable</i></small></div>
 					</div>
 					<div class="fieldset-line">
 						<label for="config_level">Auto application</label>
-						<input id="config_autoapply" type="number" min="0"> cicles number <small><i>0 for disable</i></small>
+						<input id="config_autoapply" type="number" min="0"> cicles number
+						<div class="fieldset-help"><small><i>0 for disable</i></small></div>
 					</div>
 				</fieldset>
 				<fieldset>
 					<legend><i class="icon-server"></i> Remote server</legend>
 					<div class="fieldset-line">
 						<label for="config_loader_server">URL for load status</label>
-						<input id="config_loader_server"> <small><i>Example: http://server.com/subdomain/</i></small>
+						<input id="config_loader_server">
+						<div class="fieldset-help"><small><i>Example: http://server.com/subdomain/</i></small></div>
 					</div>
 					<div class="fieldset-line">
 						<label >MD5 of actual structure</label>
@@ -65,22 +70,34 @@
 			<div class="tab" id="timemachine">
 				<table id="timemachine-table"></table>
 			</div>
+			<div class="tab" id="treemap">
+					<div class="chart-buttons-content">
+						<button id="treemap-restore"><i class="icon-back-in-time"></i> Restore state</button>
+						<button id="treemap-apply"><i class="icon-flash"></i> Apply state</button>
+					</div>
+					<fieldset class="chart-image-content">
+							<div class="chart-image-content-buttons">
+								<input type="range" class="chart-input" id="treemap-input" value="0" width="100%" list="treemap-tickmarks"/>
+								<select class="chart-search" id="treemap-search"></select>
+								<datalist id="treemap-tickmarks"><option value="100" label="now"></datalist>
+							</div>
+						<svg class="chart" id="treemap-chart"></svg>
+					</fieldset>
+			</div>
 			<div class="tab" id="hitmap">
-				<div class="hitmap-buttons-content">
+				<div class="chart-buttons-content">
 					<button id="hitmap-restore"><i class="icon-back-in-time"></i> Restore state</button>
 					<button id="hitmap-apply"><i class="icon-flash"></i> Apply state</button>
 					<button id="hitmap-print"><i class="icon-print"></i> Open in new window</button>
 				</div>
-				<fieldset class="hitmap-image-content">
-					<legend><i class="icon-eye"></i> Hitmap</legend>
-					<div class="hitmap-image-content-buttons">
-						<input type="range" id="hitmap-input" value="0" width="100%" list="tickmarks"/>
-						<select id="hitmap-search"></select>
-						<datalist id="tickmarks"><option value="100" label="now"></datalist>
+				<fieldset class="chart-image-content">
+					<div class="chart-image-content-buttons">
+						<input type="range" class="chart-input" id="hitmap-input" value="0" width="100%" list="hitmap-tickmarks"/>
+						<select class="chart-search" id="hitmap-search"></select>
+						<datalist id="hitmap-tickmarks"><option value="100" label="now"></datalist>
 					</div>
-					<svg id="hitmap-image" preserveAspectRatio="none"></svg>
+					<svg class="chart" id="hitmap-image"></svg>
 				</fieldset>
-				
 			</div>
 		</div>
 		<div id="loader">
@@ -127,7 +144,7 @@
 			</g>
 		</script>
 
-		<script type="template" id="hitmap-search-option">
+		<script type="template" id="chart-search-option">
 			<option value="{name}" {selected}>{name}</option>
 		</script>
 
@@ -162,6 +179,5 @@
 			</script>
 		<div class="message" id="message"></div>
 		<script src="panel.min.js"></script>
-		<script src="aie.min.js"></script>
 	</body>
 </html>

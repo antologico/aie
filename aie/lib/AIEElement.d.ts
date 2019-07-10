@@ -10,6 +10,7 @@ export default abstract class AIEElement {
     private processor;
     private parent;
     private memory;
+    private onChangeTrigger;
     private pregnancy;
     private pregnancyCalculator;
     private maxPregnancy;
@@ -35,6 +36,9 @@ export default abstract class AIEElement {
     setProccesor(processor: AIEEventProcessor): void;
     getParent(): AIEElement;
     setProperties(properties: Array<AIEProperty>): void;
+    setOnChangeTrigger(trigger: string): void;
+    hasOnChangeTrigger(): boolean;
+    runOnChangeTrigger(): boolean;
     getProperties(): Array<AIEProperty>;
     getPropertiesNames(): Array<String>;
     setChildren(element: AIEElement): void;

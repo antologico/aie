@@ -35,6 +35,10 @@ export default class AIEProperty {
     }
 
     public transform (element: AIEElement) {
-        this.transformFn && this.transformFn(element, this.initialValue)
+        if (!element.hasOnChangeTrigger() || element.runOnChangeTrigger() !== false) {
+            this.transformFn && this.transformFn(element, this.initialValue)
+        } else {
+            console.warn('Mutation for',name,'canceled by user')
+        }
     }
 }

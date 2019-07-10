@@ -3,7 +3,8 @@ import AIEHTMLMemory from './AIEHTMLMemory';
 import AIEHTMLProperty from './AIEHTMLProperty';
 const MAX_ID = 'max';
 const MIN_ID = 'min';
-const HTML_SUFFIX_PRESTACE_FIELD = 'pregnancy-fields';
+const HTML_SUFFIX_PRESTACE_FIELD = 'properties';
+const HTML_SUFFIX_TRIGGER_ON_CHANGE = 'on-change';
 const HTML_PREFIX = 'aie-';
 /*
   The BaseElement is a DOM element
@@ -41,6 +42,7 @@ export default class AIEHTMLElement extends AIEElement {
     setChildren(element) {
         super.setChildren(element);
         this.setProperties(this.parseAttr(this.getAttr(HTML_SUFFIX_PRESTACE_FIELD)));
+        this.setOnChangeTrigger(this.getAttr(HTML_SUFFIX_TRIGGER_ON_CHANGE));
     }
     initializeMemory(seed) {
         return new AIEHTMLMemory(seed);

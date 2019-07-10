@@ -33,7 +33,7 @@ class StatePanel {
         htmlCode = htmlCode.replace(/{name}/g, name)
         htmlCode = htmlCode.replace(
           /{properties}/g,
-          triggers.map(property => this.propertyItem.replace(/{property}/i, property)).join(''))
+          properties.map(property => this.propertyItem.replace(/{property}/i, property)).join(''))
         htmlCode = htmlCode.replace(
           /{triggers}/g,
           triggers.map(trigger => this.propertyTrigger.replace(/{trigger}/i, trigger)).join(''))
