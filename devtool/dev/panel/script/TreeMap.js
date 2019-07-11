@@ -6,7 +6,7 @@ class TreeMap extends EventDispatcher {
         document.getElementById(el).innerHTML = ''
         // create the svg element
         this.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        this.svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+        this.svg.setAttribute('viewBox', `1 1 ${width} ${height}`);
         // set props
         this.width = width
         this.height = height
@@ -71,7 +71,7 @@ class TreeMap extends EventDispatcher {
                     first || name,
                     branch,
                     branchs[branch].children, 
-                    {x, y: Y, total: val, width: WIDTH, height: HEIGHT}
+                    {x: x+1, y: Y+1, total: val, width: WIDTH-2, height: HEIGHT-2}
                 )
             }
             offsetY += HEIGHT
@@ -92,7 +92,7 @@ class TreeMap extends EventDispatcher {
                     first || name,
                     branch,
                     branchs[branch].children, 
-                    {x: X, y, total: val, width: WIDTH, height: HEIGHT}
+                    {x: X+1, y: y+1, total: val, width: WIDTH-2, height: HEIGHT-2}
                 )
             }
             offsetX += WIDTH
@@ -101,8 +101,8 @@ class TreeMap extends EventDispatcher {
 
     drawRect (x, y, width, height, name, parent, first) {
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', 0);
-        rect.setAttribute('y', 0);
+        rect.setAttribute('x', 1);
+        rect.setAttribute('y', 1);
         rect.setAttribute('width', width);
         rect.setAttribute('height', height);
         rect.setAttribute('name', name);

@@ -38,6 +38,8 @@ class Connection extends EventDispatcher {
                 break
             }
         })
+
+        this.activeMarks(false) 
     }
 
     begin () {
