@@ -1,27 +1,38 @@
 import AIEAbstractMaduration from './AIEAbstractMaduration'
-import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed'
+import AIEAbstractMutation from './AIEAbstractMutation'
 import AIEElement from './AIEElement'
+import AIE from './AIE';
 
 export default class AIEPregnancyCalculator {
   private maduration: AIEAbstractMaduration
-  private speed: AIEAbstractPregnancySpeed
+  private mutation: AIEAbstractMutation
+  private speed: number
+  private aie: AIE
 
-  public constructor(speed: AIEAbstractPregnancySpeed, maduration: AIEAbstractMaduration) {
+  public constructor(aie:AIE, speed: number, maduration: AIEAbstractMaduration, mutation: AIEAbstractMutation) {
+    this.aie = aie
     this.maduration = maduration
     this.speed = speed
+    this.mutation = mutation
   }
 
-  public calculateIncrement(element: AIEElement): number {
+  public calculate(element: AIEElement): number { 
+    this.aie.addCycle()
+
     const interactions = element.getInteractions()
-    const enviromentInterarions = element.getParentInteractions()
-
-    const interactionsPercent = interactions/enviromentInterarions
-    const date = element.getDate()
-    const lifePercent = element.getLife(date) / element.getParentLife(date)
-
-    const maduration = this.maduration.calculate(interactionsPercent, lifePercent)
-    const speed = this.speed.calculate(interactions)
-
-    return speed * maduration
+    const enviromentInterarions = element.getEnvInteractions()
+    const interactionsPercent = enviromentInterarions ? interactions/enviromentInterarions : 0
+    const mutation = this.mutation.calculate(
+      this.speed,
+      interactionsPercent,
+      element.getParent().getPregnancy())
+    
+      const pregnancy = this.maduration.calculate(
+      mutation,
+      element.getPregnancy(),
+      this.aie.getCycles(),
+      this.aie.getMaxUpdatedCycles()
+    )
+    return pregnancy
   }
 }

@@ -15,8 +15,7 @@ export default class AIEHTMLElement extends AIEElement {
     bindTriggers(): void;
     generate(baseElement: any): AIEHTMLElement;
     getBaseElementParent(): Node;
-    getDate(): number;
-    transform(percent: number): void;
+    transform(): void;
     getPhysicalAttributes(): {};
     private getAbsoluteBoundingRect;
 }

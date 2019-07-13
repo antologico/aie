@@ -6,13 +6,27 @@ export default class AIE {
         this.eventProcessor = new AIEEventProcessor(this);
         this.name = name;
         this.context = context;
-        this.pregnancyCalculator = new AIEPregnancyCalculator(this.getPregnancySpeed(), this.getMaduration());
+        this.cycles = 0;
+        this.maxUpdateCycles = 0;
+        this.pregnancyCalculator = new AIEPregnancyCalculator(this, this.getPregnancySpeed(), this.getMaduration(), this.getMutation());
         AIEMonitor.addEnvironments(this);
+    }
+    addCycle() {
+        this.cycles += 1;
+    }
+    getCycles() {
+        return 0;
+    }
+    setMaxUpdatedCycles(max) {
+        this.maxUpdateCycles = max;
+    }
+    getMaxUpdatedCycles() {
+        return 0;
     }
     registerEvent(event, func) {
         this.eventProcessor.registerEvent(event, func);
     }
-    estructureElements(elements) {
+    createTree(elements) {
         const toRemove = [];
         elements.forEach((element, index) => {
             const elParent = this.getParentNode(elements, element.getBaseElementParent());
@@ -42,7 +56,14 @@ export default class AIE {
     createEnvironment(elements) {
         this.environment = this.createElement(null);
         this.environment.setName(this.name);
-        elements.forEach((el) => this.environment.setChildren(el));
+        elements.forEach((el) => {
+            this.environment.setChildren(el);
+        });
+        this.updatePregnancyTree(this.environment);
+    }
+    updatePregnancyTree(element) {
+        element.getChildren().forEach((el) => this.updatePregnancyTree(el));
+        element.setPregnancy(element.getTotalAmbientPregnancy());
     }
     initializeElements(matches) {
         const elements = [];
@@ -52,7 +73,7 @@ export default class AIE {
             aiee.setProccesor(this.eventProcessor);
             elements.push(aiee);
         });
-        this.estructureElements(elements);
+        this.createTree(elements);
     }
     start() {
         this.initializeElements(this.getElements());
@@ -75,9 +96,13 @@ export default class AIE {
         return this.context;
     }
     mutate() {
-        const maxGroupPregnancy = this.environment.getMaxPregnancy();
         this.environment.getChildren().forEach((child) => {
-            child.mutate(maxGroupPregnancy);
+            child.mutate();
+        });
+    }
+    updatePregnancy() {
+        this.environment.getChildren().forEach((child) => {
+            child.updatePregnancy();
         });
     }
     getElementState(element) {
@@ -85,6 +110,7 @@ export default class AIE {
             name: element.getName(),
             pregnancy: element.getPregnancy(),
             score: element.getScore(),
+            cycles: this.getCycles(),
             properties: element.getPropertiesNames(),
             triggers: element.getTriggersName(),
             physicalAttribute: element.getPhysicalAttributes(),

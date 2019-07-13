@@ -2,6 +2,7 @@ import AIEMemory from './AIEMemory'
 import AIEEventProcessor from './AIEEventProcessor'
 import AIEPregnancyCalculator from './AIEPregnancyCalculator'
 import AIEProperty from './AIEProperty'
+import AIEMonitor from './AIEMonitor';
 
 const DEFAULT_MAX_PRESTANCE = 1
 
@@ -17,23 +18,28 @@ export default abstract class AIEElement {
   private pregnancy: number
   private pregnancyCalculator: AIEPregnancyCalculator
   private maxPregnancy: number
+  private pregnancyBase: number
   private updates: number
   private maxUpdates: number = null
   private born: number
   private properties: Array<AIEProperty> 
 
   public constructor(baseElement: any) {
+    this.pregnancyBase = 0
     if(baseElement) {
       this.setBaseElement(baseElement)
       this.name = this.getAttr('name')
       this.trigger = this.getAttrs('trigger')
+      this.pregnancyBase = parseFloat(this.getAttrs('pregnancy'))
+      if (isNaN(this.pregnancyBase)) {
+        this.pregnancyBase = 0
+      }
       this.bindTriggers()
     }
-    this.born = this.getDate()
+    this.pregnancy = this.pregnancyBase
     this.children = []
     this.processor = null
     this.parent = null
-    this.pregnancy = 0
     this.updates = 0
     this.properties = []
     this.maxPregnancy = DEFAULT_MAX_PRESTANCE // By default
@@ -57,36 +63,19 @@ export default abstract class AIEElement {
     return 'aie::' + this.name
   }
 
-  public updatePregnancy(increment: number = null): number {
-    if (!this.hasParent() || (this.maxUpdates && (this.updates >= this.maxUpdates))) {
-      return 0
-    }
-    if (increment !== null) {
-      this.pregnancy += (this.pregnancy + increment > 0) ? increment : 0
-      return increment
-    }
-    this.updates ++
-    const newIncrement = this.pregnancyCalculator.calculateIncrement(this)
-    this.pregnancy += newIncrement
-    return newIncrement
+  public updatePregnancy() {
+    this.setPregnancy(this.pregnancyCalculator.calculate(this))
+    this.updateChildrenPregnancy()
   }
 
   public getInteractions(): number {
     return this.memory.getScore()
   }
 
-  public getParentInteractions(): number {
-    return this.parent ? this.parent.getInteractions() : 0
-  }
-
-  public getLife(now: number = null): number {
-    const myDate = now || this.getDate()
-    return myDate - this.born
-  }
-
-  public getParentLife(now: number = null): number {
-    const myDate = now || this.getDate()
-    return myDate - this.parent.born
+  public getEnvInteractions(): number {
+    return this.parent 
+      ? this.parent.getChildren().reduce((p, a) => p+a.getInteractions(), 0) 
+      : 0
   }
 
   public getName() {
@@ -99,6 +88,10 @@ export default abstract class AIEElement {
 
   public getEventName() {
     return this.name
+  }
+
+  getPregnancyIncrement(): number {
+    return this.pregnancy - this.pregnancyBase
   }
 
   public isAmbient() {
@@ -156,7 +149,6 @@ export default abstract class AIEElement {
   }
 
   public onTrigger(name: string) {
-    this.memory.anoteEvent()
     if (this.processor) {
       this.processor.notify({ name, element: this })
     }
@@ -166,22 +158,35 @@ export default abstract class AIEElement {
     return this.children
   }
 
+  public incrementScore() {
+    this.memory.anoteEvent()
+  }
+
   public getScore(): number {
     return this.memory.getScore()
   }
 
-  public getAmbientScore(): number {
-    return this.isAmbient()
-      ? this.children.reduce((total, child) => total + child.getScore(), 0)
-      : 0
+  public updateChildrenPregnancy(): void {
+    this.children.forEach((child) => child.updatePregnancy())
   }
 
-  public updateChildrenPregnancy(increment: number, excluded: Array<AIEElement> = []): void {
-    this.children.forEach((child) => !excluded.includes(child) && child.updatePregnancy(increment))
-  }
-  public getMaxPregnancy(): number {
+  public getMaxAmbientPregnancy(): number {
     return this.children.reduce((total, child) => Math.max(total, child.getPregnancy()), 0)
   }
+
+  public getTotalAmbientPregnancy(): number {
+    if (!this.hasChildren()) {
+      return this.pregnancy
+    }
+    return this.children.reduce((total, child) => total + child.getPregnancy(), 0)
+  }
+
+  public getPercentualPregnancy(): number {
+    if (!this.hasParent()) {
+      return 1
+    }
+    return this.getPregnancy() / this.parent.getPregnancy()
+  } 
 
   public hasParent(): boolean {
     return !!this.parent
@@ -207,13 +212,12 @@ export default abstract class AIEElement {
     this.pregnancy = value
   }
 
-  public mutate(maxPregnancy: number): void {
-    this.transform(maxPregnancy ? this.getPregnancy() / maxPregnancy : 0)
-    const maxGroupPregnancy = this.getMaxPregnancy()
+  public mutate(): void {
+    this.transform()
     this.getChildren().forEach((child: AIEElement) => {
-      child.mutate(maxGroupPregnancy)
+      child.mutate()
     })
-
+    // TODO: New pregnancy in funtion of properties
   }
 
   public abstract initializeMemory(seed: string): AIEMemory
@@ -223,7 +227,6 @@ export default abstract class AIEElement {
   public abstract getBaseElementParent(): Node
   public abstract getBaseElement(): any
   public abstract bindTriggers(): void
-  public abstract getDate(): number
   public abstract getPhysicalAttributes(): any
-  public abstract transform(percent: number): void
+  public abstract transform(): void
 }

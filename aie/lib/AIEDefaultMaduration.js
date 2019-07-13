@@ -1,9 +1,9 @@
 import AIEAbstractMaduration from './AIEAbstractMaduration';
 export default class AIEDefaultMaduration extends AIEAbstractMaduration {
-    calculate(interactionsPercent, lifePercent) {
-        return lifePercent < .001
-            ? 0
-            : interactionsPercent < .001 ? 0 : 1;
+    calculate(pregnancy, prevPregnancy, cycle, maxCycles) {
+        return !maxCycles || cycle <= maxCycles
+            ? pregnancy
+            : prevPregnancy;
     }
 }
 //# sourceMappingURL=AIEDefaultMaduration.js.map

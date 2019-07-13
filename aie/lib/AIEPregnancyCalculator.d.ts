@@ -1,9 +1,12 @@
 import AIEAbstractMaduration from './AIEAbstractMaduration';
-import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed';
+import AIEAbstractMutation from './AIEAbstractMutation';
 import AIEElement from './AIEElement';
+import AIE from './AIE';
 export default class AIEPregnancyCalculator {
     private maduration;
+    private mutation;
     private speed;
-    constructor(speed: AIEAbstractPregnancySpeed, maduration: AIEAbstractMaduration);
-    calculateIncrement(element: AIEElement): number;
+    private aie;
+    constructor(aie: AIE, speed: number, maduration: AIEAbstractMaduration, mutation: AIEAbstractMutation);
+    calculate(element: AIEElement): number;
 }

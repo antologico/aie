@@ -17,13 +17,17 @@ export default class AIEEventProcessor {
     inspect() {
         const event = this.queue.shift();
         if (event) {
-            if (event.element.hasParent()) {
-                const elParent = event.element.getParent();
-                const increment = event.element.updatePregnancy();
-                elParent.updateChildrenPregnancy(-increment, [event.element]);
-                elParent.onTrigger(event.name);
-                event.name && this.events.change(event.name, event.element);
+            let element = event.element;
+            let elParent;
+            element.incrementScore();
+            while (element.hasParent()) {
+                elParent = element.getParent();
+                elParent.incrementScore();
+                element = elParent;
             }
+            this.enviroment.updatePregnancy();
+            // For monitoring ...
+            event.name && this.events.change(event.name, event.element);
         }
         setTimeout(this.inspect.bind(this), 0);
     }

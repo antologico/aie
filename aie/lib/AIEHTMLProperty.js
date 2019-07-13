@@ -12,25 +12,25 @@ function colorFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const initialValue = initialValues[child.getName()];
         const color = new Color(initialValue);
-        child.getBaseElement().style.color = color.increment(1 + child.getPregnancy()).toString();
+        child.getBaseElement().style.color = color.increment(1 + child.getPregnancyIncrement()).toString();
     });
 }
 function fontSizeFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const measure = new AIEHTMLMeasurement(initialValues[child.getName()]);
-        child.getBaseElement().style.fontSize = measure.multiply(1 + child.getPregnancy()).toString();
+        child.getBaseElement().style.fontSize = measure.multiply(1 + child.getPregnancyIncrement()).toString();
     });
 }
 function widthFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const measure = new AIEHTMLMeasurement(initialValues[child.getName()]);
-        child.getBaseElement().style.width = measure.multiply(1 + child.getPregnancy()).toString();
+        child.getBaseElement().style.width = measure.multiply(1 + child.getPregnancyIncrement()).toString();
     });
 }
 function heightFn(element, initialValues) {
     element.getChildren().forEach((child) => {
         const measure = new AIEHTMLMeasurement(initialValues[child.getName()]);
-        child.getBaseElement().style.height = measure.multiply(1 + child.getPregnancy()).toString();
+        child.getBaseElement().style.height = measure.multiply(1 + child.getPregnancyIncrement()).toString();
     });
 }
 function positionFn(element) {
@@ -55,8 +55,8 @@ function getLevelParentElement(element, parentElement, topLevelParent) {
         console.error("Error in element", element.getName(), ": null parent");
         return null;
     }
-    if ((parentElement.getMaxPregnancy() <= pregnancy) &&
-        (parentElement.getPregnancy() < pregnancy)) {
+    if ((parentElement.getMaxAmbientPregnancy() <= pregnancy) &&
+        (parentElement.getPercentualPregnancy() < element.getPercentualPregnancy())) {
         return getLevelParentElement(element, parentElement.getParent(), topLevelParent);
     }
     return parentElement;

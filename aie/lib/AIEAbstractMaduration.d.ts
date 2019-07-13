@@ -1,3 +1,3 @@
 export default abstract class AIEAbstractMaduration {
-    abstract calculate(interactionsPercent: number, lifePercent: number): number;
+    abstract calculate(pregnancy: number, prevPregnancy: number, interactionsPercent: number, lifePercent: number): number;
 }

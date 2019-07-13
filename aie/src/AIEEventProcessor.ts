@@ -33,13 +33,19 @@ export default class AIEEventProcessor {
   private inspect () {
     const event: AIEEvent = this.queue.shift()
     if (event) {
-      if (event.element.hasParent()) {
-        const elParent: AIEElement = event.element.getParent()
-        const increment = event.element.updatePregnancy()
-        elParent.updateChildrenPregnancy(-increment, [ event.element ])
-        elParent.onTrigger(event.name)
-        event.name && this.events.change(event.name, event.element)
+      let element: AIEElement = event.element
+      let elParent: AIEElement
+      element.incrementScore()
+      
+      while (element.hasParent()) {
+        elParent = element.getParent()
+        elParent.incrementScore()
+        element = elParent
       }
+      
+      this.enviroment.updatePregnancy()
+      // For monitoring ...
+      event.name && this.events.change(event.name, event.element)
     }
     setTimeout(this.inspect.bind(this), 0)
   }

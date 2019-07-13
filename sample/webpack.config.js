@@ -17,7 +17,7 @@ module.exports = {
     ]
   },
   resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json']
+        extensions: ['.js', '.json']
     },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

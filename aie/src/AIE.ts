@@ -2,28 +2,52 @@ import AIEElement from './AIEElement'
 import AIEMonitor from './AIEMonitor'
 import AIEEventProcessor from './AIEEventProcessor'
 import AIEPregnancyCalculator from './AIEPregnancyCalculator'
-import AIEAbstractPregnancySpeed from './AIEAbstractPregnancySpeed'
 import AIEAbstractMaduration from './AIEAbstractMaduration'
+import AIEAbstractMutation from './AIEAbstractMutation'
+import AIEHTMLMonitor from './AIEHTMLMonitor'
 
 export default abstract class AIE {
   private eventProcessor: AIEEventProcessor
   private environment: AIEElement
   private name: string
   private context: string
+  private cycles: number
+  private maxUpdateCycles: number
   private pregnancyCalculator: AIEPregnancyCalculator
 
   public constructor(name: string, context: any) {
     this.eventProcessor = new AIEEventProcessor(this)
     this.name = name
     this.context = context
+    this.cycles = 0
+    this.maxUpdateCycles = 0
     this.pregnancyCalculator = new AIEPregnancyCalculator(
+      this,
       this.getPregnancySpeed(),
-      this.getMaduration()
+      this.getMaduration(),
+      this.getMutation(),
     )
     AIEMonitor.addEnvironments(this)
   }
 
-  public abstract getPregnancySpeed(): AIEAbstractPregnancySpeed
+  public addCycle() {
+    this.cycles += 1
+  }
+
+  public getCycles(): number {
+    return 0;
+  }
+
+  public setMaxUpdatedCycles(max) {
+    this.maxUpdateCycles = max
+  }
+
+  public getMaxUpdatedCycles(): number {
+    return 0;
+  }
+
+  public abstract getPregnancySpeed(): number
+  public abstract getMutation(): AIEAbstractMutation
   public abstract getMaduration(): AIEAbstractMaduration
   public abstract getElements():NodeListOf<any>
 
@@ -31,7 +55,7 @@ export default abstract class AIE {
     this.eventProcessor.registerEvent(event, func)
   }
 
-  private estructureElements(elements: Array<AIEElement>) {
+  private createTree(elements: Array<AIEElement>) {
     const toRemove: Array<number> = []
     elements.forEach((element, index) => {
       const elParent = this.getParentNode(elements, element.getBaseElementParent())
@@ -66,9 +90,17 @@ export default abstract class AIE {
   private createEnvironment(elements: Array<AIEElement>) {
     this.environment = this.createElement(null)
     this.environment.setName(this.name)
-    elements.forEach((el: AIEElement) => this.environment.setChildren(el))
+    elements.forEach((el: AIEElement) => {
+      this.environment.setChildren(el)
+    })
+    this.updatePregnancyTree(this.environment)
   }
 
+  private updatePregnancyTree(element: AIEElement) {
+    element.getChildren().forEach((el: AIEElement) => this.updatePregnancyTree(el))
+    element.setPregnancy(element.getTotalAmbientPregnancy())
+  }
+  
   private initializeElements(matches: NodeListOf<any>) {
     const elements: Array<AIEElement> = []
     matches.forEach((el: Node) => {
@@ -77,7 +109,7 @@ export default abstract class AIE {
       aiee.setProccesor(this.eventProcessor)
       elements.push(aiee)
     })
-    this.estructureElements(elements)
+    this.createTree(elements)
   }
 
   public start() {
@@ -105,9 +137,14 @@ export default abstract class AIE {
   }
 
   public mutate() {
-    const maxGroupPregnancy = this.environment.getMaxPregnancy()
     this.environment.getChildren().forEach((child: AIEElement) => {
-      child.mutate(maxGroupPregnancy)
+      child.mutate()
+    })
+  }
+
+  public updatePregnancy() {
+    this.environment.getChildren().forEach((child: AIEElement) => {
+      child.updatePregnancy()
     })
   }
 
@@ -116,6 +153,7 @@ export default abstract class AIE {
       name: element.getName(),
       pregnancy: element.getPregnancy(),
       score: element.getScore(),
+      cycles: this.getCycles(),
       properties: element.getPropertiesNames(),
       triggers: element.getTriggersName(),
       physicalAttribute: element.getPhysicalAttributes(),

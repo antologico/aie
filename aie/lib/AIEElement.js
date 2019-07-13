@@ -2,17 +2,21 @@ const DEFAULT_MAX_PRESTANCE = 1;
 export default class AIEElement {
     constructor(baseElement) {
         this.maxUpdates = null;
+        this.pregnancyBase = 0;
         if (baseElement) {
             this.setBaseElement(baseElement);
             this.name = this.getAttr('name');
             this.trigger = this.getAttrs('trigger');
+            this.pregnancyBase = parseFloat(this.getAttrs('pregnancy'));
+            if (isNaN(this.pregnancyBase)) {
+                this.pregnancyBase = 0;
+            }
             this.bindTriggers();
         }
-        this.born = this.getDate();
+        this.pregnancy = this.pregnancyBase;
         this.children = [];
         this.processor = null;
         this.parent = null;
-        this.pregnancy = 0;
         this.updates = 0;
         this.properties = [];
         this.maxPregnancy = DEFAULT_MAX_PRESTANCE; // By default
@@ -31,32 +35,17 @@ export default class AIEElement {
     generateId() {
         return 'aie::' + this.name;
     }
-    updatePregnancy(increment = null) {
-        if (!this.hasParent() || (this.maxUpdates && (this.updates >= this.maxUpdates))) {
-            return 0;
-        }
-        if (increment !== null) {
-            this.pregnancy += (this.pregnancy + increment > 0) ? increment : 0;
-            return increment;
-        }
-        this.updates++;
-        const newIncrement = this.pregnancyCalculator.calculateIncrement(this);
-        this.pregnancy += newIncrement;
-        return newIncrement;
+    updatePregnancy() {
+        this.setPregnancy(this.pregnancyCalculator.calculate(this));
+        this.updateChildrenPregnancy();
     }
     getInteractions() {
         return this.memory.getScore();
     }
-    getParentInteractions() {
-        return this.parent ? this.parent.getInteractions() : 0;
-    }
-    getLife(now = null) {
-        const myDate = now || this.getDate();
-        return myDate - this.born;
-    }
-    getParentLife(now = null) {
-        const myDate = now || this.getDate();
-        return myDate - this.parent.born;
+    getEnvInteractions() {
+        return this.parent
+            ? this.parent.getChildren().reduce((p, a) => p + a.getInteractions(), 0)
+            : 0;
     }
     getName() {
         return this.name;
@@ -66,6 +55,9 @@ export default class AIEElement {
     }
     getEventName() {
         return this.name;
+    }
+    getPregnancyIncrement() {
+        return this.pregnancy - this.pregnancyBase;
     }
     isAmbient() {
         return this.children.length > 0;
@@ -111,7 +103,6 @@ export default class AIEElement {
         element.setParent(this);
     }
     onTrigger(name) {
-        this.memory.anoteEvent();
         if (this.processor) {
             this.processor.notify({ name, element: this });
         }
@@ -119,19 +110,29 @@ export default class AIEElement {
     getChildren() {
         return this.children;
     }
+    incrementScore() {
+        this.memory.anoteEvent();
+    }
     getScore() {
         return this.memory.getScore();
     }
-    getAmbientScore() {
-        return this.isAmbient()
-            ? this.children.reduce((total, child) => total + child.getScore(), 0)
-            : 0;
+    updateChildrenPregnancy() {
+        this.children.forEach((child) => child.updatePregnancy());
     }
-    updateChildrenPregnancy(increment, excluded = []) {
-        this.children.forEach((child) => !excluded.includes(child) && child.updatePregnancy(increment));
-    }
-    getMaxPregnancy() {
+    getMaxAmbientPregnancy() {
         return this.children.reduce((total, child) => Math.max(total, child.getPregnancy()), 0);
+    }
+    getTotalAmbientPregnancy() {
+        if (!this.hasChildren()) {
+            return this.pregnancy;
+        }
+        return this.children.reduce((total, child) => total + child.getPregnancy(), 0);
+    }
+    getPercentualPregnancy() {
+        if (!this.hasParent()) {
+            return 1;
+        }
+        return this.getPregnancy() / this.parent.getPregnancy();
     }
     hasParent() {
         return !!this.parent;
@@ -151,12 +152,12 @@ export default class AIEElement {
     setPregnancy(value) {
         this.pregnancy = value;
     }
-    mutate(maxPregnancy) {
-        this.transform(maxPregnancy ? this.getPregnancy() / maxPregnancy : 0);
-        const maxGroupPregnancy = this.getMaxPregnancy();
+    mutate() {
+        this.transform();
         this.getChildren().forEach((child) => {
-            child.mutate(maxGroupPregnancy);
+            child.mutate();
         });
+        // TODO: New pregnancy in funtion of properties
     }
 }
 //# sourceMappingURL=AIEElement.js.map

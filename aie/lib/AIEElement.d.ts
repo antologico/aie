@@ -14,6 +14,7 @@ export default abstract class AIEElement {
     private pregnancy;
     private pregnancyCalculator;
     private maxPregnancy;
+    private pregnancyBase;
     private updates;
     private maxUpdates;
     private born;
@@ -23,14 +24,13 @@ export default abstract class AIEElement {
     setMaxPregnancy(pregnancy: number): void;
     setName(name: string): void;
     generateId(): string;
-    updatePregnancy(increment?: number): number;
+    updatePregnancy(): void;
     getInteractions(): number;
-    getParentInteractions(): number;
-    getLife(now?: number): number;
-    getParentLife(now?: number): number;
+    getEnvInteractions(): number;
     getName(): string;
     getTriggersName(): any;
     getEventName(): string;
+    getPregnancyIncrement(): number;
     isAmbient(): boolean;
     setParent(element: AIEElement): void;
     setProccesor(processor: AIEEventProcessor): void;
@@ -44,17 +44,19 @@ export default abstract class AIEElement {
     setChildren(element: AIEElement): void;
     onTrigger(name: string): void;
     getChildren(): AIEElement[];
+    incrementScore(): void;
     getScore(): number;
-    getAmbientScore(): number;
-    updateChildrenPregnancy(increment: number, excluded?: Array<AIEElement>): void;
-    getMaxPregnancy(): number;
+    updateChildrenPregnancy(): void;
+    getMaxAmbientPregnancy(): number;
+    getTotalAmbientPregnancy(): number;
+    getPercentualPregnancy(): number;
     hasParent(): boolean;
     hasChildren(): boolean;
     setPregnancyCalculator(pregnancyCalculator: AIEPregnancyCalculator): void;
     getPregnancy(): number;
     setScore(value: number): number;
     setPregnancy(value: number): void;
-    mutate(maxPregnancy: number): void;
+    mutate(): void;
     abstract initializeMemory(seed: string): AIEMemory;
     abstract setBaseElement(baseElement: any): void;
     abstract getAttr(attributeName: string): string;
@@ -62,7 +64,6 @@ export default abstract class AIEElement {
     abstract getBaseElementParent(): Node;
     abstract getBaseElement(): any;
     abstract bindTriggers(): void;
-    abstract getDate(): number;
     abstract getPhysicalAttributes(): any;
-    abstract transform(percent: number): void;
+    abstract transform(): void;
 }

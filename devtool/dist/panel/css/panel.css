@@ -451,6 +451,10 @@ button:disabled {
   margin: 0;
 }
 
+.chart-image-content-buttons {
+  text-align: left;
+}
+
 .chart-search {
   width: calc(18%);
   border: 0;
@@ -477,6 +481,13 @@ button:disabled {
   margin-top: -0.2em;
   color: darkslategrey;
 }
+
+.chart-input:focus {
+  background: lightsalmon;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  border-radius: 0.3em;
+}
+
 .chart-input::-webkit-slider-runnable-track {
   background: floralwhite;
   height: 0.3em;

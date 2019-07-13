@@ -82,11 +82,7 @@ export default class AIEHTMLElement extends AIEElement {
     getBaseElementParent() {
         return this.getBaseElement().parentNode;
     }
-    getDate() {
-        const d = new Date();
-        return d.getMilliseconds();
-    }
-    transform(percent) {
+    transform() {
         this.getProperties().forEach(prop => {
             prop.transform(this);
         });
@@ -96,7 +92,6 @@ export default class AIEHTMLElement extends AIEElement {
         if (!el) {
             return {};
         }
-        const val = this.getAbsoluteBoundingRect(el);
         return this.getAbsoluteBoundingRect(el);
     }
     getAbsoluteBoundingRect(el) {
