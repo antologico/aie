@@ -15,6 +15,7 @@ export default abstract class AIEElement {
     private pregnancyCalculator;
     private maxPregnancy;
     private pregnancyBase;
+    private freePregnancy;
     private updates;
     private maxUpdates;
     private born;
@@ -49,6 +50,10 @@ export default abstract class AIEElement {
     updateChildrenPregnancy(): void;
     getMaxAmbientPregnancy(): number;
     getTotalAmbientPregnancy(): number;
+    getMaxAmbientPropertyValue(name: string): number;
+    getProperty(nameProp: string): AIEProperty;
+    getChildPropertyValue(nameProp: string, childName: string): number;
+    getChildPropertyMaxValue(nameProp: string, childName: string): number;
     getPercentualPregnancy(): number;
     hasParent(): boolean;
     hasChildren(): boolean;
@@ -56,7 +61,11 @@ export default abstract class AIEElement {
     getPregnancy(): number;
     setScore(value: number): number;
     setPregnancy(value: number): void;
+    getTotalPregnancy(): number;
+    setFreePregnancy(free: number): void;
+    getFreePregnancy(): number;
     mutate(): void;
+    private recalculatePregnancyAfterMutation;
     abstract initializeMemory(seed: string): AIEMemory;
     abstract setBaseElement(baseElement: any): void;
     abstract getAttr(attributeName: string): string;

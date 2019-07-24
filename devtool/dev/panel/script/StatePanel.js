@@ -4,6 +4,7 @@ class StatePanel {
         this.templateItem = document.getElementById('item-template').innerHTML
         this.propertyItem = document.getElementById('item-property').innerHTML
         this.propertyTrigger = document.getElementById('item-trigger').innerHTML
+        this.propertyFreePregnancy= document.getElementById('item-freePregnancy').innerHTML
         this.templateList = document.getElementById('list-template').innerHTML
         this.table = document.getElementById('state-table')
     }
@@ -28,7 +29,7 @@ class StatePanel {
         return pregnancy ? pregnancy.toFixed(4) : ''
     }
       
-    generateItem ({ name, pregnancy, properties, children, triggers}, id) {
+    generateItem ({ name, pregnancy, properties, children, triggers, freePregnancy}, id) {
         let htmlCode = this.templateItem.replace(/{id}/g, name)
         htmlCode = htmlCode.replace(/{name}/g, name)
         htmlCode = htmlCode.replace(
@@ -37,6 +38,12 @@ class StatePanel {
         htmlCode = htmlCode.replace(
           /{triggers}/g,
           triggers.map(trigger => this.propertyTrigger.replace(/{trigger}/i, trigger)).join(''))
+        htmlCode = htmlCode.replace(
+          /{freePregnancy}/g,
+          freePregnancy 
+            ? this.propertyFreePregnancy.replace(/{property}/i, this.getPrestace(freePregnancy))
+             : ''
+        )
         htmlCode = htmlCode.replace(/{value}/i, this.getPrestace(pregnancy))
         htmlCode = htmlCode.replace(
           /{content}/i,

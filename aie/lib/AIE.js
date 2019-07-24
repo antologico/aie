@@ -85,6 +85,7 @@ export default class AIE {
         const parent = child ? child : this.environment;
         parent.setScore(value.score);
         parent.setPregnancy(value.pregnancy);
+        parent.setFreePregnancy(value.freePregnancy);
         value.children.map((childValues) => {
             const el = parent.getChildren().find((e) => e.getName() === childValues.name);
             if (el) {
@@ -113,6 +114,7 @@ export default class AIE {
             cycles: this.getCycles(),
             properties: element.getPropertiesNames(),
             triggers: element.getTriggersName(),
+            freePregnancy: element.getFreePregnancy(),
             physicalAttribute: element.getPhysicalAttributes(),
             children: element.getChildren().map((children) => {
                 return this.getElementState(children);

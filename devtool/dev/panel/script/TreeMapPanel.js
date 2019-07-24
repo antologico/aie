@@ -13,7 +13,7 @@ class TreeMapPanel extends EventDispatcher {
         this.search.addEventListener('change', (e) => this.onSearchChange(e.currentTarget.value))
         this.applyButton = document.getElementById('treemap-apply')
         this.restoreButton = document.getElementById('treemap-restore')
-
+        this.freeNameElement = ' FREE'
         this.applyButton.addEventListener('click', () => this.onApply())
         this.restoreButton.addEventListener('click', () => this.onRestore())
         this.templateOption = document.getElementById('chart-search-option').innerHTML
@@ -49,10 +49,14 @@ class TreeMapPanel extends EventDispatcher {
         if (!item.children || item.children.length === 0) {
             return item.pregnancy
         }
-        return item.children.reduce((pre, c) => {
+        const tree = item.children.reduce((pre, c) => {
             pre[c.name] = this.generateTree(c)
             return pre
         }, {})
+        if (item.freePregnancy) {
+            tree[this.freeNameElement] = item.freePregnancy
+        }
+        return tree
     }
 
     filter(element, search = null) {
@@ -89,15 +93,19 @@ class TreeMapPanel extends EventDispatcher {
     } 
 
     onMouseOver (name) {
-        this.events.onMarkChange ({name, value: true})
+        if (name !== this.freeNameElement) {
+            this.events.onMarkChange ({name, value: true})
+        }
     }
 
     onMouseOut (name) {
-        this.events.onMarkChange ({ name, value: false })
+        if (name !== this.freeNameElement) {
+            this.events.onMarkChange ({ name, value: false })
+        }
     }
 
     onSelectElement (info) {
-        if (info.firstParent) {
+        if (info.firstParent && (name !== this.freeNameElement)) {
             this.search.value = info.firstParent
             this.onSearchChange(info.firstParent)
         }

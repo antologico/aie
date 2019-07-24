@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<style>
+    * {
+        font-family: "EB Garamont";
+    }
+
+    body {
+        background: whitesmoke;
+        font-size: 15px;
+    }
+
+    #form-context {
+        width: 1000px;
+        height: 80px;
+    }
+    .item {
+        display: block;
+        text-align: center;
+        color: white;
+        height: 100px;
+        background: #222;
+        outline:2px solid #333;
+        width: 200px;
+        overflow: hidden;
+    }
+
+    .itemW {
+        display: inline-block;
+        float: left;
+        text-align: center;
+        color: white;
+        height: 100%;
+        background: #222;
+        outline:2px solid #333;
+        width: 100px;
+        overflow: hidden;
+    }
+
+    .itemW:hover {
+        background: red;
+    }
+    .item:hover {
+        outline:2px solid red;
+    }
+
+    .c1 {
+        background: #222
+    }
+
+    .c2 {
+        background: #666
+    }
+</style>
+
+<body>
+    <div id='form-context' aie-name="width-example" aie-properties="height|max:200|min:50|total:500">
+        <div class="item" aie-name="height_1" aie-properties="width|min:10|total:200">
+            <div class="itemW c1" aie-pregnancy="0.1" aie-name="width1_1" aie-trigger="click">1</div>
+            <div class="itemW c2" aie-pregnancy="0.1" aie-name="width1_2" aie-trigger="click">2</div>
+        </div>
+        <div class="item" aie-pregnancy="0.2" aie-name="height_2" aie-trigger="click">2</div>
+        <div class="item" aie-pregnancy="0.2" aie-name="height_3" aie-trigger="click">3</div>
+        <div class="item" aie-pregnancy="0.2" aie-name="height_4" aie-trigger="click">4</div>
+        <div class="item" aie-pregnancy="0.2" aie-name="height_5" aie-trigger="click">5</div>
+    </div>
+    <script src="http://localhost:8080/dist/aie.min.js"></script>
+    <script>
+        initAIE('app-width-example', '#form-context')
+        exposeAIE()
+    </script>
+</body>
+
+</html>

@@ -15,6 +15,7 @@
   border-radius: 3em 0 0 3em;
 }
 
+.itemElement > .item .freePregnancy,
 .itemElement > .item .property,
 .itemElement > .item .trigger {
   border: 1px solid white;
@@ -28,6 +29,12 @@
 
 .itemElement > .item .trigger {
   background: darkslategray;
+}
+
+.itemElement > .item .freePregnancy {
+  background: lightgoldenrodyellow;
+  border: 1px solid darkslategray;
+  color: darkslategray;
 }
 
 .itemElement > .item:hover {
@@ -617,6 +624,10 @@ g.treemap-group > rect {
   stroke-width: 1px;
 }  
 
+g.treemap-group[aie-name=" FREE"] > rect {
+  fill: lightgoldenrodyellow;
+}  
+
 g.treemap-group > rect,
 g.hitmap-rectagle > rect {
   transition-duration: 0.5s;
@@ -628,8 +639,16 @@ g.hitmap-rectagle:hover > rect {
   cursor: pointer;
 }
 
+g.treemap-group[aie-name=" FREE"]:hover  > rect {
+  fill: lightgoldenrodyellow;
+}  
+
 g.treemap-group > text {
   fill: lightgray;
+} 
+
+g.treemap-group[aie-name=" FREE"] > text {
+  fill: lightgoldenrodyellow;
 } 
 
 g.hitmap-rectagle > text {

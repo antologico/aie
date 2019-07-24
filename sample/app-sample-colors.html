@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<style>
+    * {
+        font-family: "EB Garamont";
+    }
+
+    body {
+        background: whitesmoke;
+        font-size: 15px;
+    }
+
+    .item {
+        padding: 10px;
+        background: #222;
+    }
+
+    .item:hover {
+        border:1px solid red;
+    }
+    
+    .c1 {
+        color: rgb(140,100,0)
+    }
+
+    .c2 {
+        color: rgb(140,100,0)
+    }
+
+    .c3 {
+        color: rgb(140,100,0)
+    }
+
+    .c4 {
+        color: rgb(140,100,0)
+    }
+
+    .c5 {
+        color: rgb(140,100,0)
+    }
+</style>
+
+<body>
+    <div id='form-context' aie-name="colors" aie-properties="color|max:128">
+        <div class="item c1" aie-pregnancy="0.2" aie-name="color_1" aie-trigger="click">Element 1</div>
+        <div class="item c2" aie-pregnancy="0.2" aie-name="color_2" aie-trigger="click">Element 2</div>
+        <div class="item c3" aie-pregnancy="0.2" aie-name="color_3" aie-trigger="click">Element 3</div>
+        <div class="item c4" aie-pregnancy="0.2" aie-name="color_4" aie-trigger="click">Element 4</div>
+        <div class="item c5" aie-pregnancy="0.2" aie-name="color_5" aie-trigger="click">Element 5</div>
+    </div>
+    <script src="http://localhost:8080/dist/aie.min.js"></script>
+    <script>
+        initAIE('app-sample-colores', '#form-context')
+        exposeAIE()
+    </script>
+</body>
+
+</html>

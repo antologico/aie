@@ -118,7 +118,7 @@
 				<div class="item itemPair">
 					<label id="label_{name}" aie-name="{name}" for="item_{id}">
 						<span class="name">{name}</span>
-						{properties} {triggers}
+						{freePregnancy} {properties} {triggers}
 					</label>
 					<div class="value">
 						<i class="itemElementHitmapIcon icon-eye" hitmap-filter={name}></i>
@@ -127,6 +127,10 @@
 					</div>
 				</div>{content}
 			</li>
+		</script>
+
+		<script type="template" id="item-freePregnancy">
+			<span class="freePregnancy"><i class="icon-unlink"></i> {property}</span>
 		</script>
 
 		<script type="template" id="item-property">

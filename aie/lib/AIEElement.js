@@ -3,13 +3,18 @@ export default class AIEElement {
     constructor(baseElement) {
         this.maxUpdates = null;
         this.pregnancyBase = 0;
+        this.freePregnancy = 0;
         if (baseElement) {
             this.setBaseElement(baseElement);
-            this.name = this.getAttr('name');
+            this.name = this.getAttr('name').trim();
             this.trigger = this.getAttrs('trigger');
-            this.pregnancyBase = parseFloat(this.getAttrs('pregnancy'));
+            this.pregnancyBase = parseFloat(this.getAttr('pregnancy'));
+            this.freePregnancy = parseFloat(this.getAttr('free'));
             if (isNaN(this.pregnancyBase)) {
                 this.pregnancyBase = 0;
+            }
+            if (isNaN(this.freePregnancy)) {
+                this.freePregnancy = 0;
             }
             this.bindTriggers();
         }
@@ -124,9 +129,35 @@ export default class AIEElement {
     }
     getTotalAmbientPregnancy() {
         if (!this.hasChildren()) {
-            return this.pregnancy;
+            return this.getTotalPregnancy();
         }
-        return this.children.reduce((total, child) => total + child.getPregnancy(), 0);
+        return this.children.reduce((total, child) => total + child.getTotalPregnancy(), 0);
+    }
+    getMaxAmbientPropertyValue(name) {
+        const p = this.getProperty(name);
+        if (!this.hasChildren() || !p) {
+            return 0;
+        }
+        const sum = this.children.reduce((total, child) => {
+            return total + this.getChildPropertyMaxValue(name, child.name);
+        }, 0);
+        console.log('getMaxAmbientPropertyValue--->', p.getTotal(), sum);
+        return p.getTotal() || sum;
+    }
+    getProperty(nameProp) {
+        return this.properties.find(p => p.getName() === nameProp);
+    }
+    getChildPropertyValue(nameProp, childName) {
+        const p = this.getProperty(nameProp);
+        return p ? p.getMeasure(childName).getValue() : 0;
+    }
+    getChildPropertyMaxValue(nameProp, childName) {
+        const p = this.properties.find(p => p.getName() === nameProp);
+        if (!p) {
+            return 0;
+        }
+        const max = p.getMax(childName);
+        return max || this.getChildPropertyValue(nameProp, childName);
     }
     getPercentualPregnancy() {
         if (!this.hasParent()) {
@@ -152,12 +183,45 @@ export default class AIEElement {
     setPregnancy(value) {
         this.pregnancy = value;
     }
+    getTotalPregnancy() {
+        return this.pregnancy + this.freePregnancy;
+    }
+    setFreePregnancy(free) {
+        if (free > 0) {
+            this.freePregnancy = free;
+        }
+        else {
+            this.freePregnancy = 0;
+        }
+    }
+    getFreePregnancy() {
+        return this.freePregnancy;
+    }
     mutate() {
         this.transform();
         this.getChildren().forEach((child) => {
             child.mutate();
         });
-        // TODO: New pregnancy in funtion of properties
+        this.pregnancy = this.recalculatePregnancyAfterMutation();
+    }
+    recalculatePregnancyAfterMutation() {
+        if (!this.properties.length) {
+            return this.pregnancy;
+        }
+        const actualTotal = this.getTotalPregnancy();
+        const totalChildren = this.children.reduce((totalChild, child) => {
+            const childPregnancy = this.properties.reduce((total, prop) => {
+                const childProp = prop.getMeasure(child.name).getValue() / this.getMaxAmbientPropertyValue(prop.getName());
+                console.log('     + ', prop.getMeasure(child.name).getValue(), this.getMaxAmbientPropertyValue(prop.getName()));
+                return total + childProp;
+            }, 0) / this.properties.length;
+            console.log(child.name, ' = ', childPregnancy);
+            child.setPregnancy(childPregnancy);
+            return totalChild + childPregnancy;
+        }, 0);
+        this.setFreePregnancy(actualTotal - totalChildren);
+        this.pregnancy = this.freePregnancy + totalChildren;
+        console.log('  FINAL    ', actualTotal, '=', this.pregnancy, ' + ', this.freePregnancy);
     }
 }
 //# sourceMappingURL=AIEElement.js.map

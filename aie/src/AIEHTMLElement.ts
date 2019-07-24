@@ -4,6 +4,7 @@ import AIEHTMLMemory from './AIEHTMLMemory'
 import AIEHTMLProperty from './AIEHTMLProperty'
 import AIEHTMLMonitor from './AIEHTMLMonitor'
 
+const TOTAL_ID = 'total'
 const MAX_ID = 'max'
 const MIN_ID = 'min'
 const HTML_SUFFIX_PRESTACE_FIELD = 'properties'
@@ -41,6 +42,9 @@ export default class AIEHTMLElement extends AIEElement {
               }
               if (parts[0] === MIN_ID) {
                 property.setMin(parseFloat(parts[1].trim()))
+              }
+              if (parts[0] === TOTAL_ID) {
+                property.setTotal(parseFloat(parts[1].trim()))
               }
             }
           });
