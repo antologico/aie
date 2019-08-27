@@ -100,6 +100,8 @@ class TreeMap extends EventDispatcher {
     }
 
     drawRect (x, y, width, height, name, parent, first) {
+        if ((width < 0) || (height < 0)) return
+
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         rect.setAttribute('x', 1);
         rect.setAttribute('y', 1);

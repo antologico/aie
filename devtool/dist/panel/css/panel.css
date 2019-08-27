@@ -37,6 +37,10 @@
   color: darkslategray;
 }
 
+.itemElement > .item .freePregnancy.hidden {
+  display: none;
+}
+
 .itemElement > .item:hover {
   background: darksalmon;
 }

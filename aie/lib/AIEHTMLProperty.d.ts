@@ -10,6 +10,6 @@ export default class AIEHTMLProperty extends AIEProperty {
     propDefaultFn(prop: string, element: AIEElement): void;
     positionFn(element: AIEElement): void;
     displayFn(element: any): void;
-    getLevelParentElement(element: AIEElement, parentElement: AIEElement, topLevelParent: AIEElement): AIEElement;
-    levelFn(element: AIEHTMLElement, topLevelParent: AIEElement): void;
+    getLevelParentElement(child: AIEElement, topLevelParent: AIEElement): AIEElement;
+    levelFn(element: AIEHTMLElement, topLevelParent: any): void;
 }

@@ -2,12 +2,14 @@
 <html>
 <style>
     * {
-        font-family: sans-serif;
+        font-family: "EB Garamont";
     }
 
     body {
         background: gray;
         font-size: 10px;
+        margin: 0;
+        border: 0;
     }
 
     .content-title,
@@ -22,7 +24,7 @@
 
     .content-title {
         background:IndianRed;
-        color: lightcoral;
+        color: lightpink;
     }
 
     .item>.title {
@@ -41,27 +43,30 @@
         margin-left: 2em;
     }
 
+    #single-page-application {
+        display: flex;
+        height: 100vh;
+        width: 100vw;
+    }
     .menu {
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 20em;
+        height: 100vh;
+        width: 15em;
+        min-width: 15em;
         background: lightseagreen;
     }
 
     .content {
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        width: calc(100% - 20em);
+        height: 100vh;
         background: lightcoral;
-        display: none;
+        flex-grow: 1;
         overflow: scroll;
     }
 
-    input.form_selector:checked + .content {
+    .content-form {
+        display: none;
+    }
+    
+    input.form_selector:checked + .content-form {
         display: block;
     }
 
@@ -81,9 +86,15 @@
         border: 2px solid black;
         color: white;
         background: darkred;
-        font-size: 1em;
+        font-size: 1.2em;
         padding: 0.5em;
         width: 10em;
+    }
+
+    .map {
+        background: url('/img/map-sample.jpg');     background-position-y: 30px;
+        background-repeat: no-repeat;
+        background-position-x: 10px;
     }
 
     .form {
@@ -101,15 +112,15 @@
     }
 
     legend {
-        font-size: 1.5em;
+        font-size: 1.2em;
     }
 
     label {
         font-weight: bold;
-        font-size: 1em;
+        font-size: 1.2em;
         display: block;
         margin-top: 1em;
-        padding: 0.5em;
+        padding: 0.2em 0;
     }
 
     .selector {
@@ -162,13 +173,13 @@
     input {
         border: 2px solid darkred;
         padding: 0.5em;
-        font-size: 1em;
+        font-size: 1.2em;
         -webkit-appearance: none;
-        width: 200px;
+        min-width: 200px;
     }
 
     input.large {
-        width: 80%;
+        width: calc(100% - 12px);
     }
 
     select {
@@ -185,145 +196,149 @@
 </style>
 
 <body>
-    <div id='form-context'>
+    <div id='single-page-application' aie-name="single-page-application-content">
         <div class="menu">
             <div class="block-title">Menu block</div>
-            <div aie aie-properties="font-size|max:1.1, level, position" aie-name="menu">
-                <div class="item" aie aie-trigger="click" aie-name="menu_level_1" aie-properties="font-size|max:1.1">
-                    <label class="title" for="content1">Level 1</label>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_1_1">
-                        <label class="title" for="content1_1">Level 1_1</label>
-                    </div>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_1_2">
-                        <label class="title" for="content1_2">Level 1_2</label>
-                    </div>
+            <div aie-properties="position" aie-name="menu">
+                <div class="item" aie-trigger="click" aie-pregnancy="0.04" aie-name="menu_level_1">
+                    <label class="title" for="content1">Menu 1</label>
                 </div>
-                <div class="item" aie aie-trigger="click" aie-name="menu_level_2" aie-properties="font-size|max:1.1">
-                    <label class="title" for="content2">Level 2</label>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1" aie-properties="font-size|max:1.1">
-                        <label class="title" for="content2_1">Level 2_1</label>
-                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_1"aie-properties="font-size|max:1.1">
-                            <label class="title" for="content2_1_1">Level 2_1_1</label>
-                            <div class="item" aie aie-trigger="click" aie-name="menu_level_2_1_2">
-                                <label class="title" for="content2_1_2">Level 2_1_2 &#x2605;</label>
-                            </div>
-                        </div>
-                        <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2"aie-properties="font-size|max:1.1">
-                            <label class="title" for="content2_2">Level 2_2</label>
-                            <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_1">
-                                <label class="title" for="content2_2_1">Level 2_2_1</label>
-                            </div>
-                            <div class="item" aie aie-trigger="click" aie-name="menu_level_2_2_2">
-                                <label class="title" for="content2_2_2">Level 2_2_2</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_3">
-                        <label class="title" for="content3">Level 3</label>
-                    </div>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_4">
-                        <label class="title" for="content4">Level 4</label>
-                    </div>
-                    <div class="item" aie aie-trigger="click" aie-name="menu_level_5">
-                        <label class="title" for="content5">Level 5</label>
-                    </div>
+                <div class="item" aie-trigger="click" aie-pregnancy="0.04" aie-name="menu_level_2">
+                    <label class="title" for="content2">Menu 2</label>
+                </div>
+                <div class="item" aie-trigger="click" aie-pregnancy="0.04" aie-name="menu_level_3">
+                    <label class="title" for="content3">Menu 3</label>
+                </div>
+                <div class="item" aie-trigger="click" aie-pregnancy="0.04" aie-name="menu_level_4">
+                    <label class="title" for="content4">Menu 4</label>
                 </div>
             </div>
         </div>
-    
-        <input id="content2_1_2" type="radio" name="form_selector" class="hidden form_selector" checked>    
+
         <div class="content">
-            <div class="content-title">Content block 2_1_2</div>
-            <div class="form" aie aie-properties="position" aie-name="form">
-
-                <fieldset aie aie-name="description_group" aie-properties="height|max:3, position">
-                    <legend>Long descriptions</legend>
-                    <textarea aie aie-trigger="keypress" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
-                    <textarea aie aie-trigger="keypress" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
-                    <textarea aie aie-trigger="keypress" aie-name="text_editor_field_3" placeholder="Contact info..."></textarea>
-                </fieldset>
-                <fieldset aie aie-name="main_info_group">
-                    <legend>Main info</legend>
-                    <table width="100%">
-                        <tr aie aie-name="main_info_group_columns" aie-properties="width">
-                            <td aie aie-name="main_info_group_fields" aie-properties="font-size|max:1.2, height|max:1.2, position">
-                                <div aie aie-name="input_field_username" aie-trigger="click">
-                                    <label>Username</label>
-                                    <input class="large" type="text" placeholder="Mandatory" />
-                                </div>
-                                <div aie aie-name="input_field_phone" aie-trigger="click">
-                                    <label>Phone</label>
-                                    <input class="large" type="phone" placeholder="Optional" />
-                                </div>
-                                <div aie aie-name="input_field_firstname" aie-trigger="click">
-                                    <label>First name</label>
-                                    <input class="large" type="text" placeholder="Optional" />
-                                </div>
-                                <div aie aie-name="input_field_lastname" aie-trigger="click">
-                                    <label>Lastname</label>
-                                    <input class="large" type="text" placeholder="Optional" />
-                                </div>
-                                <div aie aie-name="input_field_email" aie-trigger="click">
-                                    <label>Email</label>
-                                    <input class="large" type="email" placeholder="Mandatory" />
-                                </div>
-                            </td>
-                            <td aie aie-name="main_info_groupm_map" aie-trigger="mouseover" style="background: url('/img/map-sample.jpg')"></td>
-                        </tr>
-                    </table>
-                </fieldset>
-                <fieldset aie aie-name="selector_group">
-                    <legend>Select Transport</legend>
-                    <div class="selector">
-                    <input id="select_input" readonly/>
-                        <div class="selector_options" aie aie-name="selector_fields" aie-properties="position, font-size|max: 2">
-                            <div class="selector_option" aie aie-name="selector_field_option_1" aie-trigger="click">Ship</div>
-                            <div class="selector_option" aie aie-name="selector_field_option_2" aie-trigger="click">Train</div>
-                            <div class="selector_option" aie aie-name="selector_field_option_3" aie-trigger="click">Plane</div>
-                            <div class="selector_option" aie aie-name="selector_field_option_4" aie-trigger="click">Car</div>
+            <input id="content1" type="radio" name="form_selector" class="hidden form_selector" checked>
+            <div class="content-form">
+                <div class="content-title">Content block 1: Location</div>
+                <div class="form" aie-properties="position,height|min:150|total:500" aie-name="form_1" aie-free='0.09'>
+                    <fieldset aie-name="selector_group_place">
+                        <legend>Location config</legend>
+                        <div class="selector">
+                        <input id="select_input_2" readonly/>
+                            <div class="selector_options" aie-name="selector_place_fields" aie-properties="position,font-size|min:10|max:20|total:50">
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_place_field_option_1" aie-trigger="click">Madrid</div>
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_place_field_option_2" aie-trigger="click">Berlin</div>
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_place_field_option_3" aie-trigger="click">Paris</div>
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_place_field_option_4" aie-trigger="click">London</div>
+                            </div>
                         </div>
+                    </fieldset>
+                    <fieldset aie-name="text_group_place">
+                            <legend>Location description</legend>
+                        <textarea aie-trigger="keypress" aie-pregnancy="0.05" aie-name="text_editor_field_location" placeholder="Location info"></textarea>
+                    </fieldset>
+                </div>
+            </div>
+        
+            <input id="content2" type="radio" name="form_selector" class="hidden form_selector">    
+            <div class="content-form">
+                <div class="content-title">Content block 2: User info</div>
+                <div class="form" aie-properties="position" aie-name="form_2">
+
+                    <fieldset aie-name="description_group" aie-properties="height|min:120, position">
+                        <legend>Long descriptions</legend>
+                        <textarea aie-trigger="keypress" aie-pregnancy="0.05" aie-name="text_editor_field_1" placeholder="Opinion..."></textarea>
+                        <textarea aie-trigger="keypress" aie-pregnancy="0.05" aie-name="text_editor_field_2" placeholder="Extra info..."></textarea>
+                        <textarea aie-trigger="keypress" aie-pregnancy="0.05" aie-name="text_editor_field_3" placeholder="Contact info..."></textarea>
+                    </fieldset>
+                    <fieldset aie-name="main_info_group">
+                        <legend>Main info</legend>
+                        <table width="600px">
+                            <tr aie-name="main_info_group_columns" width="400px" aie-properties="width|min:300">
+                                <td aie-name="main_info_group_fields" aie-properties="position">
+                                    <div aie-name="input_field_username" aie-pregnancy="0.01" aie-trigger="keypress">
+                                        <label>Username</label>
+                                        <input class="large" type="text" placeholder="Mandatory" />
+                                    </div>
+                                    <div aie-name="input_field_phone" aie-pregnancy="0.01" aie-trigger="keypress">
+                                        <label>Phone</label>
+                                        <input class="large" type="phone" placeholder="Optional" />
+                                    </div>
+                                    <div aie-name="input_field_firstname" aie-pregnancy="0.01" aie-trigger="keypress">
+                                        <label>First name</label>
+                                        <input class="large" type="text" placeholder="Optional" />
+                                    </div>
+                                    <div aie-name="input_field_lastname" aie-pregnancy="0.01" aie-trigger="keypress">
+                                        <label>Last name</label>
+                                        <input class="large" type="text" placeholder="Optional" />
+                                    </div>
+                                    <div aie-name="input_field_email" aie-pregnancy="0.01" aie-trigger="keypress">
+                                        <label>Email</label>
+                                        <input class="large" type="email" placeholder="Mandatory" />
+                                    </div>
+                                </td>
+                                <td aie-name="main_info_groupm_map" width="200px"  aie-pregnancy="0.1" aie-trigger="mouseover" class="map"></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <fieldset aie-name="selector_group">
+                        <legend>Select Transport</legend>
+                        <div class="selector">
+                            <input id="select_input" readonly/>
+                            <div class="selector_options" aie-name="selector_fields" aie-properties="position,font-size|min:10|max:20|total:50">
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_field_option_1" aie-trigger="click">Ship</div>
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_field_option_2" aie-trigger="click">Train</div>
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_field_option_3" aie-trigger="click">Plane</div>
+                                <div class="selector_option" aie-pregnancy="0.02" aie-name="selector_field_option_4" aie-trigger="click">Car</div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset aie-name="advanced_search_group" aie-properties="position">
+                        <legend>Search block</legend>
+                        <input aie-name="advanced_search_field" aie-pregnancy="0.025" aie-trigger="keypress" type="text" placeholder="Text to search" />
+                        <button aie-name="advanced_search_button" aie-pregnancy="0.025" aie-trigger="click">Find now!</button>
+                    </fieldset>
+                </div>
+            </div>
+
+            <input id="content3" type="radio" name="form_selector" class="hidden form_selector">    
+            <div class="content-form"><div class="content-title">Content block 3: Wallet</div>
+                <div class="form" aie-properties="position,height|min:100|total:300" aie-name="form_3" aie-free='0.09'>
+                    <div aie-name="advanced_wallet_group" aie-properties="width|min:100" style="height:200px">
+                        <fieldset>
+                            <legend>Insert money</legend>
+                            <input aie-name="advanced_wallet_field" aie-pregnancy="0.025" aie-trigger="keypress" type="text" placeholder="Text to search" style="width:200px" />
+                            <button aie-name="advanced_wallet_button" aie-pregnancy="0.025" aie-trigger="click" >Add mone now!</button>
+                        </fieldset>
                     </div>
-                </fieldset>
-                <fieldset aie aie-name="advanced_search_group" aie-properties="width|max: 2">
-                    <legend>Search block</legend>
-                    <input aie aie-name="advanced_search_field" aie-trigger="keypress" type="text" placeholder="Text to search" />
-                    <button aie aie-name="advanced_search_button" aie-trigger="click">Find now!</button>
-                </fieldset>
+                        <div aie-name="main_info_group_fields_wallet" aie-properties="position" style="height:200px">
+                            <div aie-name="input_field_username_wallet" aie-pregnancy="0.025" aie-trigger="keypress">
+                                <label>Account number</label>
+                                <input class="large" type="text" placeholder="Mandatory" />
+                            </div>
+                            <div aie-name="input_field_phone_wallet" aie-pregnancy="0.025" aie-trigger="keypress">
+                                <label>Bank</label>
+                                <input class="large" type="phone" placeholder="Optional" />
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <input id="content4" type="radio" name="form_selector" class="hidden form_selector">    
+            <div class="content-form"><div class="content-title">Content block 4: Legal info</div>
+                <div class="form">
+                    <h1>Legal advise</h1>
+                    <p>Loman’s Fashions, a retailer of women’s and men’s outerwear, distributed a circular last July advertising a manufacturer’s closeout of designer women’s leather coats for $59.99, coats that regularly sold for $300.00. The ad announced that the store would open at 7 a.m. on Friday, July 21, and stated that the “early bird catches the savings!” After about fifteen minutes, all the advertised coats had been sold. At 7:30 a.m., a shopper inquired about the coats and was told that there was none left. She then complained that Loman’s was obligated to sell her a comparably valued designer leather coat at the advertised price. The store manager declined, and the shopper filed a complaint in Small Claims Court, claiming that Loman’s had breached a contract by failing to sell the advertised leather coats at the advertised price.</p>
+                    <p>You mentioned to me that the store occasionally gives rain checks when it is possible to replenish supplies of an item that Loman’s can purchase at a discount. In this case, the manufacturer had discontinued the line of coats and Loman’s was not willing to sell other, designer leather coats at such a drastic markdown. You are concerned that, if the shopper’s interpretation were to be honored, Loman’s would have to reconsider its marketing strategies. Although you had assumed that the advertised terms applied only while supplies lasted, your ad had not included language to that effect. 2 You have asked for this law firm’s opinion whether this shopper could succeed on her breach of contract claim.</p>
+                    <p>Under these facts, a court would likely apply the well-settled law that a general advertisement that merely lists items for sale is at best an invitation to negotiate, not an offer to form a contract. 3 The courts that have considered this question focus on two related considerations. 4 The first is whether the advertisement is complete and definite in its terms. For example, where an advertisement containing terms for sale was missing the amount of goods available for sale, a court held that the seller had not made an offer that was complete and definite in all material terms. Thus, no contract was ever made between the seller and a person who submitted a purchase order</p>
+                </div>
             </div>
         </div>
-
-        <input id="content1" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 1</div></div>
-        <input id="content1_1" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 1_1</div></div>
-        <input id="content1_2" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 1_2</div></div>
-        <input id="content2" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 2</div></div>
-        <input id="content2_1" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 2_1</div></div>
-        <input id="content2_1_1" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 2_1_1</div></div>
-        <input id="content2_2" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 2_2</div></div>
-        <input id="content2_2_1" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 2_2_1</div></div>
-        <input id="content2_2_2" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 2_2_2</div></div>
-        <input id="content3" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 3</div></div>
-        <input id="content4" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 4</div></div>
-        <input id="content5" type="radio" name="form_selector" class="hidden form_selector">    
-        <div class="content"><div class="content-title">Content block 5</div></div>
-    </div>
     </div>
     <script src="http://localhost:8080/dist/aie.min.js"></script>
     <script>
-        initAIE('APPSAMPLE001', '#form-context')  
+        initAIE('application', '#single-page-application')  
         exposeAIE()
         document.querySelectorAll('.selector_option')
-           .forEach(el => el.addEventListener('click', e => document.getElementById('select_input').value = e.target.textContent))
+           .forEach(el => el.addEventListener('click', e => e.target.parentNode.parentNode.querySelector('input').value = e.target.textContent))
     </script>
 </body>
 

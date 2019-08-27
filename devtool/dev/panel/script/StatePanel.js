@@ -40,9 +40,10 @@ class StatePanel {
           triggers.map(trigger => this.propertyTrigger.replace(/{trigger}/i, trigger)).join(''))
         htmlCode = htmlCode.replace(
           /{freePregnancy}/g,
-          freePregnancy 
-            ? this.propertyFreePregnancy.replace(/{property}/i, this.getPrestace(freePregnancy))
-             : ''
+          this.propertyFreePregnancy
+            .replace(/{name}/i, name)
+            .replace(/{property}/i, freePregnancy ? this.getPrestace(freePregnancy) : '')
+            .replace(/{visible}/i, !!freePregnancy ? '' : 'hidden')
         )
         htmlCode = htmlCode.replace(/{value}/i, this.getPrestace(pregnancy))
         htmlCode = htmlCode.replace(
@@ -79,14 +80,22 @@ class StatePanel {
         const minVal = valueList.map(a => a.pregnancy).reduce((a, b) => Math.min(a, b), 1)
         const maxVal = valueList.map(a => a.pregnancy).reduce((a, b) => Math.max(a, b), 0)
         if (list) {
-          valueList.map(({name, pregnancy}) => {
+          valueList.map(({name, pregnancy, freePregnancy}) => {
             const el = document.getElementById(`value_${name}`)
             const arrowEl = document.getElementById(`arrow_${name}`)
+            const freePregnancyEl = document.getElementById(`freePregnancy_${name}`)
+            const freePregnancyValueEl = freePregnancyEl.getElementsByClassName(`val`)
             if (el) {
               const color = 'rgb(' + parseInt(255*(pregnancy-minVal)/(maxVal-minVal)) + ', 200, 200)'
               el.style.color = color
               arrowEl.style.color = color
               const prevValue = parseFloat(el.innerHTML)
+              if (!freePregnancy) {
+                freePregnancyEl.classList.add("hidden");
+              } else {
+                freePregnancyEl.classList.remove("hidden");
+                freePregnancyValueEl.innerHTML = freePregnancy;
+              }
               if (prevValue > pregnancy) {
                 arrowEl.innerHTML = '&darr;'
               } else if (prevValue < pregnancy) {

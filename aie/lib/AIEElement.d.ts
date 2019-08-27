@@ -43,6 +43,7 @@ export default abstract class AIEElement {
     getProperties(): Array<AIEProperty>;
     getPropertiesNames(): Array<String>;
     setChildren(element: AIEElement): void;
+    private removeChild;
     onTrigger(name: string): void;
     getChildren(): AIEElement[];
     incrementScore(): void;

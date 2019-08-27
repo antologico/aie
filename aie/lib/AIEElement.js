@@ -105,7 +105,14 @@ export default class AIEElement {
     }
     setChildren(element) {
         this.children.push(element);
+        const prevParent = element.getParent();
+        if (prevParent) {
+            prevParent.removeChild(element);
+        }
         element.setParent(this);
+    }
+    removeChild(element) {
+        this.children = this.children.filter(c => c !== element);
     }
     onTrigger(name) {
         if (this.processor) {
@@ -141,7 +148,6 @@ export default class AIEElement {
         const sum = this.children.reduce((total, child) => {
             return total + this.getChildPropertyMaxValue(name, child.name);
         }, 0);
-        console.log('getMaxAmbientPropertyValue--->', p.getTotal(), sum);
         return p.getTotal() || sum;
     }
     getProperty(nameProp) {
@@ -202,26 +208,26 @@ export default class AIEElement {
         this.getChildren().forEach((child) => {
             child.mutate();
         });
-        this.pregnancy = this.recalculatePregnancyAfterMutation();
+        this.recalculatePregnancyAfterMutation();
     }
     recalculatePregnancyAfterMutation() {
-        if (!this.properties.length) {
-            return this.pregnancy;
-        }
         const actualTotal = this.getTotalPregnancy();
-        const totalChildren = this.children.reduce((totalChild, child) => {
-            const childPregnancy = this.properties.reduce((total, prop) => {
-                const childProp = prop.getMeasure(child.name).getValue() / this.getMaxAmbientPropertyValue(prop.getName());
-                console.log('     + ', prop.getMeasure(child.name).getValue(), this.getMaxAmbientPropertyValue(prop.getName()));
-                return total + childProp;
-            }, 0) / this.properties.length;
-            console.log(child.name, ' = ', childPregnancy);
-            child.setPregnancy(childPregnancy);
-            return totalChild + childPregnancy;
-        }, 0);
+        let totalChildren;
+        if (!this.properties.length) {
+            totalChildren = this.getTotalAmbientPregnancy();
+        }
+        else {
+            totalChildren = this.children.reduce((totalChild, child) => {
+                const childPregnancy = actualTotal * this.properties.reduce((total, prop) => {
+                    const childProp = prop.getMeasure(child.name).getValue() / this.getMaxAmbientPropertyValue(prop.getName());
+                    return total + (childProp || 0);
+                }, 0) / this.properties.length || 0;
+                child.setPregnancy(childPregnancy);
+                return totalChild + childPregnancy;
+            }, 0);
+        }
         this.setFreePregnancy(actualTotal - totalChildren);
-        this.pregnancy = this.freePregnancy + totalChildren;
-        console.log('  FINAL    ', actualTotal, '=', this.pregnancy, ' + ', this.freePregnancy);
+        this.pregnancy = totalChildren;
     }
 }
 //# sourceMappingURL=AIEElement.js.map

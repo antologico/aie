@@ -151,7 +151,15 @@ export default abstract class AIEElement {
 
   public setChildren(element: AIEElement) {
     this.children.push(element)
+    const prevParent = element.getParent()
+    if (prevParent) {
+      prevParent.removeChild(element)
+    }
     element.setParent(this)
+  }
+
+  private removeChild(element: AIEElement) {
+    this.children = this.children.filter(c => c !== element)
   }
 
   public onTrigger(name: string) {
@@ -197,7 +205,6 @@ export default abstract class AIEElement {
     const sum = this.children.reduce((total, child) => {
       return total + this.getChildPropertyMaxValue(name, child.name)
     }, 0)
-    console.log('getMaxAmbientPropertyValue--->', p.getTotal(), sum)
     return p.getTotal() || sum
   }
 
@@ -272,30 +279,27 @@ export default abstract class AIEElement {
       child.mutate()
     })
 
-    this.pregnancy = this.recalculatePregnancyAfterMutation()
+    this.recalculatePregnancyAfterMutation()
   }
 
-  private recalculatePregnancyAfterMutation(): number {
+  private recalculatePregnancyAfterMutation() {
+    const actualTotal:number = this.getTotalPregnancy()
+    let totalChildren:number
+
     if (!this.properties.length) {
-      return this.pregnancy
-    }
-    
-    const actualTotal = this.getTotalPregnancy()
-    
-    const totalChildren:number = this.children.reduce((totalChild, child: AIEElement) => {
-        const childPregnancy:number = this.properties.reduce((total, prop) => {
+      totalChildren = this.getTotalAmbientPregnancy()
+    } else { 
+      totalChildren = this.children.reduce((totalChild, child: AIEElement) => {
+        const childPregnancy:number = actualTotal * this.properties.reduce((total, prop) => {
           const childProp:number = prop.getMeasure(child.name).getValue() / this.getMaxAmbientPropertyValue(prop.getName())
-          console.log('     + ', prop.getMeasure(child.name).getValue(), this.getMaxAmbientPropertyValue(prop.getName()))
-          return total + childProp
-        }, 0)/this.properties.length
-        console.log(child.name, ' = ', childPregnancy)
+          return total + (childProp || 0)
+        }, 0)/this.properties.length || 0
         child.setPregnancy(childPregnancy)
         return totalChild + childPregnancy
       }, 0)
-
+    }
     this.setFreePregnancy(actualTotal - totalChildren)
-    this.pregnancy = this.freePregnancy + totalChildren
-    console.log('  FINAL    ', actualTotal, '=', this.pregnancy, ' + ',this.freePregnancy)
+    this.pregnancy = totalChildren
   }
 
   public abstract initializeMemory(seed: string): AIEMemory

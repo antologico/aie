@@ -1,5 +1,5 @@
 import AIEMeasure from "../AIEMeasure";
-export default class Position extends AIEMeasure {
+export default class Level extends AIEMeasure {
     protected value: number;
     toString(): string;
     clone(): AIEMeasure;

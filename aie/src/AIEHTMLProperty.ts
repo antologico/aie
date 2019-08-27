@@ -5,6 +5,7 @@ import Space from './HTMLMeasures/Space'
 import AIEHTMLElement from './AIEHTMLElement'
 import AIEMeasure from './AIEMeasure';
 import Position from './HTMLMeasures/Position';
+import Level from './HTMLMeasures/Level';
 
 const COLOR = 'color'
 const FONTSIZE = 'font-size'
@@ -14,6 +15,9 @@ const POSITION = 'position'
 const LEVEL = 'level'
 const DISPLAY = 'display'
 
+function calculatePregnanceFromPosition(index: number, length: number): number {
+    return Math.pow(2, (length-index)-1) / (Math.pow(2, length) - 1)
+}
 
 function getChildrenComputedStyle(property: string, element: AIEHTMLElement) {
     return element.getChildren().reduce(
@@ -55,7 +59,7 @@ export default class AIEHTMLProperty extends AIEProperty {
                 this.measure = new Position();
                 this.setTransform(this.positionFn); break;
             case LEVEL:
-                this.measure = new Position();
+                this.measure = new Level();
                 this.setTransform(this.levelFn); break;
             default:
                 console.error('Property',name,'is not supported')
@@ -88,19 +92,16 @@ export default class AIEHTMLProperty extends AIEProperty {
                 const value = this.dimensionedValue(maxProperty * child.getPregnancy() / pregnancy)
                 const measure: AIEMeasure = this.measure.calculate(Math.floor(value))
                 child.getBaseElement().style[prop] = measure.toString()
-                console.log(' _______________', child.getName(), ' p=',child.getPregnancy(), ' => ',measure.toString())
                 this.setMeasure(child.getName(), measure)
                 return total + value
             }, 0)
             
             const correctionParameter:number = Math.min(maxProperty / newMaxProperty, 1)
-            console.log('   correctionParameter ', correctionParameter,' = ', maxProperty, '/',newMaxProperty)
             if (correctionParameter < 1) {
                 element.getChildren().forEach((child: AIEElement) => {
                     const prev:AIEMeasure = this.getMeasure(child.getName())
                     const measure:AIEMeasure = prev.calculate(prev.getValue() * correctionParameter)
                     child.getBaseElement().style[prop] = measure.toString()
-                    console.log('   >____________', child.getName(), ' p=',child.getPregnancy(), ' => ',measure.toString())
                     this.setMeasure(child.getName(), measure)
                 })
             }
@@ -108,11 +109,13 @@ export default class AIEHTMLProperty extends AIEProperty {
     }
 
     positionFn(element: AIEElement) {
-        const sortedElements = element.getChildren().sort((a:AIEElement, b:AIEElement) => b.getPregnancy() - a.getPregnancy())
-        sortedElements.forEach(el => {
-            console.log('positionFn', el.getName())
-            element.getBaseElement().appendChild(el.getBaseElement())
-        });
+        element.getChildren()
+            .sort((a:AIEElement, b:AIEElement) => b.getPregnancy() - a.getPregnancy())
+            .forEach((el: AIEElement, index, sortedElements) => {
+                element.getBaseElement().appendChild(el.getBaseElement())
+                const prev:AIEMeasure = this.getMeasure(el.getName())
+                this.setMeasure(el.getName(), prev.calculate(calculatePregnanceFromPosition(index, sortedElements.length)))
+            });
     }
 
     displayFn(element) {
@@ -124,36 +127,51 @@ export default class AIEHTMLProperty extends AIEProperty {
     }
 
     getLevelParentElement(
-        element: AIEElement,
-        parentElement: AIEElement,
+        child: AIEElement,
         topLevelParent: AIEElement) : AIEElement {
-        
-        if (parentElement === topLevelParent) {
-            return parentElement
+        if (!child.getPregnancy()) {
+            return
+        }
+    
+        const parent = child.getParent()
+        if (parent.getBaseElement() === topLevelParent) {
+            return
+        }
+
+        if (parent.getParent().getBaseElement() === topLevelParent) {
+            return
         }
         
-        const pregnancy = element.getPregnancy()
-        if (parentElement === null) {
-            console.error ("Error in element", element.getName(), ": null parent" )
-            return null
+        const cousins = parent.getParent().getChildren()
+        if  (cousins.length === 1) {
+            return parent.getParent()
         }
-        if ((parentElement.getMaxAmbientPregnancy() <= pregnancy) &&
-            (parentElement.getPercentualPregnancy() < element.getPercentualPregnancy())) {
-            return this.getLevelParentElement(element, parentElement.getParent(), topLevelParent)
-        }
-            
-        return parentElement
+
+        const selectedCousins = cousins.filter(cousin => {
+            return cousin.getPregnancy() < child.getPregnancy()
+        })
+
+        if (selectedCousins.length > 0) {
+            return parent.getParent()
+        }   
+        return
     }
 
-    levelFn(element: AIEHTMLElement, topLevelParent: AIEElement) {
-
-        element.getChildren().forEach((child: AIEHTMLElement) => {
-            const parent = this.getLevelParentElement(child, element, topLevelParent || element)
-            !child.hasChildren()
-                ? parent && parent.getBaseElement().appendChild(child.getBaseElement())
-                : child.getParent().getBaseElement().appendChild(child.getBaseElement())
-            this.levelFn(child, topLevelParent || element)
-        })
+    levelFn(element: AIEHTMLElement, topLevelParent: any) {
+        const top = topLevelParent || element.getBaseElement()
+        if (!element.getPregnancy()) {
+            return
+        }
+        element.getChildren()
+            .sort((a:AIEElement, b:AIEElement) => b.getPregnancy() - a.getPregnancy())
+            .forEach((child: AIEHTMLElement) => {
+                const nextParent = this.getLevelParentElement(child, top)
+                if (nextParent) {
+                    nextParent.getBaseElement().appendChild(child.getBaseElement())
+                    nextParent.setChildren(child)
+                }
+                this.levelFn(child, top)
+            })
     }
 }
 
