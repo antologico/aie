@@ -1,5 +1,4 @@
-<img alt="AIE" src="https://github.com/antoniojuansanchez/aie/raw/master/readme/logo.png" width="200">
-Adaptative Interface Ecosystem
+# Adaptative Interface Ecosystem
 
 
 ## What is this?
