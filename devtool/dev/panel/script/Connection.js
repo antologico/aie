@@ -135,7 +135,7 @@ class Connection extends EventDispatcher {
                         element: 'Document',
                     })
                     this.events.updateValues(state)
-                    this.applyState()
+                    this.applyState(state)
                     this.events.onMessage({
                         message: 'Data loaded from server',
                         type: 'success',

@@ -15,6 +15,12 @@ app.use('/pregnancy', pregnancyRoutes)
 
 let port = 1234
 
-app.listen(port, () => {
-    console.log('Server is up and running on port numner ' + port)
+var listener = app.listen(port, () => {
+    console.log('    ------------------------------------------------------------------ ')
+    console.log('                                                                       ')
+    console.log('    Server is up and running on port numner ' + port)
+    console.log('    Add to AIE tool config the following server (for localhost)');
+    console.log('    http://localhost:'+ port +'/pregnancy')
+    console.log('                                                                       ')
+    console.log('    ------------------------------------------------------------------ ')
 })  
