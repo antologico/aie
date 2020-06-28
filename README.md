@@ -26,7 +26,8 @@ Install de extension in Chrome/Opera
 
 And when you explore the code you can see the AIE Panel
 
-![Chrome extension](https://github.com/antoniojuansanchez/aie/raw/master/readme/img.png)
+![Chrome extension 1](https://github.com/antoniojuansanchez/aie/raw/master/readme/img1.jpg)
+![Chrome extension 2](https://github.com/antoniojuansanchez/aie/raw/master/readme/img2.jpg)
 
 ### See the example
 
